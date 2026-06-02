@@ -13,9 +13,13 @@
   /* Defaults (Dark preset, medium radius) — overridden by data-attrs below. */
   --lp-bg: #111111;
   --lp-bg-rgb: 17, 17, 17;
+  --lp-bg-alt: #1a1a1a;
+  --lp-card: #222222;
+  --lp-footer: #0a0a0a;
   --lp-surface: #1a1a1a;
   --lp-elevated: #222222;
   --lp-border: #2a2a2a;
+  --lp-border-strong: #444444;
   --lp-text: #f0f0f0;
   --lp-text-secondary: #aaaaaa;
   --lp-text-muted: #888888;
@@ -26,19 +30,42 @@
   --lp-radius: 10px;
   --lp-font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
   --lp-font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+  --lp-font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   background-color: var(--lp-bg);
   color: var(--lp-text);
   font-family: var(--lp-font-body);
 }
 
+/* Responsive horizontal padding: 48 desktop / 24 tablet / 16 mobile. */
+.lp-root .lp-container {
+  padding-left: 48px;
+  padding-right: 48px;
+}
+@media (max-width: 1024px) {
+  .lp-root .lp-container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+@media (max-width: 640px) {
+  .lp-root .lp-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
 /* ---- Presets ---- */
 .lp-root[data-preset='Dark'] {
   --lp-bg: #111111;
   --lp-bg-rgb: 17, 17, 17;
+  --lp-bg-alt: #1a1a1a;
+  --lp-card: #222222;
+  --lp-footer: #0a0a0a;
   --lp-surface: #1a1a1a;
   --lp-elevated: #222222;
   --lp-border: #2a2a2a;
+  --lp-border-strong: #444444;
   --lp-accent: #e8c547;
   --lp-accent-rgb: 232, 197, 71;
   --lp-accent-hover: #d4b33e;
@@ -50,9 +77,13 @@
 .lp-root[data-preset='Void'] {
   --lp-bg: #0a0a0a;
   --lp-bg-rgb: 10, 10, 10;
+  --lp-bg-alt: #111111;
+  --lp-card: #1a1a1a;
+  --lp-footer: #000000;
   --lp-surface: #111111;
   --lp-elevated: #1a1a1a;
   --lp-border: #222222;
+  --lp-border-strong: #333333;
   --lp-accent: #00bcd4;
   --lp-accent-rgb: 0, 188, 212;
   --lp-accent-hover: #00a5bb;
@@ -64,9 +95,13 @@
 .lp-root[data-preset='Obsidian'] {
   --lp-bg: #000000;
   --lp-bg-rgb: 0, 0, 0;
+  --lp-bg-alt: #0a0a0a;
+  --lp-card: #111111;
+  --lp-footer: #000000;
   --lp-surface: #0a0a0a;
   --lp-elevated: #111111;
   --lp-border: #1a1a1a;
+  --lp-border-strong: #2a2a2a;
   --lp-text-secondary: #888888;
   --lp-accent: #a855f7;
   --lp-accent-rgb: 168, 85, 247;
