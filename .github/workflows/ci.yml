@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  library:
+    name: Library typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      # React Native's peer-dependency ranges otherwise trip ERESOLVE; legacy
+      # resolution gives us a complete type tree (incl. NativeWind's chain).
+      - name: Install dev dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Typecheck (tokens, utils, hooks, web + mobile components, config)
+        run: npm run typecheck
+
+  mcp:
+    name: MCP server build + smoke
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test (stdio client end-to-end)
+        run: npm run smoke
