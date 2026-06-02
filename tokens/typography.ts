@@ -7,10 +7,12 @@
  */
 export const typography = {
   fontFamily: {
-    // Display / headings
-    sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    // Headings / display
+    display: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     // Body copy
-    body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    body: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    // Rounded / playful
+    rounded: ['Fredoka', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     // Code / monospaced
     mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
   },
@@ -52,5 +54,6 @@ export const typography = {
 } as const
 
 export type Typography = typeof typography
+export type FontFamily = keyof Typography['fontFamily']
 export type FontSize = keyof Typography['fontSize']
 export type FontWeight = keyof Typography['fontWeight']
