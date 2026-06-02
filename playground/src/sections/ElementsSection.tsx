@@ -15,6 +15,7 @@ const BADGE_VARIANTS: BadgeVariant[] = [
   'warning',
   'danger',
   'info',
+  'purple',
 ]
 const SPINNER_SIZES: SpinnerSize[] = ['sm', 'md', 'lg']
 
@@ -91,6 +92,7 @@ export function ElementsSection() {
         <Row label="Tones">
           <Spinner tone="primary" />
           <Spinner tone="neutral" />
+          <Spinner tone="purple" />
           <Button>
             <Spinner size="sm" tone="inverse" />
             <span className="ml-2">Loading…</span>

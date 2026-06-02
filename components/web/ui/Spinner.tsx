@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react'
 import { cn } from '../../../utils/cn'
 
 export type SpinnerSize = 'sm' | 'md' | 'lg'
-export type SpinnerTone = 'primary' | 'neutral' | 'inverse'
+export type SpinnerTone = 'primary' | 'neutral' | 'inverse' | 'purple'
 
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   /** Size preset. Defaults to 'md'. */
@@ -33,6 +33,7 @@ export function Spinner({
     primary: 'border-primary-200 border-t-primary-600',
     neutral: 'border-neutral-200 border-t-neutral-600',
     inverse: 'border-white/30 border-t-white',
+    purple: 'border-purple-tint border-t-purple',
   }
 
   return (

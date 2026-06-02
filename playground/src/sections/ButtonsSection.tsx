@@ -8,6 +8,7 @@ const VARIANTS: ButtonVariant[] = [
   'accent',
   'ghost',
   'danger',
+  'purple',
 ]
 const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
 
