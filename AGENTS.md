@@ -89,6 +89,8 @@ my-library/
 ## Git Workflow
 
 - Never commit directly to `main`
+- Always create a new feature branch before starting any new work. Never work
+  directly on `main`, even for small changes.
 - Branch naming:
   - `feat/` — new component, token, hook, util, or asset
   - `fix/` — correcting something broken or wrong
