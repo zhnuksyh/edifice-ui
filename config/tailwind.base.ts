@@ -105,7 +105,8 @@ const base: Config = {
       fontFamily: {
         display: [...typography.fontFamily.display],
         body: [...typography.fontFamily.body],
-        rounded: [...typography.fontFamily.rounded],
+        'space-grotesk': [...typography.fontFamily.spaceGrotesk],
+        'dm-mono': [...typography.fontFamily.dmMono],
         mono: [...typography.fontFamily.mono],
         // Compatibility: `font-sans` maps to the display family.
         sans: [...typography.fontFamily.display],
