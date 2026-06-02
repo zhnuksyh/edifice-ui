@@ -5,8 +5,21 @@ import { Spinner } from '../../../components/web/ui/Spinner'
 import type { SpinnerSize } from '../../../components/web/ui/Spinner'
 import { Tooltip } from '../../../components/web/ui/Tooltip'
 import { Tabs } from '../../../components/web/ui/Tabs'
+import { Popover } from '../../../components/web/ui/Popover'
+import { Menu } from '../../../components/web/ui/Menu'
+import type { MenuItem } from '../../../components/web/ui/Menu'
 import { Button } from '../../../components/web/ui/Button'
 import { Showcase, Row } from '../components/Showcase'
+
+const MENU_ITEMS: MenuItem[] = [
+  { kind: 'label', label: 'Account' },
+  { label: 'Profile', onSelect: () => {} },
+  { label: 'Settings', onSelect: () => {} },
+  { kind: 'separator' },
+  { label: 'Invite team', onSelect: () => {} },
+  { label: 'Sign out', onSelect: () => {}, danger: true },
+  { label: 'Disabled item', disabled: true },
+]
 
 const BADGE_VARIANTS: BadgeVariant[] = [
   'neutral',
@@ -126,6 +139,32 @@ export function ElementsSection() {
         <div className="max-w-lg">
           <Tabs items={TAB_ITEMS} />
         </div>
+      </Showcase>
+
+      <Showcase
+        title="Popover"
+        source="components/web/ui/Popover.tsx"
+        description="Floating panel anchored to a trigger; closes on outside click and Escape."
+      >
+        <Row>
+          <Popover trigger={<Button variant="ghost">Open popover</Button>}>
+            <p className="font-medium text-text-primary">Popover title</p>
+            <p className="mt-1 text-text-secondary">
+              Any content can live in a popover panel.
+            </p>
+          </Popover>
+        </Row>
+      </Showcase>
+
+      <Showcase
+        title="Menu"
+        source="components/web/ui/Menu.tsx"
+        description="Dropdown of actions with keyboard nav, separators, labels, and a danger item."
+      >
+        <Row>
+          <Menu trigger={<Button>Actions ▾</Button>} items={MENU_ITEMS} />
+          <Menu align="end" trigger={<Button variant="ghost">Aligned end ▾</Button>} items={MENU_ITEMS} />
+        </Row>
       </Showcase>
     </div>
   )
