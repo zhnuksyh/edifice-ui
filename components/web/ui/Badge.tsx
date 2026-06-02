@@ -8,6 +8,7 @@ export type BadgeVariant =
   | 'warning'
   | 'danger'
   | 'info'
+  | 'purple'
 export type BadgeSize = 'sm' | 'md'
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
@@ -39,6 +40,7 @@ export function Badge({
     warning: 'bg-warning-tint text-warning',
     danger: 'bg-danger-tint text-danger',
     info: 'bg-info-tint text-info',
+    purple: 'bg-purple-tint text-purple',
   }
 
   const sizes: Record<BadgeSize, string> = {

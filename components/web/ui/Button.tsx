@@ -7,6 +7,7 @@ export type ButtonVariant =
   | 'accent'
   | 'ghost'
   | 'danger'
+  | 'purple'
 export type ButtonSize = 'sm' | 'md' | 'lg'
 
 export interface ButtonProps
@@ -48,6 +49,8 @@ export function Button({
       'bg-transparent text-text-primary hover:bg-grey-22 focus-visible:ring-neutral-400',
     danger:
       'bg-danger text-text-inverse hover:bg-danger-dark focus-visible:ring-danger',
+    purple:
+      'bg-purple text-white hover:bg-purple/90 focus-visible:ring-purple',
   }
 
   const sizes: Record<ButtonSize, string> = {

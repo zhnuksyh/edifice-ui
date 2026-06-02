@@ -56,31 +56,52 @@ export function Select({
           {required && <span className="ml-0.5 text-danger">*</span>}
         </label>
       )}
-      <select
-        id={fieldId}
-        required={required}
-        aria-invalid={Boolean(error)}
-        aria-describedby={describedBy}
-        className={cn(
-          'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
-          error
-            ? 'border-danger focus-visible:ring-danger'
-            : 'border-neutral-300 focus-visible:ring-primary-500',
-          className
-        )}
-        {...rest}
-      >
-        {placeholder && (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        )}
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value} disabled={opt.disabled}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
+      <div className="relative">
+        <select
+          id={fieldId}
+          required={required}
+          aria-invalid={Boolean(error)}
+          aria-describedby={describedBy}
+          className={cn(
+            // Remove the native chrome (we draw our own chevron); `color-scheme:dark`
+            // makes the native option popup render dark to match the theme.
+            'h-10 w-full appearance-none rounded-lg border bg-surface px-3 pr-9 text-base text-text-primary transition-colors duration-fast [color-scheme:dark] focus:outline-none focus-visible:ring-2',
+            error
+              ? 'border-danger focus-visible:ring-danger'
+              : 'border-grey-2A focus-visible:ring-primary-500',
+            className
+          )}
+          {...rest}
+        >
+          {placeholder && (
+            <option value="" disabled className="bg-grey-1A text-text-primary">
+              {placeholder}
+            </option>
+          )}
+          {options.map((opt) => (
+            <option
+              key={opt.value}
+              value={opt.value}
+              disabled={opt.disabled}
+              className="bg-grey-1A text-text-primary"
+            >
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <svg
+          className="pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-secondary"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </div>
       {error ? (
         <p id={`${fieldId}-error`} className="text-sm text-danger">
           {error}

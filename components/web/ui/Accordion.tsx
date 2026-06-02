@@ -60,12 +60,15 @@ export function Accordion({
       {items.map((item) => {
         const isOpen = openIds.includes(item.id)
         return (
-          <div key={item.id}>
+          <div
+            key={item.id}
+            className="group transition-colors duration-fast hover:bg-grey-22"
+          >
             <button
               type="button"
               aria-expanded={isOpen}
               onClick={() => toggle(item.id)}
-              className="flex w-full items-center justify-between px-5 py-4 text-left font-medium text-text-primary transition-colors duration-fast hover:bg-grey-22 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+              className="flex w-full items-center justify-between px-5 py-4 text-left font-medium text-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
             >
               <span>{item.title}</span>
               <span
