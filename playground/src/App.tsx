@@ -7,11 +7,14 @@ import { ElementsSection } from './sections/ElementsSection'
 import { FormsSection } from './sections/FormsSection'
 import { LayoutSection } from './sections/LayoutSection'
 import { MarketingSection } from './sections/MarketingSection'
+import { LivePreview } from './live-preview/LivePreview'
 
 interface NavItem {
   id: string
   label: string
   render: () => JSX.Element
+  /** Render without the constrained container + heading (full-width pages). */
+  fullBleed?: boolean
 }
 
 const SECTIONS: NavItem[] = [
@@ -23,6 +26,12 @@ const SECTIONS: NavItem[] = [
   { id: 'forms', label: 'Forms', render: () => <FormsSection /> },
   { id: 'layout', label: 'Layout', render: () => <LayoutSection /> },
   { id: 'marketing', label: 'Marketing', render: () => <MarketingSection /> },
+  {
+    id: 'live-preview',
+    label: 'Live Preview',
+    render: () => <LivePreview />,
+    fullBleed: true,
+  },
 ]
 
 /** Playground root: sidebar navigation + the active section. */
@@ -57,10 +66,14 @@ export function App() {
       </aside>
 
       <main className="flex-1 overflow-x-hidden">
-        <div className="mx-auto max-w-5xl px-8 py-10">
-          <h2 className="mb-2 text-3xl font-bold">{active.label}</h2>
-          {active.render()}
-        </div>
+        {active.fullBleed ? (
+          active.render()
+        ) : (
+          <div className="mx-auto max-w-5xl px-8 py-10">
+            <h2 className="mb-2 text-3xl font-bold">{active.label}</h2>
+            {active.render()}
+          </div>
+        )}
       </main>
     </div>
   )
