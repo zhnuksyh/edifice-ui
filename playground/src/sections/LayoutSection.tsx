@@ -1,5 +1,7 @@
 import { Navbar } from '../../../components/web/layout/Navbar'
 import { Footer } from '../../../components/web/layout/Footer'
+import { Container } from '../../../components/web/layout/Container'
+import { Section } from '../../../components/web/layout/Section'
 import { Button } from '../../../components/web/ui/Button'
 import { Showcase } from '../components/Showcase'
 
@@ -84,6 +86,35 @@ export function LayoutSection() {
           <code className="font-mono text-xs">footer</code> prop in a min-height
           screen column.
         </p>
+      </Showcase>
+
+      <Showcase
+        title="Container"
+        source="components/web/layout/Container.tsx"
+        description="Centers content at a max width with responsive horizontal padding."
+      >
+        <div className="rounded-xl border border-grey-2A bg-grey-1A">
+          <Container size="md" className="border-x border-dashed border-grey-44 py-6">
+            <p className="text-center text-sm text-text-secondary">
+              Centered, max-width container (dashed edges show the bounds).
+            </p>
+          </Container>
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Section"
+        source="components/web/layout/Section.tsx"
+        description="Full-width band with vertical rhythm and alternating surface tone."
+      >
+        <div className="overflow-hidden rounded-xl border border-neutral-200">
+          <Section spacing="sm" tone="background">
+            <p className="text-center text-sm text-text-secondary">Section · background tone</p>
+          </Section>
+          <Section spacing="sm" tone="surface" bordered>
+            <p className="text-center text-sm text-text-secondary">Section · surface tone, bordered</p>
+          </Section>
+        </div>
       </Showcase>
     </div>
   )
