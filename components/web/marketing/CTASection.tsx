@@ -28,27 +28,15 @@ export function CTASection({
     <section
       className={cn(
         'py-20',
-        inverted ? 'bg-primary-700' : 'bg-surface',
+        inverted ? 'bg-grey-0A' : 'bg-grey-1A',
         className
       )}
       {...rest}
     >
       <div className="mx-auto max-w-screen-md px-6 text-center">
-        <h2
-          className={cn(
-            'text-3xl font-bold sm:text-4xl',
-            inverted ? 'text-text-inverse' : 'text-text-primary'
-          )}
-        >
-          {title}
-        </h2>
+        <h2 className="text-3xl font-bold text-grey-F0 sm:text-4xl">{title}</h2>
         {subtitle && (
-          <p
-            className={cn(
-              'mx-auto mt-4 max-w-2xl text-lg',
-              inverted ? 'text-primary-100' : 'text-text-secondary'
-            )}
-          >
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-grey-AA">
             {subtitle}
           </p>
         )}
