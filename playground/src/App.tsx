@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { TokensSection } from './sections/TokensSection'
 import { ButtonsSection } from './sections/ButtonsSection'
 import { UISection } from './sections/UISection'
+import { ElementsSection } from './sections/ElementsSection'
 import { FormsSection } from './sections/FormsSection'
 import { LayoutSection } from './sections/LayoutSection'
 import { MarketingSection } from './sections/MarketingSection'
@@ -16,6 +17,7 @@ const SECTIONS: NavItem[] = [
   { id: 'tokens', label: 'Tokens', render: () => <TokensSection /> },
   { id: 'buttons', label: 'Buttons', render: () => <ButtonsSection /> },
   { id: 'ui', label: 'UI', render: () => <UISection /> },
+  { id: 'elements', label: 'Elements', render: () => <ElementsSection /> },
   { id: 'forms', label: 'Forms', render: () => <FormsSection /> },
   { id: 'layout', label: 'Layout', render: () => <LayoutSection /> },
   { id: 'marketing', label: 'Marketing', render: () => <MarketingSection /> },
