@@ -26,17 +26,17 @@ https://raw.githubusercontent.com/{{GITHUB_OWNER}}/edifice-ui/main/
 
 ### How to fetch from the library
 
-- **Tokens:** fetch `tokens/<name>.js` (or the bundle `tokens/index.js`).
+- **Tokens:** fetch `tokens/<name>.ts` (or the bundle `tokens/index.ts`).
   Never hardcode a color, font size, spacing, radius, or shadow — use a token.
 - **Components:** fetch
-  `components/web/<category>/<Name>.jsx` (web) or
-  `components/mobile/<category>/<Name>.native.jsx` (mobile).
+  `components/web/<category>/<Name>.tsx` (web) or
+  `components/mobile/<category>/<Name>.native.tsx` (mobile).
   Categories: `layout`, `ui`, `forms`, `marketing`.
-- **Hooks:** fetch `hooks/<useName>.js`.
-- **Utils:** fetch `utils/<name>.js` (always use `cn` for className merging).
+- **Hooks:** fetch `hooks/<useName>.ts`.
+- **Utils:** fetch `utils/<name>.ts` (always use `cn` for className merging).
 - **Prompts:** fetch `prompts/<task>.md` for scaffolding tasks
   (`new-page`, `new-component`, `mobile-screen`, `code-review`).
-- **Config:** extend `config/tailwind.base.js`, `config/eslint.base.js`,
+- **Config:** extend `config/tailwind.base.ts`, `config/eslint.base.js`,
   `config/prettier.base.js`, `config/tsconfig.base.json`.
 - **Architecture:** follow `architecture/*.md` for folder structure, the API
   service layer, error handling, and Next.js conventions.

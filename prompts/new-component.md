@@ -22,28 +22,30 @@ projects.
 1. **Check for duplicates.** Search the matching `components/<platform>/<category>/`
    folder. If something similar exists, extend it instead of adding a near-copy —
    and say so.
-2. **Confirm placement.** Web → `components/web/<category>/Name.jsx`. Mobile →
-   `components/mobile/<category>/Name.native.jsx`.
+2. **Confirm placement.** Web → `components/web/<category>/Name.tsx`. Mobile →
+   `components/mobile/<category>/Name.native.tsx`.
 
 ## Conventions (must follow all)
 
 Web:
 
-- Functional React component, **named export only**.
-- Accept a `className` prop and merge with `cn()` from `utils/cn.js`.
+- Functional React component in **TypeScript** (`.tsx`), **named export only**.
+- Export a typed `Props` interface; extend the relevant element attributes
+  (e.g. `ButtonHTMLAttributes<HTMLButtonElement>`) where sensible.
+- Accept a `className` prop and merge with `cn()` from `utils/cn`.
 - **Tailwind utility classes only** — no inline styles.
 - Reference `tokens/` for any non-default value (color, spacing, radius, shadow,
   duration). No hardcoded hex/px.
-- JSDoc block at the top describing the component and every prop.
+- JSDoc block at the top describing the component (types document the props).
 - Forward unknown props (`...rest`) to the root element where sensible.
 - Handle edge cases: empty, loading, disabled, error.
 
 Mobile:
 
-- Functional React Native component using **NativeWind**.
-- File ends in `.native.jsx`.
+- Functional React Native component in **TypeScript** using **NativeWind**.
+- File ends in `.native.tsx`.
 - **Mirror the web component's props API** where possible.
-- Same JSDoc and `cn()` rules.
+- Same `Props` interface, JSDoc, and `cn()` rules.
 
 ## After writing
 

@@ -17,19 +17,23 @@
     "design-tokens"
   ],
   "exports": {
-    "./tokens": "./tokens/index.js",
-    "./utils/*": "./utils/*.js",
-    "./hooks/*": "./hooks/*.js",
+    "./tokens": "./tokens/index.ts",
+    "./utils/*": "./utils/*.ts",
+    "./hooks/*": "./hooks/*.ts",
     "./config/*": "./config/*"
   },
   "peerDependencies": {
     "clsx": "*",
     "react": ">=18",
-    "tailwind-merge": "*"
+    "tailwind-merge": "*",
+    "typescript": ">=5"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": false
+    },
+    "typescript": {
+      "optional": true
     }
   }
 }

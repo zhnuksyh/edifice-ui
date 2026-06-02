@@ -42,19 +42,20 @@ my-library/
 ## Rules For Working In This Repo
 
 ### Adding A New Component
-- Place web components in `components/web/<category>/ComponentName.jsx`
-- Place mobile components in `components/mobile/<category>/ComponentName.native.jsx`
+- Place web components in `components/web/<category>/ComponentName.tsx`
+- Place mobile components in `components/mobile/<category>/ComponentName.native.tsx`
 - Categories: `layout/`, `ui/`, `forms/`, `marketing/`
 - Every component must:
   - Accept a `className` prop for external overrides (web)
+  - Define a typed `Props` interface (exported) for its props
   - Use tokens from `tokens/` — never hardcode values
-  - Use `cn()` from `utils/cn.js` for conditional classNames
-  - Have a JSDoc comment at the top describing what it does and its props
+  - Use `cn()` from `utils/cn` for conditional classNames
+  - Have a JSDoc comment at the top describing what it does
   - Export as a named export, not default
 
 ### Adding A New Token
 - Place it in the correct file inside `tokens/`
-- Export it from `tokens/index.js`
+- Export it (and its type) from `tokens/index.ts`
 - Values must follow the existing naming convention
 
 ### Adding A New Hook
@@ -106,9 +107,10 @@ my-library/
 
 ## Stack
 
+- Language: TypeScript (`.ts` / `.tsx`) throughout
 - Web components: React + TailwindCSS
 - Mobile components: React Native + NativeWind
-- Tokens: plain JS/JSON (platform-agnostic)
+- Tokens: typed TypeScript objects (`as const`, platform-agnostic)
 - MCP server: Node.js
 
 ---

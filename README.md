@@ -16,7 +16,7 @@ them from scratch on every project.
 | ---------------- | --------------------------------------------------------------- |
 | `tokens/`        | Raw design values: colors, typography, spacing, radius, shadows, animation |
 | `components/web/`    | React + TailwindCSS components (`layout`, `ui`, `forms`, `marketing`) |
-| `components/mobile/` | React Native + NativeWind components (`.native.jsx`)        |
+| `components/mobile/` | React Native + NativeWind components (`.native.tsx`)        |
 | `hooks/`         | Reusable React hooks                                            |
 | `utils/`         | Pure helper functions                                           |
 | `assets/`        | Icons, background patterns, self-hosted fonts                   |
@@ -38,7 +38,7 @@ https://raw.githubusercontent.com/zhnuksyh/edifice-ui/main/
 
 ### Using tokens
 
-```js
+```ts
 import { colors, spacing, typography } from './tokens'
 ```
 
@@ -51,7 +51,7 @@ peer dependencies are installed:
 npm install clsx tailwind-merge
 ```
 
-```jsx
+```tsx
 import { Button } from './components/web/ui/Button'
 
 <Button variant="primary" size="md">Click me</Button>
@@ -59,14 +59,15 @@ import { Button } from './components/web/ui/Button'
 
 ### Extending the base Tailwind config
 
-```js
-// tailwind.config.js
-const base = require('./config/tailwind.base.js')
+```ts
+// tailwind.config.ts
+import type { Config } from 'tailwindcss'
+import base from './config/tailwind.base'
 
-module.exports = {
+export default {
   presets: [base],
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
-}
+} satisfies Config
 ```
 
 ---
@@ -82,7 +83,7 @@ The short version:
 - **Named exports only.** No default exports.
 - **Tokens over hardcoded values.** Never inline a color, size, or spacing value.
 - **Tailwind utilities only.** No inline styles.
-- **`cn()` for conditional classes.** From [`utils/cn.js`](./utils/cn.js).
+- **`cn()` for conditional classes.** From [`utils/cn.ts`](./utils/cn.ts).
 - **JSDoc on every component, hook, and util.**
 - **Conventional Commits + branch naming.** Never push to `main`.
 
@@ -95,8 +96,9 @@ These are **not** installed by this repo — your consuming project provides the
 - `react`
 - `clsx`
 - `tailwind-merge`
+- `typescript` (>=5) + `@types/react`
 - `tailwindcss` (web)
-- `react-native` + `nativewind` (mobile)
+- `react-native` + `nativewind` (mobile; provides RN types via `@types/react-native` or its own bundled types)
 
 ---
 

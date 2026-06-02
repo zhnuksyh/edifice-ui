@@ -27,8 +27,8 @@ rebuild.
 
 ## Requirements
 
-- Functional React Native component, **named export only**.
-- File name ends in `.native.jsx` if it is itself a reusable component;
+- Functional React Native component in **TypeScript**, **named export only**.
+- File name ends in `.native.tsx` if it is itself a reusable component;
   screens may follow the host app's routing naming.
 - Style with **NativeWind** classes only; accept and merge `className` with
   `cn()` where appropriate.
