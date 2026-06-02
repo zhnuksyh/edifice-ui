@@ -1,4 +1,4 @@
-import { useId, type InputHTMLAttributes } from 'react'
+import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '../../../utils/cn'
 
 export interface InputProps
@@ -11,10 +11,18 @@ export interface InputProps
   hint?: string
   /** Field id; auto-generated if omitted. */
   id?: string
+  /** Icon rendered inside the field, leading. */
+  leftIcon?: ReactNode
+  /** Icon rendered inside the field, trailing (hidden when `clearable` shows). */
+  rightIcon?: ReactNode
+  /** Show a clear (×) button when there is a value; called when clicked. */
+  clearable?: boolean
+  /** Called when the clear button is clicked. */
+  onClear?: () => void
 }
 
 /**
- * Input — labeled text field with error and helper-text support.
+ * Input — labeled text field with error, helper-text, icon, and clear support.
  */
 export function Input({
   label,
@@ -23,6 +31,11 @@ export function Input({
   hint,
   id,
   required = false,
+  leftIcon,
+  rightIcon,
+  clearable = false,
+  onClear,
+  value,
   className,
   ...rest
 }: InputProps) {
@@ -34,32 +47,60 @@ export function Input({
       ? `${fieldId}-hint`
       : undefined
 
+  const showClear = clearable && value !== undefined && value !== ''
+  const hasRight = showClear || Boolean(rightIcon)
+
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label
-          htmlFor={fieldId}
-          className="text-sm font-medium text-text-primary"
-        >
+        <label htmlFor={fieldId} className="text-sm font-medium text-text-primary">
           {label}
           {required && <span className="ml-0.5 text-danger">*</span>}
         </label>
       )}
-      <input
-        id={fieldId}
-        type={type}
-        required={required}
-        aria-invalid={Boolean(error)}
-        aria-describedby={describedBy}
-        className={cn(
-          'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
-          error
-            ? 'border-danger focus-visible:ring-danger'
-            : 'border-neutral-300 focus-visible:ring-primary-500',
-          className
+      <div className="relative">
+        {leftIcon && (
+          <span className="pointer-events-none absolute left-3 top-1/2 flex -translate-y-1/2 text-text-secondary">
+            {leftIcon}
+          </span>
         )}
-        {...rest}
-      />
+        <input
+          id={fieldId}
+          type={type}
+          required={required}
+          value={value}
+          aria-invalid={Boolean(error)}
+          aria-describedby={describedBy}
+          className={cn(
+            'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
+            leftIcon && 'pl-9',
+            hasRight && 'pr-9',
+            error
+              ? 'border-danger focus-visible:ring-danger'
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
+            className
+          )}
+          {...rest}
+        />
+        {showClear ? (
+          <button
+            type="button"
+            onClick={onClear}
+            aria-label="Clear"
+            className="absolute right-2.5 top-1/2 flex -translate-y-1/2 text-text-secondary transition-colors duration-fast hover:text-text-primary"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        ) : (
+          rightIcon && (
+            <span className="pointer-events-none absolute right-3 top-1/2 flex -translate-y-1/2 text-text-secondary">
+              {rightIcon}
+            </span>
+          )
+        )}
+      </div>
       {error ? (
         <p id={`${fieldId}-error`} className="text-sm text-danger">
           {error}

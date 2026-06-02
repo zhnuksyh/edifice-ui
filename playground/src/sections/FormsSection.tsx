@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Search, Mail } from 'lucide-react'
 import { Input } from '../../../components/web/forms/Input'
 import { Select } from '../../../components/web/forms/Select'
 import { Toggle } from '../../../components/web/forms/Toggle'
@@ -20,6 +21,7 @@ export function FormsSection() {
   const [enabled, setEnabled] = useState(true)
   const [terms, setTerms] = useState(false)
   const [plan, setPlan] = useState('starter')
+  const [search, setSearch] = useState('Edifice')
 
   return (
     <div>
@@ -38,6 +40,20 @@ export function FormsSection() {
           <Input label="With hint" hint="We'll never share it." placeholder="you@example.com" />
           <Input label="Required" required placeholder="Required field" />
           <Input label="With error" error="This field is required." placeholder="Oops" />
+          <Input
+            label="With left icon"
+            leftIcon={<Mail className="h-4 w-4" strokeWidth={1.75} />}
+            placeholder="you@example.com"
+          />
+          <Input
+            label="Search (clearable)"
+            leftIcon={<Search className="h-4 w-4" strokeWidth={1.75} />}
+            placeholder="Search…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            clearable
+            onClear={() => setSearch('')}
+          />
         </div>
       </Showcase>
 
