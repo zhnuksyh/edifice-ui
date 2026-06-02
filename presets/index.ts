@@ -3,17 +3,17 @@
  *
  * Re-exports each preset plus the shared Preset type and a convenience array.
  *
- *   import { defaultPreset, futuristicPreset, friendlyPreset } from './presets'
+ *   import { defaultPreset, futuristicPreset, obsidianPreset } from './presets'
  */
 export type { Preset } from './types'
 
 export { defaultPreset } from './default'
 export { futuristicPreset } from './futuristic'
-export { friendlyPreset } from './friendly'
+export { obsidianPreset } from './obsidian'
 
 import { defaultPreset } from './default'
 import { futuristicPreset } from './futuristic'
-import { friendlyPreset } from './friendly'
+import { obsidianPreset } from './obsidian'
 
 /** All presets in display order. */
-export const presets = [defaultPreset, futuristicPreset, friendlyPreset] as const
+export const presets = [defaultPreset, futuristicPreset, obsidianPreset] as const

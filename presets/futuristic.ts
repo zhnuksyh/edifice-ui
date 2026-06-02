@@ -3,20 +3,23 @@ import { typography } from '../tokens/typography'
 import type { Preset } from './types'
 
 /**
- * Futuristic preset — deeper, sharper, cooler.
+ * Void preset — deeper, sharper, cooler.
  *
  * grey[0A] background, grey[11] surface, cyan accent, Montserrat display +
  * Poppins body, md radius (sharper feel), normal density.
  */
 export const futuristicPreset: Preset = {
-  name: 'futuristic',
+  name: 'Void',
   description: 'Deep near-black UI with a cyan accent and sharper corners.',
   colors: {
     background: colors.grey['0A'],
     surface: colors.grey['11'],
+    elevated: colors.grey['1A'],
+    border: colors.grey['22'],
     accent: 'cyan',
     accentColor: colors.cyan.DEFAULT,
     text: colors.grey.F0,
+    secondaryText: colors.grey.AA,
   },
   fonts: {
     display: typography.fontFamily.display[0],

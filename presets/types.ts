@@ -14,15 +14,21 @@ export interface Preset {
   /** One-line description of the look. */
   description: string
   colors: {
-    /** Page background (a grey hex). */
+    /** Page background (a hex value). */
     background: string
-    /** Card / surface color (a grey hex). */
+    /** Card / surface color (a hex value). */
     surface: string
+    /** Elevated surface — modals, dropdowns (a hex value). */
+    elevated: string
+    /** Border color (a hex value). */
+    border: string
     /** Lead accent name + its hex. */
     accent: Accent
     accentColor: string
-    /** Primary text color (a grey hex). */
+    /** Primary text color (a hex value). */
     text: string
+    /** Secondary / muted text color (a hex value). */
+    secondaryText: string
   }
   fonts: {
     /** Display / heading font family name. */
