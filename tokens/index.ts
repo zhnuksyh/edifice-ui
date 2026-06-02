@@ -6,10 +6,10 @@
  *   import { colors, spacing, typography, type Colors } from './tokens'
  */
 export { colors } from './colors'
-export type { Colors, ColorScale, SemanticColor } from './colors'
+export type { Colors, Grey, Accent, Semantic } from './colors'
 
 export { typography } from './typography'
-export type { Typography, FontSize, FontWeight } from './typography'
+export type { Typography, FontFamily, FontSize, FontWeight } from './typography'
 
 export { spacing } from './spacing'
 export type { Spacing, SpacingKey } from './spacing'

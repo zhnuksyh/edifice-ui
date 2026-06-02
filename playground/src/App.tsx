@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PresetsSection } from './sections/PresetsSection'
 import { TokensSection } from './sections/TokensSection'
 import { ButtonsSection } from './sections/ButtonsSection'
 import { UISection } from './sections/UISection'
@@ -14,6 +15,7 @@ interface NavItem {
 }
 
 const SECTIONS: NavItem[] = [
+  { id: 'presets', label: 'Presets', render: () => <PresetsSection /> },
   { id: 'tokens', label: 'Tokens', render: () => <TokensSection /> },
   { id: 'buttons', label: 'Buttons', render: () => <ButtonsSection /> },
   { id: 'ui', label: 'UI', render: () => <UISection /> },
@@ -29,11 +31,11 @@ export function App() {
   const active = SECTIONS.find((s) => s.id === activeId) ?? SECTIONS[0]
 
   return (
-    <div className="flex min-h-screen bg-background text-text-primary">
-      <aside className="sticky top-0 h-screen w-56 shrink-0 border-r border-neutral-200 bg-surface">
-        <div className="border-b border-neutral-200 px-5 py-5">
-          <p className="text-lg font-bold">Edifice</p>
-          <p className="text-xs text-text-muted">Component Playground</p>
+    <div className="flex min-h-screen bg-grey-11 text-grey-F0">
+      <aside className="sticky top-0 h-screen w-56 shrink-0 border-r border-grey-2A bg-grey-1A">
+        <div className="border-b border-grey-2A px-5 py-5">
+          <p className="font-display text-lg font-bold">Edifice</p>
+          <p className="text-xs text-grey-88">Component Playground</p>
         </div>
         <nav className="flex flex-col gap-1 p-3">
           {SECTIONS.map((section) => (
@@ -44,8 +46,8 @@ export function App() {
               className={
                 'rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-fast ' +
                 (section.id === activeId
-                  ? 'bg-primary-50 text-primary-700'
-                  : 'text-text-secondary hover:bg-neutral-100')
+                  ? 'bg-grey-22 text-yellow'
+                  : 'text-grey-AA hover:bg-grey-1A hover:text-grey-F0')
               }
             >
               {section.label}

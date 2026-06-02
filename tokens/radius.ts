@@ -4,12 +4,11 @@
  * `full` is a large fixed value used for pills and circles.
  */
 export const radius = {
-  none: '0px',
-  sm: '0.125rem', // 2px
-  md: '0.375rem', // 6px
-  lg: '0.5rem', // 8px
-  xl: '0.75rem', // 12px
-  '2xl': '1rem', // 16px
+  sm: '2px',
+  md: '6px',
+  lg: '10px',
+  xl: '16px',
+  '2xl': '24px',
   full: '9999px',
 } as const
 
