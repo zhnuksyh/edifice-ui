@@ -76,15 +76,13 @@ export function Modal({
         {...rest}
       >
         {title && (
-          <div className="border-b border-neutral-200 px-6 py-4 text-lg font-semibold text-text-primary">
+          <div className="px-6 pt-5 pb-2 text-lg font-semibold text-text-primary">
             {title}
           </div>
         )}
-        <div className="px-6 py-5 text-text-secondary">{children}</div>
+        <div className="px-6 py-3 text-text-secondary">{children}</div>
         {footer && (
-          <div className="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4">
-            {footer}
-          </div>
+          <div className="flex justify-end gap-3 px-6 pb-5 pt-2">{footer}</div>
         )}
       </div>
     </div>
