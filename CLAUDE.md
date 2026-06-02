@@ -48,6 +48,9 @@ my-library/
 - Every component must:
   - Accept a `className` prop for external overrides (web)
   - Define a typed `Props` interface (exported) for its props
+  - When a prop reuses a native HTML attribute name with a richer type
+    (e.g. `title?: ReactNode`), `Omit` it from the extended `HTMLAttributes`
+    (e.g. `extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`)
   - Use tokens from `tokens/` — never hardcode values
   - Use `cn()` from `utils/cn` for conditional classNames
   - Have a JSDoc comment at the top describing what it does
