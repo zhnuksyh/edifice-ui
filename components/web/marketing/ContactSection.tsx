@@ -1,6 +1,7 @@
 import type { FormEvent, HTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../../utils/cn'
 import { Input } from '../forms/Input'
+import { Textarea } from '../forms/Textarea'
 import { Button } from '../ui/Button'
 
 export interface ContactSectionProps
@@ -56,22 +57,14 @@ export function ContactSection({
             placeholder="jane@example.com"
             required
           />
-          <div className="flex flex-col gap-1.5">
-            <label
-              htmlFor="contact-message"
-              className="text-sm font-medium text-text-primary"
-            >
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              rows={4}
-              required
-              placeholder="How can we help?"
-              className="w-full rounded-lg border border-neutral-300 bg-surface px-3 py-2 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
-            />
-          </div>
+          <Textarea
+            id="contact-message"
+            name="message"
+            label="Message"
+            rows={4}
+            required
+            placeholder="How can we help?"
+          />
           <Button type="submit" fullWidth>
             {submitLabel}
           </Button>
