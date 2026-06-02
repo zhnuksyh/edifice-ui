@@ -83,7 +83,7 @@ export function TokensSection() {
       <Showcase
         title="Typography scale"
         source="tokens/typography.ts"
-        description="Display: Montserrat · Body: Poppins · Rounded: Fredoka · Mono: JetBrains Mono."
+        description="Display: Montserrat · Body: Poppins · Space Grotesk · DM Mono · Mono: JetBrains Mono."
       >
         <div className="mb-6 flex flex-col gap-1 font-mono text-xs text-grey-AA">
           <span style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-base text-grey-F0">
@@ -92,8 +92,11 @@ export function TokensSection() {
           <span style={{ fontFamily: "'Poppins', sans-serif" }} className="text-base text-grey-F0">
             Poppins — body copy
           </span>
-          <span style={{ fontFamily: "'Fredoka', sans-serif" }} className="text-base text-grey-F0">
-            Fredoka — rounded / playful
+          <span style={{ fontFamily: "'Space Grotesk', sans-serif" }} className="text-base text-grey-F0">
+            Space Grotesk — technical display
+          </span>
+          <span style={{ fontFamily: "'DM Mono', monospace" }} className="text-base text-grey-F0">
+            DM Mono — monospaced body
           </span>
           <span style={{ fontFamily: "'JetBrains Mono', monospace" }} className="text-base text-grey-F0">
             JetBrains Mono — code
