@@ -85,6 +85,21 @@ back.
 
 ---
 
+## Icons
+
+- **Lucide** is the official icon library.
+  - Web: use `lucide-react`.
+  - Mobile: use `lucide-react-native`.
+- **Outline style only** — never use filled icons.
+- **Import icons individually**, never import the whole library:
+  ```tsx
+  import { Search } from 'lucide-react' // good
+  // never: import * as Icons from 'lucide-react'
+  ```
+- Size and color icons with Tailwind utilities / tokens, not inline styles.
+
+---
+
 ## Agent Behavior Rules
 
 - **Check the library first.** Reuse before rebuilding.

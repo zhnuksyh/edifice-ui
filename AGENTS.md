@@ -123,6 +123,24 @@ my-library/
 
 ---
 
+## Icons
+
+- **Lucide** is the official icon library.
+  - Web: use [`lucide-react`](https://lucide.dev).
+  - Mobile: use [`lucide-react-native`](https://lucide.dev).
+- **Outline style only** — never use filled icons.
+- **Import icons individually**, never import the whole library:
+  ```tsx
+  // Good
+  import { Search } from 'lucide-react'
+
+  // Never
+  import * as Icons from 'lucide-react'
+  ```
+- Size and color icons with Tailwind utilities / tokens, not inline styles.
+
+---
+
 ## Agent Behavior Rules
 
 - Before adding a new component, check if a similar one already exists
