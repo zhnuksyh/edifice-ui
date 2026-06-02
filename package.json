@@ -1,0 +1,35 @@
+{
+  "name": "edifice-ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Edifice — a personal component and design library optimized for AI agent consumption.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "author": "zhnuksyh",
+  "keywords": [
+    "edifice",
+    "design-system",
+    "component-library",
+    "react",
+    "react-native",
+    "tailwindcss",
+    "nativewind",
+    "design-tokens"
+  ],
+  "exports": {
+    "./tokens": "./tokens/index.js",
+    "./utils/*": "./utils/*.js",
+    "./hooks/*": "./hooks/*.js",
+    "./config/*": "./config/*"
+  },
+  "peerDependencies": {
+    "clsx": "*",
+    "react": ">=18",
+    "tailwind-merge": "*"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": false
+    }
+  }
+}

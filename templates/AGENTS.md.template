@@ -1,0 +1,95 @@
+# CLAUDE.md — {{PROJECT_NAME}}
+
+> Universal agent instructions for a project built on the **Edifice** library.
+> Copy this file to the project root as `CLAUDE.md` (and `AGENTS.md` for Codex),
+> then replace the `{{PLACEHOLDERS}}`.
+
+## What This Project Is
+
+{{ONE_PARAGRAPH_DESCRIPTION}}
+
+**Stack:** {{e.g. Next.js (App Router) + React + TailwindCSS}}
+
+---
+
+## The Edifice Library — Source of Truth
+
+This project is built on **Edifice**, a shared component & design library. **Check
+Edifice first** before building anything. Do not invent new styles, tokens, or
+components when one already exists.
+
+Raw GitHub base URL:
+
+```
+https://raw.githubusercontent.com/{{GITHUB_OWNER}}/edifice-ui/main/
+```
+
+### How to fetch from the library
+
+- **Tokens:** fetch `tokens/<name>.js` (or the bundle `tokens/index.js`).
+  Never hardcode a color, font size, spacing, radius, or shadow — use a token.
+- **Components:** fetch
+  `components/web/<category>/<Name>.jsx` (web) or
+  `components/mobile/<category>/<Name>.native.jsx` (mobile).
+  Categories: `layout`, `ui`, `forms`, `marketing`.
+- **Hooks:** fetch `hooks/<useName>.js`.
+- **Utils:** fetch `utils/<name>.js` (always use `cn` for className merging).
+- **Prompts:** fetch `prompts/<task>.md` for scaffolding tasks
+  (`new-page`, `new-component`, `mobile-screen`, `code-review`).
+- **Config:** extend `config/tailwind.base.js`, `config/eslint.base.js`,
+  `config/prettier.base.js`, `config/tsconfig.base.json`.
+- **Architecture:** follow `architecture/*.md` for folder structure, the API
+  service layer, error handling, and Next.js conventions.
+
+Workflow: **find it in Edifice → copy/fetch it in → extend if needed.** If
+nothing fits, build it following Edifice conventions and consider contributing it
+back.
+
+---
+
+## Git Workflow
+
+- **Never commit directly to `main`.**
+- Branch naming:
+  - `feat/` — new feature, component, or capability
+  - `fix/` — bug fix
+  - `chore/` — config, deps, cleanup
+  - `refactor/` — restructuring without behavior change
+- Commit messages follow **Conventional Commits**
+  (`feat: add pricing page`, `fix: correct date format`).
+- Lint and format before committing. Never push with errors.
+
+---
+
+## Code Quality Rules
+
+- **No dead code** — no unused variables, imports, functions, or exports.
+- **No commented-out code** — delete it.
+- **No `console.log`** in committed files (`console.warn`/`error` allowed).
+- **No hardcoded values** — colors, sizes, and spacing come from Edifice tokens.
+- **No inline styles** — Tailwind / NativeWind utility classes only.
+- **Always handle edge cases** — loading, empty, and error states.
+- Every function does one thing. Prefer **named exports**.
+
+---
+
+## Stack Rules
+
+- **Web:** React + TailwindCSS. Use Edifice web components and `cn()`.
+- **Mobile:** React Native + NativeWind. Use Edifice `.native` components.
+- **Tokens:** platform-agnostic JS from Edifice `tokens/`.
+- **API calls:** go through a per-domain service layer — never inline `fetch` in
+  components (see Edifice `architecture/api-layer.md`).
+
+---
+
+## Agent Behavior Rules
+
+- **Check the library first.** Reuse before rebuilding.
+- **Do not invent new styles** when a token or component already covers it.
+- **Ask before adding any dependency**, library, or package.
+- **Explain before acting on large tasks** — outline the plan, then execute.
+- Do not rename or restructure existing files without explicit instruction.
+- Do not refactor outside the scope of the current task.
+- When two approaches are reasonable, present both with tradeoffs rather than
+  deciding silently.
