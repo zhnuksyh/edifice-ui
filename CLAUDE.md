@@ -1,8 +1,8 @@
-# CLAUDE.md — Daimon's Component & Design Library
+# CLAUDE.md — zhnuksyh's Component & Design Library
 
 ## What This Repo Is
 This is a personal component and design library — a single source of truth for
-all of Daimon's projects. It is optimized for AI agent consumption (Claude Code,
+all of zhnuksyh's projects. It is optimized for AI agent consumption (Claude Code,
 Codex). Everything in here is a building block: tokens, components, hooks,
 utils, assets, config, architecture patterns, and prompt templates.
 
