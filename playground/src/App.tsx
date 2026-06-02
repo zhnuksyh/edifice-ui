@@ -5,6 +5,7 @@ import { TokensSection } from './sections/TokensSection'
 import { ButtonsSection } from './sections/ButtonsSection'
 import { UISection } from './sections/UISection'
 import { ElementsSection } from './sections/ElementsSection'
+import { DataSection } from './sections/DataSection'
 import { FormsSection } from './sections/FormsSection'
 import { LayoutSection } from './sections/LayoutSection'
 import { MarketingSection } from './sections/MarketingSection'
@@ -24,6 +25,7 @@ const SECTIONS: NavItem[] = [
   { id: 'buttons', label: 'Buttons', render: () => <ButtonsSection /> },
   { id: 'ui', label: 'UI', render: () => <UISection /> },
   { id: 'elements', label: 'Elements', render: () => <ElementsSection /> },
+  { id: 'data', label: 'Data', render: () => <DataSection /> },
   { id: 'forms', label: 'Forms', render: () => <FormsSection /> },
   { id: 'layout', label: 'Layout', render: () => <LayoutSection /> },
   { id: 'marketing', label: 'Marketing', render: () => <MarketingSection /> },
