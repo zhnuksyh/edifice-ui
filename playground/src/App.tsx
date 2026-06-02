@@ -84,10 +84,10 @@ export function App() {
           type="button"
           onClick={() => setSidebarOpen(true)}
           aria-label="Open sidebar"
-          className="fixed left-3 top-3 z-50 flex items-center gap-2 rounded-lg border border-grey-2A bg-grey-1A px-3 py-2 text-sm font-medium text-grey-F0 shadow-lg transition-colors hover:bg-grey-22"
+          title="Open sidebar"
+          className="fixed left-3 top-3 z-50 rounded-md border border-grey-2A bg-grey-1A/80 p-1.5 text-grey-AA backdrop-blur transition-colors hover:bg-grey-22 hover:text-grey-F0"
         >
           <PanelLeftOpen className="h-5 w-5" strokeWidth={1.75} />
-          Menu
         </button>
       )}
 
