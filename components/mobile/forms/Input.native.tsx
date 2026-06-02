@@ -53,7 +53,7 @@ export function Input({
       {error ? (
         <Text className="text-sm text-danger">{error}</Text>
       ) : (
-        hint && <Text className="text-sm text-text-muted">{hint}</Text>
+        hint && <Text className="text-sm text-text-secondary">{hint}</Text>
       )}
     </View>
   )

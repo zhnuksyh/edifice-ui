@@ -35,7 +35,7 @@ export function App() {
       <aside className="sticky top-0 h-screen w-56 shrink-0 border-r border-grey-2A bg-grey-1A">
         <div className="border-b border-grey-2A px-5 py-5">
           <p className="font-display text-lg font-bold">Edifice</p>
-          <p className="text-xs text-grey-88">Component Playground</p>
+          <p className="text-xs text-grey-AA">Component Playground</p>
         </div>
         <nav className="flex flex-col gap-1 p-3">
           {SECTIONS.map((section) => (
@@ -47,7 +47,7 @@ export function App() {
                 'rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-fast ' +
                 (section.id === activeId
                   ? 'bg-grey-22 text-yellow'
-                  : 'text-grey-AA hover:bg-grey-1A hover:text-grey-F0')
+                  : 'text-grey-AA hover:bg-grey-22 hover:text-grey-F0')
               }
             >
               {section.label}

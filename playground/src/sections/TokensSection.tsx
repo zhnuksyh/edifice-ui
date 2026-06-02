@@ -58,7 +58,7 @@ export function TokensSection() {
         <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-5">
           {ACCENTS.map((accent) => (
             <div key={accent} className="flex flex-col gap-2">
-              <p className="text-xs font-medium uppercase tracking-wide text-grey-66">
+              <p className="text-xs font-medium uppercase tracking-wide text-grey-AA">
                 {accent}
               </p>
               <Swatch name="DEFAULT" value={colors[accent].DEFAULT} />
@@ -85,7 +85,7 @@ export function TokensSection() {
         source="tokens/typography.ts"
         description="Display: Montserrat · Body: Poppins · Rounded: Fredoka · Mono: JetBrains Mono."
       >
-        <div className="mb-6 flex flex-col gap-1 font-mono text-xs text-grey-88">
+        <div className="mb-6 flex flex-col gap-1 font-mono text-xs text-grey-AA">
           <span style={{ fontFamily: "'Montserrat', sans-serif" }} className="text-base text-grey-F0">
             Montserrat — display / headings
           </span>
@@ -102,7 +102,7 @@ export function TokensSection() {
         <div className="flex flex-col gap-3">
           {FONT_SIZE_ORDER.map((size) => (
             <div key={size} className="flex items-baseline gap-4">
-              <code className="w-12 shrink-0 font-mono text-xs text-grey-66">
+              <code className="w-12 shrink-0 font-mono text-xs text-grey-AA">
                 {size}
               </code>
               <span style={{ fontSize: typography.fontSize[size] }}>
@@ -121,7 +121,7 @@ export function TokensSection() {
                 className="h-16 w-16 border border-grey-33 bg-grey-22"
                 style={{ borderRadius: value }}
               />
-              <code className="font-mono text-xs text-grey-88">
+              <code className="font-mono text-xs text-grey-AA">
                 {name} · {value}
               </code>
             </div>
@@ -141,7 +141,7 @@ export function TokensSection() {
                 className="h-16 w-16 rounded-lg bg-grey-22"
                 style={{ boxShadow: value }}
               />
-              <code className="font-mono text-xs text-grey-88">{name}</code>
+              <code className="font-mono text-xs text-grey-AA">{name}</code>
             </div>
           ))}
         </div>

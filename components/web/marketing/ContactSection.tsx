@@ -69,7 +69,7 @@ export function ContactSection({
               rows={4}
               required
               placeholder="How can we help?"
-              className="w-full rounded-lg border border-neutral-300 bg-surface px-3 py-2 text-base text-text-primary placeholder:text-text-muted transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="w-full rounded-lg border border-neutral-300 bg-surface px-3 py-2 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
             />
           </div>
           <Button type="submit" fullWidth>

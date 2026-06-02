@@ -65,7 +65,7 @@ export function Accordion({
               type="button"
               aria-expanded={isOpen}
               onClick={() => toggle(item.id)}
-              className="flex w-full items-center justify-between px-5 py-4 text-left font-medium text-text-primary transition-colors duration-fast hover:bg-neutral-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
+              className="flex w-full items-center justify-between px-5 py-4 text-left font-medium text-text-primary transition-colors duration-fast hover:bg-grey-22 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
             >
               <span>{item.title}</span>
               <span

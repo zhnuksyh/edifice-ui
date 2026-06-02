@@ -15,8 +15,8 @@ export function Swatch({ name, value, note }: SwatchProps) {
       />
       <div className="px-0.5">
         <p className="text-xs font-medium text-grey-F0">{name}</p>
-        <p className="font-mono text-[10px] text-grey-88">{value}</p>
-        {note && <p className="text-[10px] text-grey-66">{note}</p>}
+        <p className="font-mono text-[10px] text-grey-AA">{value}</p>
+        {note && <p className="text-[10px] text-grey-AA">{note}</p>}
       </div>
     </div>
   )

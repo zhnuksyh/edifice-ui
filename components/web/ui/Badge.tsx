@@ -33,12 +33,12 @@ export function Badge({
   ...rest
 }: BadgeProps) {
   const variants: Record<BadgeVariant, string> = {
-    neutral: 'bg-neutral-100 text-neutral-700',
-    primary: 'bg-primary-100 text-primary-700',
-    success: 'bg-success-light/40 text-success-dark',
-    warning: 'bg-warning-light/40 text-warning-dark',
-    danger: 'bg-danger-light/40 text-danger-dark',
-    info: 'bg-info-light/40 text-info-dark',
+    neutral: 'bg-grey-22 text-grey-F0',
+    primary: 'bg-yellow-tint text-yellow',
+    success: 'bg-success-tint text-success',
+    warning: 'bg-warning-tint text-warning',
+    danger: 'bg-danger-tint text-danger',
+    info: 'bg-info-tint text-info',
   }
 
   const sizes: Record<BadgeSize, string> = {

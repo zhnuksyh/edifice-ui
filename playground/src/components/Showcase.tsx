@@ -18,7 +18,7 @@ export function Showcase({ title, description, source, children }: ShowcaseProps
             {title}
           </h3>
           {source && (
-            <code className="font-mono text-xs text-grey-88">{source}</code>
+            <code className="font-mono text-xs text-grey-AA">{source}</code>
           )}
         </div>
         {description && (
@@ -40,7 +40,7 @@ export function Row({ label, children }: RowProps) {
   return (
     <div className="mb-4 last:mb-0">
       {label && (
-        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-grey-66">
+        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-grey-AA">
           {label}
         </p>
       )}

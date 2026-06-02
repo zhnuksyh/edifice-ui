@@ -87,7 +87,7 @@ export function Select({
         </p>
       ) : (
         hint && (
-          <p id={`${fieldId}-hint`} className="text-sm text-text-muted">
+          <p id={`${fieldId}-hint`} className="text-sm text-text-secondary">
             {hint}
           </p>
         )
