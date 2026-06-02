@@ -4,10 +4,16 @@ import { Accordion } from '../../../components/web/ui/Accordion'
 import { Modal } from '../../../components/web/ui/Modal'
 import { Toast } from '../../../components/web/ui/Toast'
 import type { ToastVariant } from '../../../components/web/ui/Toast'
+import { Alert } from '../../../components/web/ui/Alert'
+import type { AlertVariant } from '../../../components/web/ui/Alert'
+import { Progress } from '../../../components/web/ui/Progress'
+import { Skeleton } from '../../../components/web/ui/Skeleton'
+import { Breadcrumb } from '../../../components/web/ui/Breadcrumb'
 import { Button } from '../../../components/web/ui/Button'
 import { Showcase, Row } from '../components/Showcase'
 
 const TOAST_VARIANTS: ToastVariant[] = ['success', 'warning', 'danger', 'info']
+const ALERT_VARIANTS: AlertVariant[] = ['info', 'success', 'warning', 'danger']
 
 const ACCORDION_ITEMS = [
   { id: 'a', title: 'What is Edifice?', content: 'A personal component library.' },
@@ -98,6 +104,66 @@ export function UISection() {
             </Toast>
           ))}
         </div>
+      </Showcase>
+
+      <Showcase
+        title="Alert"
+        source="components/web/ui/Alert.tsx"
+        description="Persistent in-page message in four tones; optionally dismissible."
+      >
+        <div className="flex max-w-md flex-col gap-3">
+          {ALERT_VARIANTS.map((variant) => (
+            <Alert key={variant} variant={variant} title={variant}>
+              This is a persistent {variant} alert.
+            </Alert>
+          ))}
+          <Alert variant="info" title="Dismissible" onDismiss={() => {}}>
+            This one has a dismiss button.
+          </Alert>
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Progress"
+        source="components/web/ui/Progress.tsx"
+        description="Linear bar — determinate (value) and indeterminate, three sizes."
+      >
+        <div className="flex max-w-md flex-col gap-4">
+          <Progress value={30} />
+          <Progress value={70} tone="success" size="lg" />
+          <Progress value={90} tone="danger" size="sm" />
+          <Progress label="Loading" />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Skeleton"
+        source="components/web/ui/Skeleton.tsx"
+        description="Animated loading placeholders — text lines, circle, and block."
+      >
+        <div className="flex max-w-md items-start gap-4">
+          <Skeleton variant="circle" width={48} height={48} />
+          <div className="flex-1">
+            <Skeleton variant="text" lines={3} />
+          </div>
+        </div>
+        <div className="mt-4 max-w-md">
+          <Skeleton variant="rect" height={120} />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Breadcrumb"
+        source="components/web/ui/Breadcrumb.tsx"
+        description="Navigation trail; the last item is the current page."
+      >
+        <Breadcrumb
+          items={[
+            { label: 'Home', href: '#' },
+            { label: 'Components', href: '#' },
+            { label: 'Breadcrumb' },
+          ]}
+        />
       </Showcase>
     </div>
   )

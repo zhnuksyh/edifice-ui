@@ -129,6 +129,21 @@ const base: Config = {
       transitionTimingFunction: {
         spring: animation.easing.spring,
       },
+      keyframes: {
+        'progress-indeterminate': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(400%)' },
+        },
+        'skeleton-pulse': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.4' },
+        },
+      },
+      animation: {
+        'progress-indeterminate':
+          'progress-indeterminate 1.2s ease-in-out infinite',
+        'skeleton-pulse': 'skeleton-pulse 1.5s ease-in-out infinite',
+      },
     },
   },
   plugins: [],
