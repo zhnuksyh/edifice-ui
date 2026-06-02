@@ -11,8 +11,10 @@ export const typography = {
     display: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
     // Body copy
     body: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-    // Rounded / playful
-    rounded: ['Fredoka', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    // Technical / geometric display (e.g. Obsidian preset)
+    spaceGrotesk: ['Space Grotesk', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    // Monospaced body (e.g. Obsidian preset)
+    dmMono: ['DM Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
     // Code / monospaced
     mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
   },
