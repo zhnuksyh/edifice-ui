@@ -9,6 +9,11 @@ import type { AlertVariant } from '../../../components/web/ui/Alert'
 import { Progress } from '../../../components/web/ui/Progress'
 import { Skeleton } from '../../../components/web/ui/Skeleton'
 import { Breadcrumb } from '../../../components/web/ui/Breadcrumb'
+import { Pagination } from '../../../components/web/ui/Pagination'
+import { EmptyState } from '../../../components/web/ui/EmptyState'
+import { Divider } from '../../../components/web/ui/Divider'
+import { Kbd } from '../../../components/web/ui/Kbd'
+import { Inbox } from 'lucide-react'
 import { Button } from '../../../components/web/ui/Button'
 import { useToast } from '../../../components/web/ui/ToastProvider'
 import { Showcase, Row } from '../components/Showcase'
@@ -25,6 +30,7 @@ const ACCORDION_ITEMS = [
 /** Card, Accordion, Modal, and Toast. */
 export function UISection() {
   const [modalOpen, setModalOpen] = useState(false)
+  const [page, setPage] = useState(1)
   const { toast, success, error } = useToast()
 
   return (
@@ -185,6 +191,63 @@ export function UISection() {
             { label: 'Breadcrumb' },
           ]}
         />
+      </Showcase>
+
+      <Showcase
+        title="Pagination"
+        source="components/web/ui/Pagination.tsx"
+        description="Page navigation with prev/next and ellipsis-truncated page numbers."
+      >
+        <Pagination page={page} pageCount={12} onPageChange={setPage} />
+      </Showcase>
+
+      <Showcase
+        title="EmptyState"
+        source="components/web/ui/EmptyState.tsx"
+        description="Placeholder for empty / no-results views, with an optional action."
+      >
+        <div className="max-w-md">
+          <EmptyState
+            icon={<Inbox className="h-6 w-6" strokeWidth={1.75} />}
+            title="No messages yet"
+            description="When you receive messages, they'll show up here."
+            action={<Button>Compose</Button>}
+          />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Divider"
+        source="components/web/ui/Divider.tsx"
+        description="Horizontal or vertical separator, optionally with a centered label."
+      >
+        <div className="max-w-md space-y-4">
+          <Divider />
+          <Divider label="or" />
+          <div className="flex h-8 items-center text-sm text-text-secondary">
+            <span>Left</span>
+            <Divider orientation="vertical" />
+            <span>Right</span>
+          </div>
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Kbd"
+        source="components/web/ui/Kbd.tsx"
+        description="Keyboard key caps for documenting shortcuts."
+      >
+        <Row>
+          <span className="flex items-center gap-1">
+            <Kbd>⌘</Kbd>
+            <Kbd>K</Kbd>
+          </span>
+          <span className="flex items-center gap-1">
+            <Kbd size="sm">Ctrl</Kbd>
+            <Kbd size="sm">C</Kbd>
+          </span>
+          <Kbd>Esc</Kbd>
+        </Row>
       </Showcase>
     </div>
   )
