@@ -52,7 +52,7 @@ export function Input({
         aria-invalid={Boolean(error)}
         aria-describedby={describedBy}
         className={cn(
-          'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary placeholder:text-text-muted transition-colors duration-fast focus:outline-none focus-visible:ring-2',
+          'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
           error
             ? 'border-danger focus-visible:ring-danger'
             : 'border-neutral-300 focus-visible:ring-primary-500',
@@ -66,7 +66,7 @@ export function Input({
         </p>
       ) : (
         hint && (
-          <p id={`${fieldId}-hint`} className="text-sm text-text-muted">
+          <p id={`${fieldId}-hint`} className="text-sm text-text-secondary">
             {hint}
           </p>
         )

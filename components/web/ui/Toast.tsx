@@ -40,10 +40,10 @@ export function Toast({
   }, [duration, onClose])
 
   const variants: Record<ToastVariant, string> = {
-    success: 'border-success bg-success-light/30 text-success-dark',
-    warning: 'border-warning bg-warning-light/30 text-warning-dark',
-    danger: 'border-danger bg-danger-light/30 text-danger-dark',
-    info: 'border-info bg-info-light/30 text-info-dark',
+    success: 'border-success bg-success-tint text-success',
+    warning: 'border-warning bg-warning-tint text-warning',
+    danger: 'border-danger bg-danger-tint text-danger',
+    info: 'border-info bg-info-tint text-info',
   }
 
   return (
@@ -66,7 +66,7 @@ export function Toast({
           type="button"
           onClick={onClose}
           aria-label="Dismiss notification"
-          className="shrink-0 text-text-muted transition-colors duration-fast hover:text-text-primary"
+          className="shrink-0 text-text-secondary transition-colors duration-fast hover:text-text-primary"
         >
           ✕
         </button>

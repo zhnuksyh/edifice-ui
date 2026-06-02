@@ -45,7 +45,7 @@ export function Button({
     accent:
       'bg-accent-500 text-text-inverse hover:bg-accent-600 focus-visible:ring-accent-400',
     ghost:
-      'bg-transparent text-text-primary hover:bg-neutral-100 focus-visible:ring-neutral-400',
+      'bg-transparent text-text-primary hover:bg-grey-22 focus-visible:ring-neutral-400',
     danger:
       'bg-danger text-text-inverse hover:bg-danger-dark focus-visible:ring-danger',
   }
