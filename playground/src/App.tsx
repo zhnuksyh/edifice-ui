@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { PresetsSection } from './sections/PresetsSection'
 import { TokensSection } from './sections/TokensSection'
 import { ButtonsSection } from './sections/ButtonsSection'
@@ -37,33 +38,58 @@ const SECTIONS: NavItem[] = [
 /** Playground root: sidebar navigation + the active section. */
 export function App() {
   const [activeId, setActiveId] = useState(SECTIONS[0].id)
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const active = SECTIONS.find((s) => s.id === activeId) ?? SECTIONS[0]
 
   return (
     <div className="flex min-h-screen bg-grey-11 text-grey-F0">
-      <aside className="sticky top-0 h-screen w-56 shrink-0 border-r border-grey-2A bg-grey-1A">
-        <div className="border-b border-grey-2A px-5 py-5">
-          <p className="font-display text-lg font-bold">Edifice</p>
-          <p className="text-xs text-grey-AA">Component Playground</p>
-        </div>
-        <nav className="flex flex-col gap-1 p-3">
-          {SECTIONS.map((section) => (
+      {sidebarOpen && (
+        <aside className="sticky top-0 h-screen w-56 shrink-0 border-r border-grey-2A bg-grey-1A">
+          <div className="flex items-start justify-between border-b border-grey-2A px-5 py-5">
+            <div>
+              <p className="font-display text-lg font-bold">Edifice</p>
+              <p className="text-xs text-grey-AA">Component Playground</p>
+            </div>
             <button
-              key={section.id}
               type="button"
-              onClick={() => setActiveId(section.id)}
-              className={
-                'rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-fast ' +
-                (section.id === activeId
-                  ? 'bg-grey-22 text-yellow'
-                  : 'text-grey-AA hover:bg-grey-22 hover:text-grey-F0')
-              }
+              onClick={() => setSidebarOpen(false)}
+              aria-label="Collapse sidebar"
+              className="rounded-md p-1 text-grey-AA transition-colors hover:bg-grey-22 hover:text-grey-F0"
             >
-              {section.label}
+              <PanelLeftClose className="h-5 w-5" strokeWidth={1.75} />
             </button>
-          ))}
-        </nav>
-      </aside>
+          </div>
+          <nav className="flex flex-col gap-1 p-3">
+            {SECTIONS.map((section) => (
+              <button
+                key={section.id}
+                type="button"
+                onClick={() => setActiveId(section.id)}
+                className={
+                  'rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors duration-fast ' +
+                  (section.id === activeId
+                    ? 'bg-grey-22 text-yellow'
+                    : 'text-grey-AA hover:bg-grey-22 hover:text-grey-F0')
+                }
+              >
+                {section.label}
+              </button>
+            ))}
+          </nav>
+        </aside>
+      )}
+
+      {!sidebarOpen && (
+        <button
+          type="button"
+          onClick={() => setSidebarOpen(true)}
+          aria-label="Open sidebar"
+          className="fixed left-3 top-3 z-50 flex items-center gap-2 rounded-lg border border-grey-2A bg-grey-1A px-3 py-2 text-sm font-medium text-grey-F0 shadow-lg transition-colors hover:bg-grey-22"
+        >
+          <PanelLeftOpen className="h-5 w-5" strokeWidth={1.75} />
+          Menu
+        </button>
+      )}
 
       <main className="flex-1 overflow-x-hidden">
         {active.fullBleed ? (
