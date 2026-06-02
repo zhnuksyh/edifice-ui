@@ -1,0 +1,143 @@
+/*
+ * Live Preview scoped theming.
+ *
+ * The Edifice components use fixed Tailwind utility classes (bg-surface,
+ * text-text-primary, bg-primary-600, rounded-lg, …) that normally compile to
+ * literal values. Inside `.lp-root`, we re-point the handful of themeable
+ * utilities at CSS variables, then swap those variables per preset and per
+ * radius via data-attributes on the root. This re-themes the *real* components
+ * live, with no library changes — playground-only.
+ */
+
+.lp-root {
+  /* Defaults (Dark preset, medium radius) — overridden by data-attrs below. */
+  --lp-bg: #111111;
+  --lp-surface: #1a1a1a;
+  --lp-elevated: #222222;
+  --lp-border: #2a2a2a;
+  --lp-text: #f0f0f0;
+  --lp-text-secondary: #aaaaaa;
+  --lp-text-muted: #888888;
+  --lp-accent: #e8c547;
+  --lp-accent-hover: #d4b33e;
+  --lp-accent-contrast: #111111;
+  --lp-radius: 10px;
+  --lp-font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --lp-font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  background-color: var(--lp-bg);
+  color: var(--lp-text);
+  font-family: var(--lp-font-body);
+}
+
+/* ---- Presets ---- */
+.lp-root[data-preset='Dark'] {
+  --lp-bg: #111111;
+  --lp-surface: #1a1a1a;
+  --lp-elevated: #222222;
+  --lp-border: #2a2a2a;
+  --lp-accent: #e8c547;
+  --lp-accent-hover: #d4b33e;
+  --lp-accent-contrast: #111111;
+  --lp-font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --lp-font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
+.lp-root[data-preset='Void'] {
+  --lp-bg: #0a0a0a;
+  --lp-surface: #111111;
+  --lp-elevated: #1a1a1a;
+  --lp-border: #222222;
+  --lp-accent: #00bcd4;
+  --lp-accent-hover: #00a5bb;
+  --lp-accent-contrast: #0a0a0a;
+  --lp-font-display: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
+  --lp-font-body: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
+.lp-root[data-preset='Obsidian'] {
+  --lp-bg: #000000;
+  --lp-surface: #0a0a0a;
+  --lp-elevated: #111111;
+  --lp-border: #1a1a1a;
+  --lp-text-secondary: #888888;
+  --lp-accent: #a855f7;
+  --lp-accent-hover: #9333ea;
+  --lp-accent-contrast: #ffffff;
+  --lp-font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --lp-font-body: 'DM Mono', ui-monospace, monospace;
+}
+
+/* ---- Radius overrides ---- */
+.lp-root[data-radius='low'] {
+  --lp-radius: 2px;
+}
+.lp-root[data-radius='medium'] {
+  --lp-radius: 10px;
+}
+.lp-root[data-radius='high'] {
+  --lp-radius: 20px;
+}
+
+/* ---- Re-point themeable utilities to the variables (scoped) ---- */
+.lp-root .bg-background {
+  background-color: var(--lp-bg);
+}
+.lp-root .bg-surface {
+  background-color: var(--lp-surface);
+}
+.lp-root .bg-surface\/80 {
+  background-color: color-mix(in srgb, var(--lp-surface) 80%, transparent);
+}
+
+.lp-root .text-text-primary {
+  color: var(--lp-text);
+}
+.lp-root .text-text-secondary {
+  color: var(--lp-text-secondary);
+}
+.lp-root .text-text-muted {
+  color: var(--lp-text-muted);
+}
+
+/* Borders / dividers */
+.lp-root .border-neutral-200,
+.lp-root .border-neutral-300,
+.lp-root .border-grey-2A,
+.lp-root .divide-neutral-200 > * + * {
+  border-color: var(--lp-border);
+}
+
+/* Accent-driven surfaces (primary = the lead accent in this sandbox) */
+.lp-root .bg-primary-600,
+.lp-root .bg-primary-700 {
+  background-color: var(--lp-accent);
+  color: var(--lp-accent-contrast);
+}
+.lp-root .hover\:bg-primary-700:hover,
+.lp-root .hover\:bg-primary-600:hover {
+  background-color: var(--lp-accent-hover);
+}
+.lp-root .text-primary-600,
+.lp-root .text-primary-700,
+.lp-root .hover\:text-primary-600:hover {
+  color: var(--lp-accent);
+}
+.lp-root .text-text-inverse {
+  color: var(--lp-accent-contrast);
+}
+
+/* Radius: override every rounded utility the components use */
+.lp-root .rounded-lg,
+.lp-root .rounded-xl,
+.lp-root .rounded-md {
+  border-radius: var(--lp-radius);
+}
+
+/* Fonts */
+.lp-root .font-display,
+.lp-root h1,
+.lp-root h2,
+.lp-root h3 {
+  font-family: var(--lp-font-display);
+}
