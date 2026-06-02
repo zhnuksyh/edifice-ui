@@ -1,4 +1,12 @@
-import { useState, type HTMLAttributes } from 'react'
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  useState,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+} from 'react'
 import { cn } from '../../../utils/cn'
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
@@ -80,5 +88,73 @@ export function Avatar({
         </svg>
       )}
     </span>
+  )
+}
+
+export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
+  /** Size applied to all avatars in the group. Defaults to 'md'. */
+  size?: AvatarSize
+  /** Max avatars to show before collapsing into a +N chip. */
+  max?: number
+  /** Avatar children. */
+  children: ReactNode
+}
+
+const overlap: Record<AvatarSize, string> = {
+  sm: '-ml-2',
+  md: '-ml-2.5',
+  lg: '-ml-3',
+  xl: '-ml-4',
+}
+
+/**
+ * AvatarGroup — overlapping stack of avatars with a `+N` overflow.
+ *
+ * Applies the group `size` to each child Avatar and shows at most `max`
+ * avatars, collapsing the rest into a count chip.
+ */
+export function AvatarGroup({
+  size = 'md',
+  max,
+  children,
+  className,
+  ...rest
+}: AvatarGroupProps) {
+  const avatars = Children.toArray(children).filter(isValidElement) as ReactElement<
+    AvatarProps
+  >[]
+  const visible = max ? avatars.slice(0, max) : avatars
+  const overflow = avatars.length - visible.length
+
+  const sizes: Record<AvatarSize, string> = {
+    sm: 'h-8 w-8 text-xs',
+    md: 'h-10 w-10 text-sm',
+    lg: 'h-12 w-12 text-base',
+    xl: 'h-16 w-16 text-lg',
+  }
+
+  return (
+    <div className={cn('flex items-center', className)} {...rest}>
+      {visible.map((child, i) => (
+        <span
+          key={child.key ?? i}
+          className={cn('rounded-full ring-2 ring-grey-11', i > 0 && overlap[size])}
+        >
+          {cloneElement(child, { size })}
+        </span>
+      ))}
+      {overflow > 0 && (
+        <span
+          className={cn(
+            'inline-flex items-center justify-center rounded-full bg-grey-2A font-medium text-text-secondary ring-2 ring-grey-11',
+            sizes[size],
+            overlap[size]
+          )}
+          aria-label={`${overflow} more`}
+        >
+          +{overflow}
+        </span>
+      )}
+    </div>
   )
 }
