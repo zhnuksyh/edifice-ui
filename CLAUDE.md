@@ -103,6 +103,8 @@ my-library/
 - Atomic commits: each commit must represent one complete, focused change —
   one component, one fix, one refactor. Never bundle unrelated changes into a
   single commit.
+- Do not open pull requests. After completing work on a feature branch, report
+  the branch name and a summary of changes. The developer will merge manually.
 - Always lint before committing
 - Never push with errors
 
