@@ -49,7 +49,7 @@ export function Tooltip({
         <span
           role="tooltip"
           className={cn(
-            'pointer-events-none absolute z-50 w-max max-w-xs whitespace-normal rounded-md bg-neutral-900 px-2 py-1 text-xs text-text-inverse shadow-md',
+            'pointer-events-none absolute z-50 w-max max-w-xs whitespace-normal rounded-md border border-grey-33 bg-grey-22 px-2.5 py-1.5 text-xs font-medium text-grey-F0 shadow-lg',
             placements[placement]
           )}
         >
