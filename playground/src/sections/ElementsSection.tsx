@@ -1,6 +1,6 @@
 import { Badge } from '../../../components/web/ui/Badge'
 import type { BadgeVariant } from '../../../components/web/ui/Badge'
-import { Avatar } from '../../../components/web/ui/Avatar'
+import { Avatar, AvatarGroup } from '../../../components/web/ui/Avatar'
 import { Spinner } from '../../../components/web/ui/Spinner'
 import type { SpinnerSize } from '../../../components/web/ui/Spinner'
 import { Tooltip } from '../../../components/web/ui/Tooltip'
@@ -89,6 +89,15 @@ export function ElementsSection() {
         </Row>
         <Row label="Placeholder (no src or name)">
           <Avatar />
+        </Row>
+        <Row label="AvatarGroup (overlap + overflow)">
+          <AvatarGroup max={3}>
+            <Avatar name="Ada Lovelace" />
+            <Avatar name="Grace Hopper" />
+            <Avatar name="Alan Turing" />
+            <Avatar name="Katherine Johnson" />
+            <Avatar name="Edsger Dijkstra" />
+          </AvatarGroup>
         </Row>
       </Showcase>
 

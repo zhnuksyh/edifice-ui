@@ -10,6 +10,7 @@ import { Progress } from '../../../components/web/ui/Progress'
 import { Skeleton } from '../../../components/web/ui/Skeleton'
 import { Breadcrumb } from '../../../components/web/ui/Breadcrumb'
 import { Button } from '../../../components/web/ui/Button'
+import { useToast } from '../../../components/web/ui/ToastProvider'
 import { Showcase, Row } from '../components/Showcase'
 
 const TOAST_VARIANTS: ToastVariant[] = ['success', 'warning', 'danger', 'info']
@@ -24,6 +25,7 @@ const ACCORDION_ITEMS = [
 /** Card, Accordion, Modal, and Toast. */
 export function UISection() {
   const [modalOpen, setModalOpen] = useState(false)
+  const { toast, success, error } = useToast()
 
   return (
     <div>
@@ -104,6 +106,25 @@ export function UISection() {
             </Toast>
           ))}
         </div>
+      </Showcase>
+
+      <Showcase
+        title="useToast (provider)"
+        source="components/web/ui/ToastProvider.tsx"
+        description="Fire toasts imperatively from anywhere under ToastProvider; they queue and auto-dismiss."
+      >
+        <Row>
+          <Button onClick={() => success('Changes saved.')}>Success toast</Button>
+          <Button variant="danger" onClick={() => error('Something went wrong.')}>
+            Error toast
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => toast({ title: 'Heads up', description: 'A neutral info toast.', variant: 'info' })}
+          >
+            Info toast
+          </Button>
+        </Row>
       </Showcase>
 
       <Showcase

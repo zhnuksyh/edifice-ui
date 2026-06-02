@@ -1,3 +1,4 @@
+import { Plus, ArrowRight, Settings } from 'lucide-react'
 import { Button } from '../../../components/web/ui/Button'
 import type { ButtonVariant, ButtonSize } from '../../../components/web/ui/Button'
 import { Showcase, Row } from '../components/Showcase'
@@ -42,6 +43,26 @@ export function ButtonsSection() {
             {variant}
           </Button>
         ))}
+      </Row>
+
+      <Row label="With icons">
+        <Button leftIcon={<Plus className="h-4 w-4" strokeWidth={2} />}>New item</Button>
+        <Button variant="ghost" rightIcon={<ArrowRight className="h-4 w-4" strokeWidth={2} />}>
+          Continue
+        </Button>
+        <Button variant="ghost" iconOnly aria-label="Settings">
+          <Settings className="h-4 w-4" strokeWidth={2} />
+        </Button>
+      </Row>
+
+      <Row label="Loading">
+        <Button loading>Saving</Button>
+        <Button variant="ghost" loading>
+          Loading
+        </Button>
+        <Button variant="danger" loading iconOnly aria-label="Deleting">
+          <Plus className="h-4 w-4" />
+        </Button>
       </Row>
 
       <Row label="Full width">
