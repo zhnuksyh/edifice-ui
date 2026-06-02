@@ -100,6 +100,9 @@ my-library/
   fix: correct spacing token scale
   chore: update tailwind base config
   ```
+- Atomic commits: each commit must represent one complete, focused change —
+  one component, one fix, one refactor. Never bundle unrelated changes into a
+  single commit.
 - Always lint before committing
 - Never push with errors
 
