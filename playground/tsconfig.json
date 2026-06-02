@@ -5,6 +5,6 @@
     "types": ["react", "react-dom"],
     "jsx": "react-jsx"
   },
-  "include": ["src", "../components/web", "../tokens", "../utils"],
+  "include": ["src", "../components/web", "../tokens", "../presets", "../utils"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
