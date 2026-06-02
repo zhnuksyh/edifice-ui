@@ -46,7 +46,7 @@ export function FormsSection() {
             label="Framework"
             options={SELECT_OPTIONS}
             value={framework}
-            onChange={(e) => setFramework(e.target.value)}
+            onChange={setFramework}
           />
           <Select
             label="With placeholder"
