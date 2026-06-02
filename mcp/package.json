@@ -1,0 +1,31 @@
+{
+  "name": "edifice-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MCP server that serves the Edifice component & design library over stdio.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "author": "zhnuksyh",
+  "bin": {
+    "edifice-mcp": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "tsx": "^4",
+    "typescript": "^5"
+  }
+}

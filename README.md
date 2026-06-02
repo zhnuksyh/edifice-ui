@@ -24,6 +24,32 @@ them from scratch on every project.
 | `architecture/`  | Pattern docs and conventions                                    |
 | `prompts/`       | Agent prompt templates                                          |
 | `templates/`     | `CLAUDE.md` / `AGENTS.md` starters for new projects            |
+| `mcp/`           | MCP server that serves this library to agents over stdio       |
+
+---
+
+## MCP Server
+
+Edifice ships an [MCP](https://modelcontextprotocol.io) server in [`mcp/`](./mcp)
+that lets agents **discover, fetch, and search** the library through tools and
+resources instead of guessing file paths. It reads from the local filesystem and
+speaks stdio. See [`mcp/README.md`](./mcp/README.md) for setup and the full tool
+list; the short version:
+
+```bash
+cd mcp && npm install && npm run build
+```
+
+```json
+{
+  "mcpServers": {
+    "edifice": {
+      "command": "node",
+      "args": ["/absolute/path/to/edifice-ui/mcp/dist/index.js"]
+    }
+  }
+}
+```
 
 ---
 

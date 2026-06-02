@@ -111,7 +111,8 @@ my-library/
 - Web components: React + TailwindCSS
 - Mobile components: React Native + NativeWind
 - Tokens: typed TypeScript objects (`as const`, platform-agnostic)
-- MCP server: Node.js
+- MCP server: Node.js — lives in `mcp/`, serves the library to agents over stdio
+  (tools: `list_components`, `get_component`, `get_token_group`, `search`, …)
 
 ---
 
