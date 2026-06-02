@@ -1,0 +1,84 @@
+import { useState, type HTMLAttributes } from 'react'
+import { cn } from '../../../utils/cn'
+
+export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
+
+export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
+  /** Image source. If omitted or it fails to load, initials/fallback show. */
+  src?: string
+  /** Alt text for the image and accessible label. */
+  alt?: string
+  /** Name used to derive initials when no image is shown. */
+  name?: string
+  /** Size preset. Defaults to 'md'. */
+  size?: AvatarSize
+}
+
+/** Derive up to two uppercase initials from a name. */
+function initialsFrom(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  if (parts.length === 0) return ''
+  const first = parts[0][0] ?? ''
+  const last = parts.length > 1 ? (parts[parts.length - 1][0] ?? '') : ''
+  return (first + last).toUpperCase()
+}
+
+/**
+ * Avatar — a user image with an initials fallback.
+ *
+ * Falls back to initials (from `name`) when no `src` is given or the image
+ * fails to load; falls back to a neutral placeholder when neither is available.
+ */
+export function Avatar({
+  src,
+  alt,
+  name,
+  size = 'md',
+  className,
+  ...rest
+}: AvatarProps) {
+  const [failed, setFailed] = useState(false)
+
+  const sizes: Record<AvatarSize, string> = {
+    sm: 'h-8 w-8 text-xs',
+    md: 'h-10 w-10 text-sm',
+    lg: 'h-12 w-12 text-base',
+    xl: 'h-16 w-16 text-lg',
+  }
+
+  const showImage = Boolean(src) && !failed
+  const initials = name ? initialsFrom(name) : ''
+
+  return (
+    <span
+      className={cn(
+        'inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-200 font-medium text-neutral-600',
+        sizes[size],
+        className
+      )}
+      aria-label={alt ?? name}
+      role="img"
+      {...rest}
+    >
+      {showImage ? (
+        <img
+          src={src}
+          alt={alt ?? name ?? ''}
+          className="h-full w-full object-cover"
+          onError={() => setFailed(true)}
+        />
+      ) : initials ? (
+        <span aria-hidden="true">{initials}</span>
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          className="h-1/2 w-1/2"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z" />
+        </svg>
+      )}
+    </span>
+  )
+}
