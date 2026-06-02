@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   library:
-    name: Library typecheck
+    name: Library typecheck + tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +31,9 @@ jobs:
 
       - name: Typecheck (tokens, utils, hooks, web + mobile components, config)
         run: npm run typecheck
+
+      - name: Unit tests (utils)
+        run: npm test
 
   mcp:
     name: MCP server build + smoke
