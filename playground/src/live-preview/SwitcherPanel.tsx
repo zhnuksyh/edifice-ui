@@ -1,4 +1,4 @@
-import { SlidersHorizontal, X, Check } from 'lucide-react'
+import { SlidersHorizontal, ChevronRight, Check } from 'lucide-react'
 import {
   BUTTON_STYLES,
   HERO_LAYOUTS,
@@ -28,19 +28,36 @@ function OptionGroup<T extends string>({
   value,
   format,
   onSelect,
+  divider,
 }: {
   label: string
   options: readonly T[]
   value: T
   format?: (v: T) => string
   onSelect: (v: T) => void
+  divider: boolean
 }) {
   return (
-    <div className="mb-4">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-grey-88">
+    <div
+      style={{
+        paddingBottom: divider ? 20 : 0,
+        marginBottom: divider ? 20 : 0,
+        borderBottom: divider ? '1px solid var(--lp-border)' : undefined,
+      }}
+    >
+      <p
+        style={{
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          color: 'var(--lp-text-muted)',
+          marginBottom: 10,
+        }}
+      >
         {label}
       </p>
-      <div className="flex flex-wrap gap-1.5">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
         {options.map((opt) => {
           const active = opt === value
           return (
@@ -48,11 +65,25 @@ function OptionGroup<T extends string>({
               key={opt}
               type="button"
               onClick={() => onSelect(opt)}
+              style={
+                active
+                  ? {
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                      borderRadius: 6,
+                      padding: '4px 10px',
+                      fontSize: 12,
+                      fontWeight: 500,
+                      backgroundColor: 'var(--lp-accent)',
+                      color: 'var(--lp-accent-contrast)',
+                    }
+                  : undefined
+              }
               className={
-                'inline-flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-medium transition-colors duration-fast ' +
-                (active
-                  ? 'bg-purple text-white'
-                  : 'bg-grey-22 text-grey-AA hover:bg-grey-2A hover:text-grey-F0')
+                active
+                  ? ''
+                  : 'inline-flex items-center gap-1 rounded-md bg-grey-22 px-2.5 py-1 text-xs font-medium text-grey-AA transition-colors hover:bg-grey-2A hover:text-grey-F0'
               }
             >
               {active && <Check className="h-3 w-3" strokeWidth={2.5} />}
@@ -66,12 +97,7 @@ function OptionGroup<T extends string>({
 }
 
 /** Floating, collapsible component-switcher panel for the Live Preview page. */
-export function SwitcherPanel({
-  state,
-  onChange,
-  open,
-  onToggle,
-}: SwitcherPanelProps) {
+export function SwitcherPanel({ state, onChange, open, onToggle }: SwitcherPanelProps) {
   if (!open) {
     return (
       <button
@@ -88,7 +114,7 @@ export function SwitcherPanel({
 
   return (
     <aside className="fixed right-4 top-24 z-50 max-h-[80vh] w-72 overflow-auto rounded-xl border border-grey-2A bg-grey-1A p-4 shadow-xl">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-5 flex items-center justify-between">
         <span className="flex items-center gap-2 font-display text-sm font-semibold text-grey-F0">
           <SlidersHorizontal className="h-4 w-4" strokeWidth={1.75} />
           Live controls
@@ -99,7 +125,7 @@ export function SwitcherPanel({
           aria-label="Collapse controls"
           className="rounded-md p-1 text-grey-AA transition-colors hover:bg-grey-22 hover:text-grey-F0"
         >
-          <X className="h-4 w-4" strokeWidth={2} />
+          <ChevronRight className="h-4 w-4" strokeWidth={2} />
         </button>
       </div>
 
@@ -108,24 +134,28 @@ export function SwitcherPanel({
         options={BUTTON_STYLES}
         value={state.buttonStyle}
         onSelect={(v) => onChange({ buttonStyle: v })}
+        divider
       />
       <OptionGroup
         label="Navbar style"
         options={NAVBAR_STYLES}
         value={state.navbarStyle}
         onSelect={(v) => onChange({ navbarStyle: v })}
+        divider
       />
       <OptionGroup
         label="Hero layout"
         options={HERO_LAYOUTS}
         value={state.heroLayout}
         onSelect={(v) => onChange({ heroLayout: v })}
+        divider
       />
       <OptionGroup
         label="Preset (theme)"
         options={PRESETS}
         value={state.preset}
         onSelect={(v) => onChange({ preset: v })}
+        divider
       />
       <OptionGroup
         label="Border radius"
@@ -133,11 +163,8 @@ export function SwitcherPanel({
         value={state.radius}
         format={(v) => RADIUS_LABEL[v]}
         onSelect={(v) => onChange({ radius: v })}
+        divider={false}
       />
-
-      <div className="mt-4 border-t border-grey-2A pt-3 text-[11px] text-grey-88">
-        Design experimentation only — not shipped to any project.
-      </div>
     </aside>
   )
 }

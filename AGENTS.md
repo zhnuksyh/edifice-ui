@@ -141,6 +141,24 @@ my-library/
 
 ---
 
+## Design Philosophy
+
+Edifice has an official design philosophy and composition system — surface
+levels, spacing scale, type scale, accent restraint, and section-by-section
+layout rules. **Read [`architecture/design-principles.md`](./architecture/design-principles.md)
+before making any design or layout decision.** The five core principles:
+
+1. Dark is a canvas — three distinct surface levels are always visible.
+2. Restraint is the aesthetic — accent appears at most twice on screen.
+3. Hierarchy before beauty — every section has a clear priority order.
+4. Spacing is content — never compress spacing to fit more in.
+5. Components work in context — validate in the playground Live Preview.
+
+The Live Preview page (`playground/src/live-preview/`) is the canonical
+reference implementation of these rules.
+
+---
+
 ## Agent Behavior Rules
 
 - Before adding a new component, check if a similar one already exists
