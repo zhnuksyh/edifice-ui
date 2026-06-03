@@ -44,7 +44,7 @@ my-library/
 ### Adding A New Component
 - Place web components in `components/web/<category>/ComponentName.tsx`
 - Place mobile components in `components/mobile/<category>/ComponentName.native.tsx`
-- Categories: `layout/`, `ui/`, `forms/`, `marketing/`
+- Categories: `layout/`, `ui/`, `forms/`, `marketing/`, `data-display/`
 - Every component must:
   - Accept a `className` prop for external overrides (web)
   - Define a typed `Props` interface (exported) for its props
