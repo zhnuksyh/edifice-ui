@@ -6,6 +6,7 @@ import { ButtonsSection } from './sections/ButtonsSection'
 import { UISection } from './sections/UISection'
 import { ElementsSection } from './sections/ElementsSection'
 import { DataSection } from './sections/DataSection'
+import { DataDisplaySection } from './sections/DataDisplaySection'
 import { FormsSection } from './sections/FormsSection'
 import { LayoutSection } from './sections/LayoutSection'
 import { MarketingSection } from './sections/MarketingSection'
@@ -26,6 +27,7 @@ const SECTIONS: NavItem[] = [
   { id: 'ui', label: 'UI', render: () => <UISection /> },
   { id: 'elements', label: 'Elements', render: () => <ElementsSection /> },
   { id: 'data', label: 'Data', render: () => <DataSection /> },
+  { id: 'data-display', label: 'Data Display', render: () => <DataDisplaySection /> },
   { id: 'forms', label: 'Forms', render: () => <FormsSection /> },
   { id: 'layout', label: 'Layout', render: () => <LayoutSection /> },
   { id: 'marketing', label: 'Marketing', render: () => <MarketingSection /> },
