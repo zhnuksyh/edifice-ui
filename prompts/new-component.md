@@ -32,6 +32,11 @@ Web:
 - Functional React component in **TypeScript** (`.tsx`), **named export only**.
 - Export a typed `Props` interface; extend the relevant element attributes
   (e.g. `ButtonHTMLAttributes<HTMLButtonElement>`) where sensible.
+- **Attribute-collision gotcha:** if a prop reuses the name of a native HTML
+  attribute but with a richer type (commonly `title?: ReactNode` or
+  `content?: ReactNode`, which natively are `string`), `Omit` it from the
+  extended attributes or the interface won't compile — e.g.
+  `interface FooProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>`.
 - Accept a `className` prop and merge with `cn()` from `utils/cn`.
 - **Tailwind utility classes only** — no inline styles.
 - Reference `tokens/` for any non-default value (color, spacing, radius, shadow,
