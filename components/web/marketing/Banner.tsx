@@ -1,0 +1,78 @@
+import type { HTMLAttributes, ReactNode } from 'react'
+import { cn } from '../../../utils/cn'
+
+export type BannerTone = 'neutral' | 'accent' | 'info'
+
+export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
+  /** Tone. Defaults to 'accent'. */
+  tone?: BannerTone
+  /** Optional leading icon. */
+  icon?: ReactNode
+  /** Optional inline action (e.g. a link or Button). */
+  action?: ReactNode
+  /** Called when the dismiss button is clicked; omit to hide it. */
+  onDismiss?: () => void
+  /** Banner message. */
+  children: ReactNode
+}
+
+/**
+ * Banner — a full-width announcement bar, typically pinned at the top of a page.
+ *
+ * Use for launches, promos, and notices. Optionally dismissible and supports a
+ * trailing action. Keep the copy short — one line.
+ */
+export function Banner({
+  tone = 'accent',
+  icon,
+  action,
+  onDismiss,
+  children,
+  className,
+  ...rest
+}: BannerProps) {
+  const tones: Record<BannerTone, string> = {
+    neutral: 'bg-grey-1A text-grey-F0 border-grey-2A',
+    accent: 'bg-yellow-tint text-yellow border-yellow/20',
+    info: 'bg-info-tint text-info border-info/20',
+  }
+
+  return (
+    <div
+      role="region"
+      aria-label="Announcement"
+      className={cn(
+        'flex items-center justify-center gap-3 border-b px-4 py-2.5 text-sm',
+        tones[tone],
+        className
+      )}
+      {...rest}
+    >
+      {icon && <span className="shrink-0">{icon}</span>}
+      <p className="text-center font-medium">{children}</p>
+      {action && <span className="shrink-0">{action}</span>}
+      {onDismiss && (
+        <button
+          type="button"
+          onClick={onDismiss}
+          aria-label="Dismiss announcement"
+          className="ml-1 shrink-0 rounded p-0.5 opacity-70 transition-opacity hover:opacity-100"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </button>
+      )}
+    </div>
+  )
+}
