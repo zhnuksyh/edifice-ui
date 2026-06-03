@@ -6,12 +6,25 @@ import { Toggle } from '../../../components/web/forms/Toggle'
 import { Textarea } from '../../../components/web/forms/Textarea'
 import { Checkbox } from '../../../components/web/forms/Checkbox'
 import { Radio, RadioGroup } from '../../../components/web/forms/Radio'
+import { Slider } from '../../../components/web/forms/Slider'
+import { Combobox } from '../../../components/web/forms/Combobox'
+import { OtpInput } from '../../../components/web/forms/OtpInput'
+import { FileUpload } from '../../../components/web/forms/FileUpload'
 import { Showcase, Row } from '../components/Showcase'
 
 const SELECT_OPTIONS = [
   { value: 'react', label: 'React' },
   { value: 'vue', label: 'Vue' },
   { value: 'svelte', label: 'Svelte' },
+]
+
+const COUNTRY_OPTIONS = [
+  { value: 'us', label: 'United States' },
+  { value: 'gb', label: 'United Kingdom' },
+  { value: 'de', label: 'Germany' },
+  { value: 'fr', label: 'France' },
+  { value: 'jp', label: 'Japan' },
+  { value: 'au', label: 'Australia' },
 ]
 
 /** Input, Select, Toggle, Textarea, Checkbox, and Radio in controlled demos. */
@@ -22,6 +35,9 @@ export function FormsSection() {
   const [terms, setTerms] = useState(false)
   const [plan, setPlan] = useState('starter')
   const [search, setSearch] = useState('Edifice')
+  const [volume, setVolume] = useState(60)
+  const [country, setCountry] = useState('')
+  const [otp, setOtp] = useState('')
 
   return (
     <div>
@@ -120,6 +136,72 @@ export function FormsSection() {
           <Toggle checked={false} onChange={() => {}} label="Off" />
           <Toggle checked disabled onChange={() => {}} label="Disabled (on)" />
         </Row>
+      </Showcase>
+
+      <Showcase
+        title="Slider"
+        source="components/web/forms/Slider.tsx"
+        description="Labeled range input with a value readout; themed via accent-color."
+      >
+        <div className="grid max-w-2xl gap-6 sm:grid-cols-2">
+          <Slider
+            label="Volume"
+            value={volume}
+            onChange={setVolume}
+            formatValue={(v) => `${v}%`}
+          />
+          <Slider label="Disabled" defaultValue={40} disabled />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Combobox"
+        source="components/web/forms/Combobox.tsx"
+        description="Searchable select — type to filter, then pick. Keyboard + click-outside."
+      >
+        <div className="grid max-w-2xl gap-5 sm:grid-cols-2">
+          <Combobox
+            label="Country"
+            options={COUNTRY_OPTIONS}
+            value={country}
+            onChange={setCountry}
+            placeholder="Search countries…"
+          />
+          <Combobox
+            label="With error"
+            options={COUNTRY_OPTIONS}
+            error="Please choose a country."
+            placeholder="Search…"
+          />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="OtpInput"
+        source="components/web/forms/OtpInput.tsx"
+        description="Segmented passcode entry — auto-advance, backspace nav, and paste-to-fill."
+      >
+        <Row label="6-digit (controlled)">
+          <OtpInput value={otp} onChange={setOtp} />
+        </Row>
+        <Row label="4-digit, masked">
+          <OtpInput length={4} masked />
+        </Row>
+      </Showcase>
+
+      <Showcase
+        title="FileUpload"
+        source="components/web/forms/FileUpload.tsx"
+        description="Click-or-drag dropzone over a hidden file input; lists selected files."
+      >
+        <div className="max-w-md">
+          <FileUpload
+            label="Attachments"
+            multiple
+            hint="PNG, JPG, or PDF up to 5MB"
+            onFiles={() => {}}
+          />
+        </div>
       </Showcase>
     </div>
   )
