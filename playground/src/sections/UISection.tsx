@@ -13,6 +13,10 @@ import { Pagination } from '../../../components/web/ui/Pagination'
 import { EmptyState } from '../../../components/web/ui/EmptyState'
 import { Divider } from '../../../components/web/ui/Divider'
 import { Kbd } from '../../../components/web/ui/Kbd'
+import { Drawer } from '../../../components/web/ui/Drawer'
+import type { DrawerSide } from '../../../components/web/ui/Drawer'
+import { Stepper } from '../../../components/web/ui/Stepper'
+import { Rating } from '../../../components/web/ui/Rating'
 import { Inbox } from 'lucide-react'
 import { Button } from '../../../components/web/ui/Button'
 import { useToast } from '../../../components/web/ui/ToastProvider'
@@ -27,10 +31,21 @@ const ACCORDION_ITEMS = [
   { id: 'c', title: 'Is it typed?', content: 'Yes — fully TypeScript.' },
 ]
 
+const STEPPER_STEPS = [
+  { id: '1', label: 'Account', description: 'Your details' },
+  { id: '2', label: 'Payment', description: 'Billing info' },
+  { id: '3', label: 'Confirm', description: 'Review & submit' },
+]
+
+const DRAWER_SIDES: DrawerSide[] = ['left', 'right', 'top', 'bottom']
+
 /** Card, Accordion, Modal, and Toast. */
 export function UISection() {
   const [modalOpen, setModalOpen] = useState(false)
   const [page, setPage] = useState(1)
+  const [drawerSide, setDrawerSide] = useState<DrawerSide | null>(null)
+  const [step, setStep] = useState(1)
+  const [rating, setRating] = useState(3)
   const { toast, success, error } = useToast()
 
   return (
@@ -98,6 +113,85 @@ export function UISection() {
           This is the modal body. Click the overlay, press Escape, or use a button
           to close it.
         </Modal>
+      </Showcase>
+
+      <Showcase
+        title="Drawer"
+        source="components/web/ui/Drawer.tsx"
+        description="Panel that slides in from any edge over an overlay. Closes on overlay click or Escape."
+      >
+        <Row>
+          {DRAWER_SIDES.map((side) => (
+            <Button key={side} variant="ghost" onClick={() => setDrawerSide(side)}>
+              Open {side}
+            </Button>
+          ))}
+        </Row>
+        <Drawer
+          isOpen={drawerSide !== null}
+          onClose={() => setDrawerSide(null)}
+          side={drawerSide ?? 'right'}
+          title={`Drawer (${drawerSide ?? 'right'})`}
+          footer={
+            <>
+              <Button variant="ghost" onClick={() => setDrawerSide(null)}>
+                Cancel
+              </Button>
+              <Button onClick={() => setDrawerSide(null)}>Save</Button>
+            </>
+          }
+        >
+          Slide-in panel content. Click the overlay, press Escape, or use a button
+          to close it.
+        </Drawer>
+      </Showcase>
+
+      <Showcase
+        title="Stepper"
+        source="components/web/ui/Stepper.tsx"
+        description="Numbered progress for multi-step flows; completed steps show a check."
+      >
+        <Row label="Horizontal">
+          <div className="w-full max-w-lg">
+            <Stepper steps={STEPPER_STEPS} current={step} />
+          </div>
+        </Row>
+        <Row>
+          <Button
+            variant="ghost"
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            disabled={step === 0}
+          >
+            Back
+          </Button>
+          <Button
+            onClick={() => setStep((s) => Math.min(STEPPER_STEPS.length - 1, s + 1))}
+            disabled={step === STEPPER_STEPS.length - 1}
+          >
+            Next
+          </Button>
+        </Row>
+        <Row label="Vertical">
+          <div className="max-w-xs">
+            <Stepper steps={STEPPER_STEPS} current={step} orientation="vertical" />
+          </div>
+        </Row>
+      </Showcase>
+
+      <Showcase
+        title="Rating"
+        source="components/web/ui/Rating.tsx"
+        description="Star rating — interactive (with hover preview) or read-only."
+      >
+        <Row label="Interactive">
+          <Rating value={rating} onChange={setRating} />
+          <span className="text-sm text-text-secondary">{rating} / 5</span>
+        </Row>
+        <Row label="Sizes (read-only)">
+          <Rating value={4} size="sm" readOnly />
+          <Rating value={4} size="md" readOnly />
+          <Rating value={4} size="lg" readOnly />
+        </Row>
       </Showcase>
 
       <Showcase
