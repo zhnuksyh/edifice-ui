@@ -4,8 +4,18 @@ import { ContactSection } from '../../../components/web/marketing/ContactSection
 import { PricingTable } from '../../../components/web/marketing/PricingTable'
 import type { PricingTier } from '../../../components/web/marketing/PricingTable'
 import { FAQSection } from '../../../components/web/marketing/FAQSection'
+import { LogoCloud } from '../../../components/web/marketing/LogoCloud'
+import { Banner } from '../../../components/web/marketing/Banner'
+import { NewsletterSignup } from '../../../components/web/marketing/NewsletterSignup'
 import { Button } from '../../../components/web/ui/Button'
+import { Sparkles } from 'lucide-react'
 import { Showcase } from '../components/Showcase'
+
+const LOGOS = ['Acme', 'Globex', 'Initech', 'Umbra', 'Stark'].map((name) => ({
+  id: name,
+  label: name,
+  content: <span className="font-display text-lg font-semibold">{name}</span>,
+}))
 
 const TIERS: PricingTier[] = [
   {
@@ -112,6 +122,55 @@ export function MarketingSection() {
       >
         <div className="overflow-hidden rounded-xl border border-neutral-200">
           <FAQSection items={FAQ_ITEMS} subtitle="Everything you need to know." />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="Banner"
+        source="components/web/marketing/Banner.tsx"
+        description="Full-width announcement bar; three tones, optional icon, action, and dismiss."
+      >
+        <div className="flex flex-col gap-3 overflow-hidden rounded-xl border border-neutral-200">
+          <Banner
+            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+            action={
+              <a href="#" className="underline underline-offset-2">
+                Learn more
+              </a>
+            }
+            onDismiss={() => {}}
+          >
+            Edifice v2 is here — faster, leaner, fully typed.
+          </Banner>
+          <Banner tone="info">Scheduled maintenance this Sunday at 02:00 UTC.</Banner>
+          <Banner tone="neutral" onDismiss={() => {}}>
+            We use cookies to improve your experience.
+          </Banner>
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="LogoCloud"
+        source="components/web/marketing/LogoCloud.tsx"
+        description="A 'trusted by' strip of partner logos; muted by default, brighten on hover."
+      >
+        <div className="overflow-hidden rounded-xl border border-neutral-200">
+          <LogoCloud title="Trusted by teams at" logos={LOGOS} />
+        </div>
+      </Showcase>
+
+      <Showcase
+        title="NewsletterSignup"
+        source="components/web/marketing/NewsletterSignup.tsx"
+        description="Email-capture block with heading and inline form; calls onSubscribe(email)."
+      >
+        <div className="overflow-hidden rounded-xl border border-neutral-200">
+          <NewsletterSignup
+            title="Stay in the loop"
+            subtitle="Get product updates and the occasional deep dive. No spam."
+            note="Unsubscribe anytime."
+            onSubscribe={() => {}}
+          />
         </div>
       </Showcase>
     </div>
