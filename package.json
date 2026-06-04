@@ -25,6 +25,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "clsx": "^2",
+    "expo-document-picker": "^56.0.4",
     "nativewind": "^4",
     "react": "^18",
     "react-native": "^0.74",
@@ -41,11 +42,15 @@
   },
   "peerDependencies": {
     "clsx": "*",
+    "expo-document-picker": "*",
     "react": ">=18",
     "tailwind-merge": "*",
     "typescript": ">=5"
   },
   "peerDependenciesMeta": {
+    "expo-document-picker": {
+      "optional": true
+    },
     "react": {
       "optional": false
     },
