@@ -32,7 +32,7 @@ export function Navbar({
   return (
     <header
       className={cn(
-        'z-40 w-full border-b border-neutral-200 bg-surface/80 backdrop-blur',
+        'z-40 w-full border-b border-grey-2A bg-grey-11/80 backdrop-blur',
         sticky && 'sticky top-0',
         className
       )}

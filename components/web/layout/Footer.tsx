@@ -29,7 +29,7 @@ export function Footer({
 
   return (
     <footer
-      className={cn('border-t border-neutral-200 bg-surface', className)}
+      className={cn('border-t border-grey-2A bg-grey-11', className)}
       {...rest}
     >
       <div className="mx-auto max-w-screen-xl px-6 py-12">
@@ -47,7 +47,7 @@ export function Footer({
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="text-sm text-text-secondary transition-colors duration-fast hover:text-primary-600"
+                      className="text-sm text-text-secondary transition-colors duration-fast hover:text-text-primary"
                     >
                       {link.label}
                     </a>
@@ -57,7 +57,7 @@ export function Footer({
             </div>
           ))}
         </div>
-        <div className="mt-10 border-t border-neutral-200 pt-6 text-sm text-text-secondary">
+        <div className="mt-10 border-t border-grey-2A pt-6 text-sm text-text-secondary">
           {bottom ?? `© ${year} All rights reserved.`}
         </div>
       </div>
