@@ -11,7 +11,7 @@ export type Platform = 'web' | 'mobile'
 /** Component categories available per platform. */
 export const COMPONENT_CATEGORIES: Record<Platform, readonly string[]> = {
   web: ['layout', 'ui', 'forms', 'marketing', 'data-display'],
-  mobile: ['layout', 'ui', 'forms', 'data-display'],
+  mobile: ['layout', 'ui', 'forms', 'data-display', 'marketing'],
 }
 
 /** Token groups, each backed by `tokens/<group>.ts`. */
