@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LandingPage } from './LandingPage'
+import { Gallery } from './Gallery'
 import { SwitcherPanel } from './SwitcherPanel'
 import { DEFAULT_STATE, type LivePreviewState } from './config'
 import './theme.css'
@@ -23,6 +24,7 @@ export function LivePreview() {
       data-radius={state.radius}
     >
       <LandingPage state={state} />
+      <Gallery state={state} />
       <SwitcherPanel
         state={state}
         onChange={update}

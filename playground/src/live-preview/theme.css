@@ -133,6 +133,23 @@
   background-color: color-mix(in srgb, var(--lp-surface) 80%, transparent);
 }
 
+/* Restyle surface levels: grey-11 (bg) / grey-1A (surface) / grey-22 (elevated). */
+.lp-root .bg-grey-11 {
+  background-color: var(--lp-bg);
+}
+.lp-root .bg-grey-11\/80 {
+  background-color: color-mix(in srgb, var(--lp-bg) 80%, transparent);
+}
+.lp-root .bg-grey-1A {
+  background-color: var(--lp-surface);
+}
+.lp-root .bg-grey-22 {
+  background-color: var(--lp-elevated);
+}
+.lp-root .bg-grey-2A {
+  background-color: var(--lp-border);
+}
+
 .lp-root .text-text-primary {
   color: var(--lp-text);
 }
@@ -147,8 +164,24 @@
 .lp-root .border-neutral-200,
 .lp-root .border-neutral-300,
 .lp-root .border-grey-2A,
-.lp-root .divide-neutral-200 > * + * {
+.lp-root .border-t-grey-2A,
+.lp-root .border-b-grey-2A,
+.lp-root .divide-neutral-200 > * + *,
+.lp-root .divide-grey-2A > * + * {
   border-color: var(--lp-border);
+}
+
+/* Hover-brighten borders (interactive cards, inputs, secondary buttons). */
+.lp-root .hover\:border-grey-44:hover {
+  border-color: var(--lp-border-strong);
+}
+
+/* Inset rings used by Badge variants and focus offsets. */
+.lp-root .ring-grey-2A {
+  --tw-ring-color: var(--lp-border);
+}
+.lp-root .ring-offset-grey-11 {
+  --tw-ring-offset-color: var(--lp-bg);
 }
 
 /* Accent-driven surfaces (primary = the lead accent in this sandbox) */
