@@ -34,7 +34,9 @@ export function CTASection({
       {...rest}
     >
       <div className="mx-auto max-w-screen-md px-6 text-center">
-        <h2 className="text-3xl font-bold text-grey-F0 sm:text-4xl">{title}</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-grey-F0 sm:text-4xl">
+          {title}
+        </h2>
         {subtitle && (
           <p className="mx-auto mt-4 max-w-2xl text-lg text-grey-AA">
             {subtitle}

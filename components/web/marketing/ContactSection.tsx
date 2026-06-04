@@ -39,7 +39,7 @@ export function ContactSection({
     <section className={cn('bg-surface py-24', className)} {...rest}>
       <div className="mx-auto grid max-w-screen-lg gap-12 px-6 lg:grid-cols-2">
         <div>
-          <h2 className="text-3xl font-bold text-text-primary sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
             {title}
           </h2>
           {subtitle && (
