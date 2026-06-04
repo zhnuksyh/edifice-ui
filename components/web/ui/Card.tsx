@@ -11,6 +11,8 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   shadow?: CardShadow
   /** Show a hairline border. Defaults to true. */
   bordered?: boolean
+  /** Brighten the border on hover (for clickable cards). */
+  interactive?: boolean
   /** Optional header content. */
   header?: ReactNode
   /** Optional footer content. */
@@ -26,6 +28,7 @@ export function Card({
   padding = 'md',
   shadow = 'md',
   bordered = true,
+  interactive = false,
   header,
   footer,
   children,
@@ -50,21 +53,24 @@ export function Card({
   return (
     <div
       className={cn(
-        'rounded-xl bg-surface overflow-hidden',
-        bordered && 'border border-neutral-200',
+        'overflow-hidden rounded-xl bg-grey-1A',
+        bordered && 'border border-grey-2A',
+        interactive && 'transition-colors duration-fast hover:border-grey-44',
         shadows[shadow],
         className
       )}
       {...rest}
     >
       {header && (
-        <div className="px-6 py-4 font-semibold text-text-primary">
+        <div className="border-b border-grey-2A px-6 py-4 font-semibold text-text-primary">
           {header}
         </div>
       )}
       <div className={paddings[padding]}>{children}</div>
       {footer && (
-        <div className="px-6 py-4 text-text-secondary">{footer}</div>
+        <div className="border-t border-grey-2A px-6 py-4 text-text-secondary">
+          {footer}
+        </div>
       )}
     </div>
   )

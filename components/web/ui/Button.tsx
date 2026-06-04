@@ -56,36 +56,40 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const base =
-    'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none'
+    'inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:opacity-50 disabled:pointer-events-none'
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      'bg-primary-600 text-text-inverse hover:bg-primary-700 focus-visible:ring-primary-500',
+      'bg-primary-600 text-text-inverse hover:bg-primary-700 active:bg-primary-700 focus-visible:ring-primary-500',
+    // Bordered neutral button — the everyday non-primary action.
     secondary:
-      'bg-secondary-600 text-text-inverse hover:bg-secondary-700 focus-visible:ring-secondary-500',
+      'border border-grey-2A bg-grey-1A text-text-primary hover:border-grey-44 hover:bg-grey-22 active:bg-grey-2A focus-visible:ring-grey-44',
     accent:
-      'bg-accent-500 text-text-inverse hover:bg-accent-600 focus-visible:ring-accent-400',
+      'bg-accent-500 text-text-inverse hover:bg-accent-600 active:bg-accent-600 focus-visible:ring-accent-400',
+    // Borderless until hover — leans neutral, accent only on focus ring.
     ghost:
-      'bg-transparent text-text-primary hover:bg-grey-22 focus-visible:ring-neutral-400',
+      'bg-transparent text-text-secondary hover:bg-grey-22 hover:text-text-primary active:bg-grey-2A focus-visible:ring-grey-44',
     danger:
-      'bg-danger text-text-inverse hover:bg-danger-dark focus-visible:ring-danger',
-    purple: 'bg-purple text-white hover:bg-purple/90 focus-visible:ring-purple',
+      'bg-danger text-text-inverse hover:bg-danger-dark active:bg-danger-dark focus-visible:ring-danger',
+    purple:
+      'bg-purple text-white hover:bg-purple/90 active:bg-purple/90 focus-visible:ring-purple',
   }
 
   const sizes: Record<ButtonSize, string> = {
-    sm: 'h-8 px-3 text-sm gap-1.5',
-    md: 'h-10 px-4 text-base gap-2',
+    sm: 'h-9 px-3.5 text-sm gap-1.5',
+    md: 'h-11 px-4 text-base gap-2',
     lg: 'h-12 px-6 text-lg gap-2.5',
   }
 
   const iconOnlySizes: Record<ButtonSize, string> = {
-    sm: 'h-8 w-8 text-sm',
-    md: 'h-10 w-10 text-base',
+    sm: 'h-9 w-9 text-sm',
+    md: 'h-11 w-11 text-base',
     lg: 'h-12 w-12 text-lg',
   }
 
+  // Secondary/ghost render dark-on-light text, so they need the neutral spinner.
   const spinnerTone =
-    variant === 'ghost' ? 'neutral' : variant === 'primary' ? 'inverse' : 'inverse'
+    variant === 'ghost' || variant === 'secondary' ? 'neutral' : 'inverse'
 
   return (
     <button
