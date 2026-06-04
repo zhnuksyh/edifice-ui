@@ -59,7 +59,7 @@ export function Tabs({
 
   return (
     <div className={cn('flex flex-col gap-4', className)} {...rest}>
-      <div role="tablist" className="flex gap-1 border-b border-neutral-200">
+      <div role="tablist" className="flex gap-1 border-b border-grey-2A">
         {items.map((item) => {
           const selected = item.value === active
           return (
@@ -75,7 +75,7 @@ export function Tabs({
               className={cn(
                 '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50',
                 selected
-                  ? 'border-primary-600 text-primary-700'
+                  ? 'border-primary-600 text-text-primary'
                   : 'border-transparent text-text-secondary hover:text-text-primary'
               )}
             >

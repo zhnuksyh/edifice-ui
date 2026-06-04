@@ -33,14 +33,15 @@ export function Badge({
   className,
   ...rest
 }: BadgeProps) {
+  // A subtle same-hue ring gives each badge a crisp edge against the dark surface.
   const variants: Record<BadgeVariant, string> = {
-    neutral: 'bg-grey-22 text-grey-F0',
-    primary: 'bg-yellow-tint text-yellow',
-    success: 'bg-success-tint text-success',
-    warning: 'bg-warning-tint text-warning',
-    danger: 'bg-danger-tint text-danger',
-    info: 'bg-info-tint text-info',
-    purple: 'bg-purple-tint text-purple',
+    neutral: 'bg-grey-22 text-grey-F0 ring-1 ring-inset ring-grey-2A',
+    primary: 'bg-yellow-tint text-yellow ring-1 ring-inset ring-yellow/20',
+    success: 'bg-success-tint text-success ring-1 ring-inset ring-success/20',
+    warning: 'bg-warning-tint text-warning ring-1 ring-inset ring-warning/20',
+    danger: 'bg-danger-tint text-danger ring-1 ring-inset ring-danger/20',
+    info: 'bg-info-tint text-info ring-1 ring-inset ring-info/20',
+    purple: 'bg-purple-tint text-purple ring-1 ring-inset ring-purple/20',
   }
 
   const sizes: Record<BadgeSize, string> = {

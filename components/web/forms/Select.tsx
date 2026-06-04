@@ -183,10 +183,10 @@ export function Select({
           onClick={() => (open ? setOpen(false) : openMenu())}
           onKeyDown={onKeyDown}
           className={cn(
-            'flex h-10 w-full items-center justify-between gap-2 rounded-lg border bg-surface px-3 text-left text-base transition-colors duration-fast focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50',
+            'flex h-11 w-full items-center justify-between gap-2 rounded-lg border bg-grey-1A px-3 text-left text-base transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:cursor-not-allowed disabled:opacity-50',
             error
               ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A focus-visible:ring-primary-500',
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
             selectedOption ? 'text-text-primary' : 'text-text-secondary',
             className
           )}

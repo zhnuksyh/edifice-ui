@@ -72,7 +72,7 @@ export function Input({
           aria-invalid={Boolean(error)}
           aria-describedby={describedBy}
           className={cn(
-            'h-10 w-full rounded-lg border bg-surface px-3 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
+            'h-11 w-full rounded-lg border bg-grey-1A px-3 text-base text-text-primary placeholder:text-text-muted transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
             leftIcon && 'pl-9',
             hasRight && 'pr-9',
             error

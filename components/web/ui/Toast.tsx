@@ -39,11 +39,13 @@ export function Toast({
     return () => clearTimeout(timer)
   }, [duration, onClose])
 
+  // Elevated grey-22 surface with a single accent left edge (cleaner than a full
+  // tint wash); the accent color also tints the title via text-* on the body.
   const variants: Record<ToastVariant, string> = {
-    success: 'border-success bg-success-tint text-success',
-    warning: 'border-warning bg-warning-tint text-warning',
-    danger: 'border-danger bg-danger-tint text-danger',
-    info: 'border-info bg-info-tint text-info',
+    success: 'border-l-success text-success',
+    warning: 'border-l-warning text-warning',
+    danger: 'border-l-danger text-danger',
+    info: 'border-l-info text-info',
   }
 
   return (
@@ -51,7 +53,7 @@ export function Toast({
       role="status"
       aria-live="polite"
       className={cn(
-        'flex items-start gap-3 rounded-lg border-l-4 bg-surface p-4 shadow-lg',
+        'flex items-start gap-3 rounded-lg border border-l-4 border-grey-2A bg-grey-22 p-4 shadow-xl',
         variants[variant],
         className
       )}

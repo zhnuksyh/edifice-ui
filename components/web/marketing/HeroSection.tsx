@@ -40,11 +40,11 @@ export function HeroSection({
       >
         <div className={cn(!media && 'mx-auto max-w-3xl')}>
           {eyebrow && (
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-primary-600">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-yellow">
               {eyebrow}
             </p>
           )}
-          <h1 className="text-4xl font-bold leading-tight text-text-primary sm:text-5xl lg:text-6xl">
+          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-primary sm:text-5xl lg:text-6xl">
             {title}
           </h1>
           {subtitle && (

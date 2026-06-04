@@ -31,7 +31,7 @@ export function Spinner({
 
   const tones: Record<SpinnerTone, string> = {
     primary: 'border-primary-200 border-t-primary-600',
-    neutral: 'border-neutral-200 border-t-neutral-600',
+    neutral: 'border-grey-2A border-t-grey-AA',
     inverse: 'border-white/30 border-t-white',
     purple: 'border-purple-tint border-t-purple',
   }

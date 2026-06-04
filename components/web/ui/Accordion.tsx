@@ -52,7 +52,7 @@ export function Accordion({
   return (
     <div
       className={cn(
-        'divide-y divide-neutral-200 rounded-xl border border-neutral-200',
+        'divide-y divide-grey-2A rounded-xl border border-grey-2A',
         className
       )}
       {...rest}
