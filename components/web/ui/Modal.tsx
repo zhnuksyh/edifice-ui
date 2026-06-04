@@ -69,7 +69,7 @@ export function Modal({
       <div
         ref={panelRef}
         className={cn(
-          'w-full rounded-xl bg-surface shadow-2xl',
+          'w-full rounded-xl border border-grey-2A bg-grey-22 shadow-2xl',
           sizes[size],
           className
         )}
