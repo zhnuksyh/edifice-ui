@@ -1,4 +1,5 @@
 import { useEffect, type HTMLAttributes, type ReactNode } from 'react'
+import { X } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export type ToastVariant = 'success' | 'warning' | 'danger' | 'info'
@@ -70,7 +71,7 @@ export function Toast({
           aria-label="Dismiss notification"
           className="shrink-0 text-text-secondary transition-colors duration-fast hover:text-text-primary"
         >
-          ✕
+          <X className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
         </button>
       )}
     </div>

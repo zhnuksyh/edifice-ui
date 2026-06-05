@@ -7,6 +7,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from 'react'
+import { User } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl'
@@ -78,14 +79,7 @@ export function Avatar({
       ) : initials ? (
         <span aria-hidden="true">{initials}</span>
       ) : (
-        <svg
-          viewBox="0 0 24 24"
-          className="h-1/2 w-1/2"
-          fill="currentColor"
-          aria-hidden="true"
-        >
-          <path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10Zm0 2c-4.42 0-8 2.69-8 6v2h16v-2c0-3.31-3.58-6-8-6Z" />
-        </svg>
+        <User className="h-1/2 w-1/2" strokeWidth={2} aria-hidden="true" />
       )}
     </span>
   )

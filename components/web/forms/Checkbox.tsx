@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, type InputHTMLAttributes } from 'react'
+import { Check, Minus } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export interface CheckboxProps
@@ -71,21 +72,13 @@ export function Checkbox({
             )}
           >
             {indeterminate ? (
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-                <path d="M5 12h14" />
-              </svg>
+              <Minus className="h-3.5 w-3.5" strokeWidth={3} aria-hidden="true" />
             ) : (
-              <svg
-                viewBox="0 0 24 24"
+              <Check
                 className="h-3.5 w-3.5 opacity-0 peer-checked:opacity-100"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
+                strokeWidth={3}
+                aria-hidden="true"
+              />
             )}
           </span>
         </span>

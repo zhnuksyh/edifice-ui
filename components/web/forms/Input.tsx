@@ -1,4 +1,5 @@
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
+import { X } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export interface InputProps
@@ -89,9 +90,7 @@ export function Input({
             aria-label="Clear"
             className="absolute right-2.5 top-1/2 flex -translate-y-1/2 text-text-secondary transition-colors duration-fast hover:text-text-primary"
           >
-            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
+            <X className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
           </button>
         ) : (
           rightIcon && (

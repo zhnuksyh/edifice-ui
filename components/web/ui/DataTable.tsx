@@ -1,4 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react'
+import { ChevronDown, ChevronUp, ChevronsUpDown } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 import {
   Table,
@@ -171,24 +172,17 @@ export function DataTable<T>({
 
 /** Sort direction indicator; dims to a neutral glyph when the column is inactive. */
 function SortIcon({ active, direction }: { active: boolean; direction?: SortDirection }) {
+  const Icon =
+    active && direction === 'asc'
+      ? ChevronUp
+      : active && direction === 'desc'
+        ? ChevronDown
+        : ChevronsUpDown
   return (
-    <svg
-      viewBox="0 0 24 24"
+    <Icon
       className={cn('h-3.5 w-3.5', active ? 'text-text-primary' : 'text-text-muted')}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth={2}
       aria-hidden="true"
-    >
-      {active && direction === 'asc' ? (
-        <path d="m18 15-6-6-6 6" />
-      ) : active && direction === 'desc' ? (
-        <path d="m6 9 6 6 6-6" />
-      ) : (
-        <path d="m8 9 4-4 4 4M8 15l4 4 4-4" />
-      )}
-    </svg>
+    />
   )
 }
