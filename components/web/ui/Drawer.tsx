@@ -4,6 +4,7 @@ import { useClickOutside } from '../../../hooks/useClickOutside'
 
 export type DrawerSide = 'left' | 'right' | 'top' | 'bottom'
 export type DrawerSize = 'sm' | 'md' | 'lg'
+export type DrawerStyleVariant = 'overlay' | 'flush'
 
 export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Whether the drawer is visible. */
@@ -14,6 +15,13 @@ export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title
   side?: DrawerSide
   /** Panel size (width for left/right, height for top/bottom). Defaults to 'md'. */
   size?: DrawerSize
+  /**
+   * Backdrop treatment. Defaults to 'overlay'.
+   * - `overlay` — a dimmed scrim behind the panel (the original look).
+   * - `flush` — no scrim; the panel floats with a stronger shadow. Outside
+   *   clicks still close it.
+   */
+  styleVariant?: DrawerStyleVariant
   /** Optional heading. */
   title?: ReactNode
   /** Optional footer (actions). */
@@ -33,6 +41,7 @@ export function Drawer({
   onClose,
   side = 'right',
   size = 'md',
+  styleVariant = 'overlay',
   title,
   footer,
   children,
@@ -81,14 +90,19 @@ export function Drawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-overlay"
+      className={cn(
+        'fixed inset-0 z-50',
+        styleVariant === 'overlay' ? 'bg-overlay' : 'bg-transparent'
+      )}
       role="dialog"
       aria-modal="true"
     >
       <div
         ref={panelRef}
         className={cn(
-          'absolute flex max-w-full max-h-full flex-col bg-surface shadow-2xl border-grey-2A',
+          'absolute flex max-w-full max-h-full flex-col border-grey-2A bg-surface',
+          // flush has no scrim, so lean on a stronger shadow for separation.
+          styleVariant === 'flush' ? 'shadow-2xl shadow-black/50' : 'shadow-2xl',
           sides[side],
           isHorizontal ? widths[size] : heights[size],
           className
