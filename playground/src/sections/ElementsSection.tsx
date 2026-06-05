@@ -1,5 +1,8 @@
 import { Badge } from '../../../components/web/ui/Badge'
-import type { BadgeVariant } from '../../../components/web/ui/Badge'
+import type {
+  BadgeVariant,
+  BadgeStyleVariant,
+} from '../../../components/web/ui/Badge'
 import { Avatar, AvatarGroup } from '../../../components/web/ui/Avatar'
 import { Spinner } from '../../../components/web/ui/Spinner'
 import type { SpinnerSize } from '../../../components/web/ui/Spinner'
@@ -30,6 +33,7 @@ const BADGE_VARIANTS: BadgeVariant[] = [
   'info',
   'purple',
 ]
+const BADGE_STYLE_VARIANTS: BadgeStyleVariant[] = ['soft', 'solid', 'outline']
 const SPINNER_SIZES: SpinnerSize[] = ['sm', 'md', 'lg']
 
 const TAB_ITEMS = [
@@ -46,15 +50,24 @@ export function ElementsSection() {
       <Showcase
         title="Badge"
         source="components/web/ui/Badge.tsx"
-        description="Small label for statuses, counts, and tags. Six tones, two sizes, optional pill."
+        description="Small label for statuses, counts, and tags. Seven tones × three style variants, two sizes, optional pill."
       >
-        <Row label="Variants">
+        <Row label="Variants (soft)">
           {BADGE_VARIANTS.map((variant) => (
             <Badge key={variant} variant={variant}>
               {variant}
             </Badge>
           ))}
         </Row>
+        {BADGE_STYLE_VARIANTS.map((styleVariant) => (
+          <Row key={styleVariant} label={styleVariant}>
+            {BADGE_VARIANTS.map((variant) => (
+              <Badge key={variant} variant={variant} styleVariant={styleVariant}>
+                {variant}
+              </Badge>
+            ))}
+          </Row>
+        ))}
         <Row label="Pill + sizes">
           <Badge pill variant="primary">
             Pill
