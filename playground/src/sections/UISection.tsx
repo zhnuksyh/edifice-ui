@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { Card } from '../../../components/web/ui/Card'
+import type { CardStyleVariant } from '../../../components/web/ui/Card'
 import { Accordion } from '../../../components/web/ui/Accordion'
 import { Modal } from '../../../components/web/ui/Modal'
+import type { ModalStyleVariant } from '../../../components/web/ui/Modal'
 import { Toast } from '../../../components/web/ui/Toast'
 import type { ToastVariant } from '../../../components/web/ui/Toast'
 import { Alert } from '../../../components/web/ui/Alert'
-import type { AlertVariant } from '../../../components/web/ui/Alert'
+import type {
+  AlertVariant,
+  AlertStyleVariant,
+} from '../../../components/web/ui/Alert'
 import { Progress } from '../../../components/web/ui/Progress'
 import { Skeleton } from '../../../components/web/ui/Skeleton'
 import { Breadcrumb } from '../../../components/web/ui/Breadcrumb'
@@ -24,6 +29,13 @@ import { Showcase, Row } from '../components/Showcase'
 
 const TOAST_VARIANTS: ToastVariant[] = ['success', 'warning', 'danger', 'info']
 const ALERT_VARIANTS: AlertVariant[] = ['info', 'success', 'warning', 'danger']
+const ALERT_STYLE_VARIANTS: AlertStyleVariant[] = ['soft', 'solid', 'outline']
+const CARD_STYLE_VARIANTS: CardStyleVariant[] = ['elevated', 'outlined', 'ghost']
+const MODAL_STYLE_VARIANTS: ModalStyleVariant[] = [
+  'centered',
+  'sheet',
+  'fullscreen',
+]
 
 const ACCORDION_ITEMS = [
   { id: 'a', title: 'What is Edifice?', content: 'A personal component library.' },
@@ -41,7 +53,7 @@ const DRAWER_SIDES: DrawerSide[] = ['left', 'right', 'top', 'bottom']
 
 /** Card, Accordion, Modal, and Toast. */
 export function UISection() {
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalStyle, setModalStyle] = useState<ModalStyleVariant | null>(null)
   const [page, setPage] = useState(1)
   const [drawerSide, setDrawerSide] = useState<DrawerSide | null>(null)
   const [step, setStep] = useState(1)
@@ -53,12 +65,18 @@ export function UISection() {
       <Showcase
         title="Card"
         source="components/web/ui/Card.tsx"
-        description="Surface container with optional header/footer and padding/shadow options."
+        description="Surface container with optional header/footer. Three styleVariant treatments; shadow/padding still configurable."
       >
-        <Row>
-          <div className="w-64">
-            <Card>Basic card with default padding and shadow.</Card>
-          </div>
+        <Row label="styleVariant (elevated · outlined · ghost)">
+          {CARD_STYLE_VARIANTS.map((styleVariant) => (
+            <div key={styleVariant} className="w-64">
+              <Card styleVariant={styleVariant} header={styleVariant}>
+                {styleVariant} treatment.
+              </Card>
+            </div>
+          ))}
+        </Row>
+        <Row label="Header/footer + overrides">
           <div className="w-64">
             <Card header="Card header" footer="Card footer">
               Card with a header and footer slot.
@@ -92,21 +110,30 @@ export function UISection() {
       <Showcase
         title="Modal"
         source="components/web/ui/Modal.tsx"
-        description="Closes on overlay click or Escape. Opened here via local state."
+        description="Closes on overlay click or Escape. Three styleVariant looks: centered, sheet, fullscreen."
       >
-        <Row>
-          <Button onClick={() => setModalOpen(true)}>Open modal</Button>
+        <Row label="styleVariant">
+          {MODAL_STYLE_VARIANTS.map((styleVariant) => (
+            <Button
+              key={styleVariant}
+              variant="secondary"
+              onClick={() => setModalStyle(styleVariant)}
+            >
+              Open {styleVariant}
+            </Button>
+          ))}
         </Row>
         <Modal
-          isOpen={modalOpen}
-          onClose={() => setModalOpen(false)}
-          title="Example modal"
+          isOpen={modalStyle !== null}
+          onClose={() => setModalStyle(null)}
+          styleVariant={modalStyle ?? 'centered'}
+          title={`Example modal (${modalStyle ?? 'centered'})`}
           footer={
             <>
-              <Button variant="ghost" onClick={() => setModalOpen(false)}>
+              <Button variant="ghost" onClick={() => setModalStyle(null)}>
                 Cancel
               </Button>
-              <Button onClick={() => setModalOpen(false)}>Confirm</Button>
+              <Button onClick={() => setModalStyle(null)}>Confirm</Button>
             </>
           }
         >
@@ -230,18 +257,31 @@ export function UISection() {
       <Showcase
         title="Alert"
         source="components/web/ui/Alert.tsx"
-        description="Persistent in-page message in four tones; optionally dismissible."
+        description="Persistent in-page message; four tones × three styleVariant treatments, optionally dismissible."
       >
-        <div className="flex max-w-md flex-col gap-3">
-          {ALERT_VARIANTS.map((variant) => (
-            <Alert key={variant} variant={variant} title={variant}>
-              This is a persistent {variant} alert.
+        {ALERT_STYLE_VARIANTS.map((styleVariant) => (
+          <Row key={styleVariant} label={styleVariant}>
+            <div className="flex w-full max-w-md flex-col gap-3">
+              {ALERT_VARIANTS.map((variant) => (
+                <Alert
+                  key={variant}
+                  variant={variant}
+                  styleVariant={styleVariant}
+                  title={variant}
+                >
+                  This is a {styleVariant} {variant} alert.
+                </Alert>
+              ))}
+            </div>
+          </Row>
+        ))}
+        <Row label="Dismissible">
+          <div className="w-full max-w-md">
+            <Alert variant="info" title="Dismissible" onDismiss={() => {}}>
+              This one has a dismiss button.
             </Alert>
-          ))}
-          <Alert variant="info" title="Dismissible" onDismiss={() => {}}>
-            This one has a dismiss button.
-          </Alert>
-        </div>
+          </div>
+        </Row>
       </Showcase>
 
       <Showcase

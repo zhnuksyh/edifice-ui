@@ -1,6 +1,10 @@
 import { Plus, ArrowRight, Settings } from 'lucide-react'
 import { Button } from '../../../components/web/ui/Button'
-import type { ButtonVariant, ButtonSize } from '../../../components/web/ui/Button'
+import type {
+  ButtonVariant,
+  ButtonSize,
+  ButtonStyleVariant,
+} from '../../../components/web/ui/Button'
 import { Showcase, Row } from '../components/Showcase'
 
 const VARIANTS: ButtonVariant[] = [
@@ -12,6 +16,9 @@ const VARIANTS: ButtonVariant[] = [
   'purple',
 ]
 const SIZES: ButtonSize[] = ['sm', 'md', 'lg']
+// styleVariant derives its hue from variant; show it across the hue-bearing ones.
+const STYLE_VARIANTS: ButtonStyleVariant[] = ['solid', 'soft', 'outline']
+const STYLE_HUES: ButtonVariant[] = ['primary', 'danger', 'purple']
 
 /** All Button variants, sizes, and states. */
 export function ButtonsSection() {
@@ -19,7 +26,7 @@ export function ButtonsSection() {
     <Showcase
       title="Button"
       source="components/web/ui/Button.tsx"
-      description="Five variants, three sizes, plus disabled and full-width states."
+      description="Six variants (hue) × an orthogonal styleVariant treatment, three sizes, plus disabled and full-width states."
     >
       <Row label="Variants">
         {VARIANTS.map((variant) => (
@@ -28,6 +35,16 @@ export function ButtonsSection() {
           </Button>
         ))}
       </Row>
+
+      {STYLE_VARIANTS.map((styleVariant) => (
+        <Row key={styleVariant} label={`styleVariant: ${styleVariant}`}>
+          {STYLE_HUES.map((variant) => (
+            <Button key={variant} variant={variant} styleVariant={styleVariant}>
+              {variant}
+            </Button>
+          ))}
+        </Row>
+      ))}
 
       <Row label="Sizes">
         {SIZES.map((size) => (

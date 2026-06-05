@@ -3,6 +3,7 @@ import { cn } from '../../../utils/cn'
 import { useClickOutside } from '../../../hooks/useClickOutside'
 
 export type ModalSize = 'sm' | 'md' | 'lg'
+export type ModalStyleVariant = 'centered' | 'sheet' | 'fullscreen'
 
 export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Whether the modal is visible. */
@@ -13,8 +14,15 @@ export interface ModalProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
   title?: ReactNode
   /** Optional footer (actions). */
   footer?: ReactNode
-  /** Max width preset. Defaults to 'md'. */
+  /** Max width preset (centered/sheet only). Defaults to 'md'. */
   size?: ModalSize
+  /**
+   * Position & shape. Defaults to 'centered'.
+   * - `centered` — a panel centered in the viewport (the original look).
+   * - `sheet` — a panel anchored to the bottom edge, full-width up to `size`.
+   * - `fullscreen` — fills the viewport (ignores `size`).
+   */
+  styleVariant?: ModalStyleVariant
   /** Modal body. */
   children: ReactNode
 }
@@ -31,6 +39,7 @@ export function Modal({
   title,
   footer,
   size = 'md',
+  styleVariant = 'centered',
   children,
   className,
   ...rest
@@ -60,17 +69,33 @@ export function Modal({
     lg: 'max-w-2xl',
   }
 
+  // Overlay alignment + padding, and panel shape/width, per treatment.
+  const overlays: Record<ModalStyleVariant, string> = {
+    centered: 'items-center justify-center p-4',
+    sheet: 'items-end justify-center p-0 sm:p-4',
+    fullscreen: 'items-stretch justify-stretch p-0',
+  }
+
+  const panels: Record<ModalStyleVariant, string> = {
+    centered: cn('w-full rounded-xl border border-grey-2A', sizes[size]),
+    sheet: cn(
+      'w-full rounded-t-xl border border-grey-2A sm:rounded-xl',
+      sizes[size]
+    ),
+    fullscreen: 'flex w-full flex-col rounded-none border-0',
+  }
+
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-overlay p-4"
+      className={cn('fixed inset-0 z-50 flex bg-overlay', overlays[styleVariant])}
       role="dialog"
       aria-modal="true"
     >
       <div
         ref={panelRef}
         className={cn(
-          'w-full rounded-xl border border-grey-2A bg-grey-22 shadow-2xl',
-          sizes[size],
+          'bg-grey-22 shadow-2xl',
+          panels[styleVariant],
           className
         )}
         {...rest}
@@ -80,7 +105,14 @@ export function Modal({
             {title}
           </div>
         )}
-        <div className="px-6 py-3 text-text-secondary">{children}</div>
+        <div
+          className={cn(
+            'px-6 py-3 text-text-secondary',
+            styleVariant === 'fullscreen' && 'flex-1 overflow-y-auto'
+          )}
+        >
+          {children}
+        </div>
         {footer && (
           <div className="flex justify-end gap-3 px-6 pb-5 pt-2">{footer}</div>
         )}
