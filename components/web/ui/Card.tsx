@@ -3,13 +3,24 @@ import { cn } from '../../../utils/cn'
 
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg'
 export type CardShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl'
+export type CardStyleVariant = 'elevated' | 'outlined' | 'ghost'
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /** Inner padding. Defaults to 'md'. */
   padding?: CardPadding
-  /** Elevation. Defaults to 'md'. */
+  /**
+   * Visual treatment. Defaults to 'elevated'.
+   * - `elevated` — surface fill, hairline border, and a shadow (the original).
+   * - `outlined` — surface fill and border, no shadow.
+   * - `ghost` — transparent, no border or shadow.
+   *
+   * The explicit `shadow` and `bordered` props, when set, override the
+   * treatment's defaults.
+   */
+  styleVariant?: CardStyleVariant
+  /** Elevation. Overrides the styleVariant default when set. */
   shadow?: CardShadow
-  /** Show a hairline border. Defaults to true. */
+  /** Show a hairline border. Overrides the styleVariant default when set. */
   bordered?: boolean
   /** Brighten the border on hover (for clickable cards). */
   interactive?: boolean
@@ -26,8 +37,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
  */
 export function Card({
   padding = 'md',
-  shadow = 'md',
-  bordered = true,
+  styleVariant = 'elevated',
+  shadow,
+  bordered,
   interactive = false,
   header,
   footer,
@@ -50,13 +62,28 @@ export function Card({
     xl: 'shadow-xl',
   }
 
+  // Per-treatment defaults; explicit shadow/bordered props override them.
+  const treatments: Record<
+    CardStyleVariant,
+    { fill: string; bordered: boolean; shadow: CardShadow }
+  > = {
+    elevated: { fill: 'bg-grey-1A', bordered: true, shadow: 'md' },
+    outlined: { fill: 'bg-grey-1A', bordered: true, shadow: 'none' },
+    ghost: { fill: 'bg-transparent', bordered: false, shadow: 'none' },
+  }
+
+  const treatment = treatments[styleVariant]
+  const isBordered = bordered ?? treatment.bordered
+  const resolvedShadow = shadow ?? treatment.shadow
+
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-xl bg-grey-1A',
-        bordered && 'border border-grey-2A',
+        'overflow-hidden rounded-xl',
+        treatment.fill,
+        isBordered && 'border border-grey-2A',
         interactive && 'transition-colors duration-fast hover:border-grey-44',
-        shadows[shadow],
+        shadows[resolvedShadow],
         className
       )}
       {...rest}
