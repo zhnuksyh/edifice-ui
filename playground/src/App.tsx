@@ -11,6 +11,7 @@ import { FormsSection } from './sections/FormsSection'
 import { LayoutSection } from './sections/LayoutSection'
 import { MarketingSection } from './sections/MarketingSection'
 import { LivePreview } from './live-preview/LivePreview'
+import { SectionNavProvider } from './components/SectionNav'
 
 interface NavItem {
   id: string
@@ -100,8 +101,10 @@ export function App() {
           active.render()
         ) : (
           <div className="mx-auto max-w-5xl px-8 py-10">
-            <h2 className="mb-2 text-3xl font-bold">{active.label}</h2>
-            {active.render()}
+            <h2 className="mb-4 text-3xl font-bold">{active.label}</h2>
+            <SectionNavProvider sectionId={active.id}>
+              {active.render()}
+            </SectionNavProvider>
           </div>
         )}
       </main>

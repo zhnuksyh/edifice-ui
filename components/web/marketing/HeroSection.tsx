@@ -1,6 +1,8 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../../utils/cn'
 
+export type HeroStyleVariant = 'centered' | 'left-aligned' | 'split-image'
+
 export interface HeroSectionProps
   extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   /** Small label above the title. */
@@ -11,15 +13,22 @@ export interface HeroSectionProps
   subtitle?: ReactNode
   /** CTA buttons. */
   actions?: ReactNode
-  /**
-   * Optional right-side media (image/illustration); switches the layout to
-   * two columns when present.
-   */
+  /** Optional media (image/illustration). Shown beside copy in `split-image`. */
   media?: ReactNode
+  /**
+   * Visual layout style. Defaults to 'centered'.
+   * - `centered` — copy centered in a single column.
+   * - `left-aligned` — copy left-aligned in a single column.
+   * - `split-image` — copy left, `media` right (two columns on large screens).
+   */
+  styleVariant?: HeroStyleVariant
 }
 
 /**
  * HeroSection — top-of-page marketing hero with headline, subcopy, and CTAs.
+ *
+ * Three `styleVariant` layouts share one API: centered (default), left-aligned,
+ * and split-image (pairs copy with the `media` slot).
  */
 export function HeroSection({
   eyebrow,
@@ -27,18 +36,23 @@ export function HeroSection({
   subtitle,
   actions,
   media,
+  styleVariant = 'centered',
   className,
   ...rest
 }: HeroSectionProps) {
+  const split = styleVariant === 'split-image'
+  const centered = styleVariant === 'centered'
+
   return (
     <section className={cn('bg-background py-24', className)} {...rest}>
       <div
         className={cn(
           'mx-auto max-w-screen-xl px-6',
-          media ? 'grid items-center gap-12 lg:grid-cols-2' : 'text-center'
+          split ? 'grid items-center gap-12 lg:grid-cols-2' : 'w-full',
+          centered && 'text-center'
         )}
       >
-        <div className={cn(!media && 'mx-auto max-w-3xl')}>
+        <div className={cn(centered && 'mx-auto max-w-3xl')}>
           {eyebrow && (
             <p className="mb-4 text-sm font-semibold uppercase tracking-wide text-yellow">
               {eyebrow}
@@ -48,7 +62,12 @@ export function HeroSection({
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-6 text-lg leading-relaxed text-text-secondary">
+            <p
+              className={cn(
+                'mt-6 text-lg leading-relaxed text-text-secondary',
+                centered && 'mx-auto max-w-2xl'
+              )}
+            >
               {subtitle}
             </p>
           )}
@@ -56,14 +75,14 @@ export function HeroSection({
             <div
               className={cn(
                 'mt-8 flex flex-wrap gap-4',
-                !media && 'justify-center'
+                centered && 'justify-center'
               )}
             >
               {actions}
             </div>
           )}
         </div>
-        {media && <div className="w-full">{media}</div>}
+        {split && media && <div className="w-full">{media}</div>}
       </div>
     </section>
   )
