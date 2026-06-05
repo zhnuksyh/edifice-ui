@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
+import { slugify, useSectionNav } from './SectionNav'
 
 interface ShowcaseProps {
   title: string
@@ -10,8 +11,20 @@ interface ShowcaseProps {
 
 /** A titled block wrapping one component's demos. */
 export function Showcase({ title, description, source, children }: ShowcaseProps) {
+  const { activeSlug, register } = useSectionNav()
+  const slug = slugify(title)
+
+  useEffect(() => {
+    register({ slug, title })
+  }, [register, slug, title])
+
+  // When a component is isolated via the section chip bar, hide the others.
+  if (activeSlug !== null && activeSlug !== slug) {
+    return null
+  }
+
   return (
-    <section className="border-b border-grey-2A py-10">
+    <section id={slug} className="border-b border-grey-2A py-10">
       <div className="mb-5">
         <div className="flex items-baseline gap-3">
           <h3 className="font-display text-xl font-semibold text-grey-F0">
