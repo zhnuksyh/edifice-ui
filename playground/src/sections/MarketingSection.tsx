@@ -1,5 +1,7 @@
 import { HeroSection } from '../../../components/web/marketing/HeroSection'
+import type { HeroStyleVariant } from '../../../components/web/marketing/HeroSection'
 import { CTASection } from '../../../components/web/marketing/CTASection'
+import type { CTAStyleVariant } from '../../../components/web/marketing/CTASection'
 import { ContactSection } from '../../../components/web/marketing/ContactSection'
 import { PricingTable } from '../../../components/web/marketing/PricingTable'
 import type { PricingTier } from '../../../components/web/marketing/PricingTable'
@@ -9,7 +11,15 @@ import { Banner } from '../../../components/web/marketing/Banner'
 import { NewsletterSignup } from '../../../components/web/marketing/NewsletterSignup'
 import { Button } from '../../../components/web/ui/Button'
 import { Sparkles } from 'lucide-react'
-import { Showcase } from '../components/Showcase'
+import { Showcase, Row } from '../components/Showcase'
+
+const HERO_VARIANTS: HeroStyleVariant[] = [
+  'centered',
+  'left-aligned',
+  'split-image',
+]
+
+const CTA_VARIANTS: CTAStyleVariant[] = ['banner', 'boxed', 'gradient']
 
 const LOGOS = ['Acme', 'Globex', 'Initech', 'Umbra', 'Stark'].map((name) => ({
   id: name,
@@ -57,41 +67,58 @@ export function MarketingSection() {
       <Showcase
         title="HeroSection"
         source="components/web/marketing/HeroSection.tsx"
-        description="Top-of-page hero with eyebrow, headline, subcopy, and CTAs."
+        description="Top-of-page hero with eyebrow, headline, subcopy, and CTAs. Three styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
-          <HeroSection
-            eyebrow="Introducing Edifice"
-            title="Build once. Stand forever."
-            subtitle="A single source of truth for tokens, components, and patterns — optimized for AI agents and humans alike."
-            actions={
-              <>
-                <Button size="lg">Get started</Button>
-                <Button size="lg" variant="ghost">
-                  Read the docs
-                </Button>
-              </>
-            }
-          />
-        </div>
+        {HERO_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <HeroSection
+                styleVariant={variant}
+                eyebrow="Introducing Edifice"
+                title="Build once. Stand forever."
+                subtitle="A single source of truth for tokens, components, and patterns — optimized for AI agents and humans alike."
+                media={
+                  variant === 'split-image' ? (
+                    <div className="flex aspect-video items-center justify-center rounded-xl border border-grey-2A bg-grey-1A text-sm text-text-muted">
+                      media slot
+                    </div>
+                  ) : undefined
+                }
+                actions={
+                  <>
+                    <Button size="lg">Get started</Button>
+                    <Button size="lg" variant="ghost">
+                      Read the docs
+                    </Button>
+                  </>
+                }
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="CTASection"
         source="components/web/marketing/CTASection.tsx"
-        description="Bold call-to-action band (inverted variant shown)."
+        description="Bold call-to-action band. Three styleVariant looks: banner, boxed, gradient."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
-          <CTASection
-            title="Ready to start building?"
-            subtitle="Pull Edifice into your next project in minutes."
-            actions={
-              <Button size="lg" variant="accent">
-                Start now
-              </Button>
-            }
-          />
-        </div>
+        {CTA_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <CTASection
+                styleVariant={variant}
+                title="Ready to start building?"
+                subtitle="Pull Edifice into your next project in minutes."
+                actions={
+                  <Button size="lg" variant="accent">
+                    Start now
+                  </Button>
+                }
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
@@ -99,7 +126,7 @@ export function MarketingSection() {
         source="components/web/marketing/ContactSection.tsx"
         description="Intro copy plus a simple contact form."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-grey-2A">
           <ContactSection
             subtitle="Have a question? Send us a note and we'll get back to you."
             onSubmit={() => {}}
@@ -120,7 +147,7 @@ export function MarketingSection() {
         source="components/web/marketing/FAQSection.tsx"
         description="Titled Q&A built on Accordion."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-grey-2A">
           <FAQSection items={FAQ_ITEMS} subtitle="Everything you need to know." />
         </div>
       </Showcase>
@@ -130,7 +157,7 @@ export function MarketingSection() {
         source="components/web/marketing/Banner.tsx"
         description="Full-width announcement bar; three tones, optional icon, action, and dismiss."
       >
-        <div className="flex flex-col gap-3 overflow-hidden rounded-xl border border-neutral-200">
+        <div className="flex flex-col gap-3 overflow-hidden rounded-xl border border-grey-2A">
           <Banner
             icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
             action={
@@ -154,7 +181,7 @@ export function MarketingSection() {
         source="components/web/marketing/LogoCloud.tsx"
         description="A 'trusted by' strip of partner logos; muted by default, brighten on hover."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-grey-2A">
           <LogoCloud title="Trusted by teams at" logos={LOGOS} />
         </div>
       </Showcase>
@@ -164,7 +191,7 @@ export function MarketingSection() {
         source="components/web/marketing/NewsletterSignup.tsx"
         description="Email-capture block with heading and inline form; calls onSubscribe(email)."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-grey-2A">
           <NewsletterSignup
             title="Stay in the loop"
             subtitle="Get product updates and the occasional deep dive. No spam."

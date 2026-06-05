@@ -1,5 +1,7 @@
 import { Navbar } from '../../../components/web/layout/Navbar'
+import type { NavbarStyleVariant } from '../../../components/web/layout/Navbar'
 import { Footer } from '../../../components/web/layout/Footer'
+import type { FooterStyleVariant } from '../../../components/web/layout/Footer'
 import { Container } from '../../../components/web/layout/Container'
 import { Section } from '../../../components/web/layout/Section'
 import { Stack } from '../../../components/web/layout/Stack'
@@ -33,6 +35,15 @@ const Cell = ({ children }: { children: React.ReactNode }) => (
     {children}
   </div>
 )
+
+const NAVBAR_VARIANTS: NavbarStyleVariant[] = [
+  'bordered-bar',
+  'pill',
+  'split',
+  'minimal',
+]
+
+const FOOTER_VARIANTS: FooterStyleVariant[] = ['columns', 'minimal', 'centered']
 
 const NAV_LINKS = [
   { label: 'Home', href: '#', active: true },
@@ -71,36 +82,46 @@ export function LayoutSection() {
       <Showcase
         title="Navbar"
         source="components/web/layout/Navbar.tsx"
-        description="Brand, links, and an actions slot. Sticky disabled here for framing."
+        description="Brand, links, and an actions slot. Four styleVariant layouts; sticky disabled here for framing."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
-          <Navbar
-            brand="Edifice"
-            links={NAV_LINKS}
-            sticky={false}
-            actions={
-              <>
-                <Button variant="ghost" size="sm">
-                  Sign in
-                </Button>
-                <Button size="sm">Get started</Button>
-              </>
-            }
-          />
-        </div>
+        {NAVBAR_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A bg-grey-11">
+              <Navbar
+                brand="Edifice"
+                links={NAV_LINKS}
+                sticky={false}
+                styleVariant={variant}
+                actions={
+                  <>
+                    <Button variant="ghost" size="sm">
+                      Sign in
+                    </Button>
+                    <Button size="sm">Get started</Button>
+                  </>
+                }
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="Footer"
         source="components/web/layout/Footer.tsx"
-        description="Brand blurb plus grouped link columns and a bottom bar."
+        description="Grouped link columns and a bottom bar. Three styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
-          <Footer
-            brand={<p className="text-sm">Edifice — build once, stand forever.</p>}
-            columns={FOOTER_COLUMNS}
-          />
-        </div>
+        {FOOTER_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <Footer
+                brand={<p className="text-sm">Edifice — build once, stand forever.</p>}
+                columns={FOOTER_COLUMNS}
+                styleVariant={variant}
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
@@ -136,7 +157,7 @@ export function LayoutSection() {
         source="components/web/layout/Section.tsx"
         description="Full-width band with vertical rhythm and alternating surface tone."
       >
-        <div className="overflow-hidden rounded-xl border border-neutral-200">
+        <div className="overflow-hidden rounded-xl border border-grey-2A">
           <Section spacing="sm" tone="background">
             <p className="text-center text-sm text-text-secondary">Section · background tone</p>
           </Section>
@@ -212,7 +233,7 @@ export function LayoutSection() {
         source="components/web/layout/Sidebar.tsx"
         description="Vertical navigation rail with grouped, active-aware items and header/footer slots."
       >
-        <div className="h-80 overflow-hidden rounded-xl border border-neutral-200">
+        <div className="h-80 overflow-hidden rounded-xl border border-grey-2A">
           <Sidebar
             header={<p className="font-display font-bold text-text-primary">Edifice</p>}
             groups={SIDEBAR_GROUPS}
