@@ -6,6 +6,8 @@ import {
 import { cn } from '../../../utils/cn'
 import { Button } from '../ui/Button'
 
+export type NewsletterStyleVariant = 'inline' | 'card' | 'split'
+
 export interface NewsletterSignupProps
   extends Omit<FormHTMLAttributes<HTMLFormElement>, 'title' | 'onSubmit'> {
   /** Heading above the form. */
@@ -20,6 +22,13 @@ export interface NewsletterSignupProps
   note?: ReactNode
   /** Called with the entered email on submit. */
   onSubscribe?: (email: string) => void
+  /**
+   * Visual layout style. Defaults to 'inline'.
+   * - `inline` — centered copy above an inline email + button.
+   * - `card` — the same, wrapped in a bordered, elevated panel.
+   * - `split` — copy on the left, form on the right (two columns).
+   */
+  styleVariant?: NewsletterStyleVariant
 }
 
 /**
@@ -35,6 +44,7 @@ export function NewsletterSignup({
   placeholder = 'you@example.com',
   note,
   onSubscribe,
+  styleVariant = 'inline',
   className,
   ...rest
 }: NewsletterSignupProps) {
@@ -45,33 +55,80 @@ export function NewsletterSignup({
     if (email.trim()) onSubscribe?.(email.trim())
   }
 
+  const split = styleVariant === 'split'
+
+  const copy = (title || subtitle) && (
+    <div className={cn(!split && 'text-center')}>
+      {title && (
+        <h2 className="text-2xl font-bold text-grey-F0 sm:text-3xl">{title}</h2>
+      )}
+      {subtitle && (
+        <p className={cn('mt-3 text-grey-AA', !split && 'mx-auto max-w-md')}>
+          {subtitle}
+        </p>
+      )}
+    </div>
+  )
+
+  const form = (
+    <form
+      onSubmit={handleSubmit}
+      className={cn(
+        'flex max-w-md flex-col gap-3 sm:flex-row',
+        !split && 'mx-auto'
+      )}
+      {...rest}
+    >
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        placeholder={placeholder}
+        aria-label="Email address"
+        className="h-11 flex-1 rounded-lg border border-grey-2A bg-grey-1A px-4 text-sm text-grey-F0 placeholder:text-grey-66 transition-colors hover:border-grey-44 focus-visible:border-yellow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
+      />
+      <Button type="submit">{buttonLabel}</Button>
+    </form>
+  )
+
+  const finePrint = note && (
+    <p className={cn('mt-3 text-xs text-grey-66', !split && 'text-center')}>
+      {note}
+    </p>
+  )
+
+  if (split) {
+    return (
+      <section className={cn('py-16', className)}>
+        <div className="mx-auto grid max-w-screen-lg items-center gap-8 px-6 lg:grid-cols-2">
+          {copy}
+          <div>
+            {form}
+            {finePrint}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  const inner = (
+    <>
+      {copy}
+      <div className="mt-6">{form}</div>
+      {finePrint}
+    </>
+  )
+
   return (
     <section className={cn('py-16', className)}>
-      <div className="mx-auto max-w-screen-sm px-6 text-center">
-        {title && (
-          <h2 className="text-2xl font-bold text-grey-F0 sm:text-3xl">{title}</h2>
-        )}
-        {subtitle && (
-          <p className="mx-auto mt-3 max-w-md text-grey-AA">{subtitle}</p>
-        )}
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto mt-6 flex max-w-md flex-col gap-3 sm:flex-row"
-          {...rest}
-        >
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            placeholder={placeholder}
-            aria-label="Email address"
-            className="h-11 flex-1 rounded-lg border border-grey-2A bg-grey-1A px-4 text-sm text-grey-F0 placeholder:text-grey-66 transition-colors hover:border-grey-44 focus-visible:border-yellow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
-          />
-          <Button type="submit">{buttonLabel}</Button>
-        </form>
-        {note && (
-          <p className="mt-3 text-xs text-grey-66">{note}</p>
+      <div className="mx-auto max-w-screen-sm px-6">
+        {styleVariant === 'card' ? (
+          <div className="rounded-2xl border border-grey-2A bg-grey-1A p-8 shadow-sm">
+            {inner}
+          </div>
+        ) : (
+          inner
         )}
       </div>
     </section>
