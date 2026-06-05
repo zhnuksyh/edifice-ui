@@ -8,6 +8,7 @@ import { cn } from '../../../utils/cn'
 import { useClickOutside } from '../../../hooks/useClickOutside'
 
 export type MenuAlign = 'start' | 'end'
+export type MenuStyleVariant = 'elevated' | 'outlined'
 
 /** A selectable action. */
 export interface MenuAction {
@@ -40,6 +41,12 @@ export interface MenuProps {
   items: MenuItem[]
   /** Which side of the trigger to align to. Defaults to 'start'. */
   align?: MenuAlign
+  /**
+   * Surface treatment. Defaults to 'elevated'.
+   * - `elevated` — hairline border with a prominent shadow (the original).
+   * - `outlined` — a brighter border and no shadow (flatter, crisper).
+   */
+  styleVariant?: MenuStyleVariant
   /** Extra classes merged onto the panel via cn(). */
   className?: string
 }
@@ -55,7 +62,17 @@ const isAction = (item: MenuItem): item is MenuAction =>
  * labels, danger and disabled items, and closes on select / outside click /
  * Escape. ARIA menu roles included.
  */
-export function Menu({ trigger, items, align = 'start', className }: MenuProps) {
+export function Menu({
+  trigger,
+  items,
+  align = 'start',
+  styleVariant = 'elevated',
+  className,
+}: MenuProps) {
+  const surfaces: Record<MenuStyleVariant, string> = {
+    elevated: 'border-grey-2A shadow-xl',
+    outlined: 'border-grey-44 shadow-none',
+  }
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
   const ref = useClickOutside<HTMLDivElement>(() => setOpen(false), open)
@@ -151,7 +168,8 @@ export function Menu({ trigger, items, align = 'start', className }: MenuProps) 
           ref={listRef}
           role="menu"
           className={cn(
-            'absolute top-full z-50 mt-2 min-w-[12rem] overflow-auto rounded-lg border border-grey-2A bg-grey-22 p-1 shadow-xl',
+            'absolute top-full z-50 mt-2 min-w-[12rem] overflow-auto rounded-lg border bg-grey-22 p-1',
+            surfaces[styleVariant],
             align === 'end' ? 'right-0' : 'left-0',
             className
           )}

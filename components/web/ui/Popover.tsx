@@ -4,6 +4,7 @@ import { useClickOutside } from '../../../hooks/useClickOutside'
 
 export type PopoverPlacement = 'top' | 'bottom' | 'left' | 'right'
 export type PopoverAlign = 'start' | 'center' | 'end'
+export type PopoverStyleVariant = 'elevated' | 'outlined'
 
 export interface PopoverProps {
   /** The element that toggles the popover (rendered as the anchor). */
@@ -14,6 +15,12 @@ export interface PopoverProps {
   placement?: PopoverPlacement
   /** Cross-axis alignment. Defaults to 'center'. */
   align?: PopoverAlign
+  /**
+   * Surface treatment. Defaults to 'elevated'.
+   * - `elevated` — hairline border with a prominent shadow (the original).
+   * - `outlined` — a brighter border and no shadow (flatter, crisper).
+   */
+  styleVariant?: PopoverStyleVariant
   /** Controlled open state. */
   open?: boolean
   /** Called when open state should change (controlled or uncontrolled). */
@@ -33,6 +40,7 @@ export function Popover({
   children,
   placement = 'bottom',
   align = 'center',
+  styleVariant = 'elevated',
   open,
   onOpenChange,
   className,
@@ -74,6 +82,11 @@ export function Popover({
     end: placement === 'left' || placement === 'right' ? 'bottom-0' : 'right-0',
   }
 
+  const surfaces: Record<PopoverStyleVariant, string> = {
+    elevated: 'border-grey-2A shadow-xl',
+    outlined: 'border-grey-44 shadow-none',
+  }
+
   return (
     <div ref={ref} className="relative inline-flex">
       <span onClick={() => setOpen(!isOpen)} className="contents">
@@ -83,7 +96,8 @@ export function Popover({
         <div
           role="dialog"
           className={cn(
-            'absolute z-50 min-w-[12rem] rounded-lg border border-grey-2A bg-grey-22 p-3 text-sm text-text-primary shadow-xl',
+            'absolute z-50 min-w-[12rem] rounded-lg border bg-grey-22 p-3 text-sm text-text-primary',
+            surfaces[styleVariant],
             placements[placement],
             aligns[align],
             className
