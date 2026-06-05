@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../../utils/cn'
 
 export type BannerTone = 'neutral' | 'accent' | 'info'
+export type BannerStyleVariant = 'bar' | 'floating'
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /** Tone. Defaults to 'accent'. */
@@ -12,6 +13,12 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode
   /** Called when the dismiss button is clicked; omit to hide it. */
   onDismiss?: () => void
+  /**
+   * Visual style. Defaults to 'bar'.
+   * - `bar` — full-width edge-to-edge bar with a bottom hairline.
+   * - `floating` — inset, rounded, self-contained pill with a full border.
+   */
+  styleVariant?: BannerStyleVariant
   /** Banner message. */
   children: ReactNode
 }
@@ -27,6 +34,7 @@ export function Banner({
   icon,
   action,
   onDismiss,
+  styleVariant = 'bar',
   children,
   className,
   ...rest
@@ -37,12 +45,19 @@ export function Banner({
     info: 'bg-info-tint text-info border-info/20',
   }
 
+  // bar: edge-to-edge with a bottom hairline; floating: inset rounded pill.
+  const shape =
+    styleVariant === 'floating'
+      ? 'mx-4 my-3 rounded-lg border shadow-sm'
+      : 'border-b'
+
   return (
     <div
       role="region"
       aria-label="Announcement"
       className={cn(
-        'flex items-center justify-center gap-3 border-b px-4 py-2.5 text-sm',
+        'flex items-center justify-center gap-3 px-4 py-2.5 text-sm',
+        shape,
         tones[tone],
         className
       )}
