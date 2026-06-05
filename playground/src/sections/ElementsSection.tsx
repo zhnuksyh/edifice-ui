@@ -7,10 +7,12 @@ import { Avatar, AvatarGroup } from '../../../components/web/ui/Avatar'
 import { Spinner } from '../../../components/web/ui/Spinner'
 import type { SpinnerSize } from '../../../components/web/ui/Spinner'
 import { Tooltip } from '../../../components/web/ui/Tooltip'
+import type { TooltipStyleVariant } from '../../../components/web/ui/Tooltip'
 import { Tabs } from '../../../components/web/ui/Tabs'
 import { Popover } from '../../../components/web/ui/Popover'
+import type { PopoverStyleVariant } from '../../../components/web/ui/Popover'
 import { Menu } from '../../../components/web/ui/Menu'
-import type { MenuItem } from '../../../components/web/ui/Menu'
+import type { MenuItem, MenuStyleVariant } from '../../../components/web/ui/Menu'
 import { Button } from '../../../components/web/ui/Button'
 import { Showcase, Row } from '../components/Showcase'
 
@@ -34,6 +36,10 @@ const BADGE_VARIANTS: BadgeVariant[] = [
   'purple',
 ]
 const BADGE_STYLE_VARIANTS: BadgeStyleVariant[] = ['soft', 'solid', 'outline']
+const TOOLTIP_STYLE_VARIANTS: TooltipStyleVariant[] = ['dark', 'light']
+// Popover and Menu share the same surface axis.
+const POPOVER_STYLE_VARIANTS: PopoverStyleVariant[] = ['elevated', 'outlined']
+const MENU_STYLE_VARIANTS: MenuStyleVariant[] = ['elevated', 'outlined']
 const SPINNER_SIZES: SpinnerSize[] = ['sm', 'md', 'lg']
 
 const TAB_ITEMS = [
@@ -138,9 +144,9 @@ export function ElementsSection() {
       <Showcase
         title="Tooltip"
         source="components/web/ui/Tooltip.tsx"
-        description="Shows on hover and keyboard focus. Four placements."
+        description="Shows on hover and keyboard focus. Four placements, two color schemes."
       >
-        <Row>
+        <Row label="Placements">
           {(['top', 'bottom', 'left', 'right'] as const).map((placement) => (
             <Tooltip
               key={placement}
@@ -148,6 +154,17 @@ export function ElementsSection() {
               content={`Tooltip on ${placement}`}
             >
               <Button variant="ghost">{placement}</Button>
+            </Tooltip>
+          ))}
+        </Row>
+        <Row label="styleVariant">
+          {TOOLTIP_STYLE_VARIANTS.map((styleVariant) => (
+            <Tooltip
+              key={styleVariant}
+              styleVariant={styleVariant}
+              content={`${styleVariant} tooltip`}
+            >
+              <Button variant="ghost">{styleVariant}</Button>
             </Tooltip>
           ))}
         </Row>
@@ -166,26 +183,42 @@ export function ElementsSection() {
       <Showcase
         title="Popover"
         source="components/web/ui/Popover.tsx"
-        description="Floating panel anchored to a trigger; closes on outside click and Escape."
+        description="Floating panel anchored to a trigger; closes on outside click and Escape. Two surface treatments."
       >
-        <Row>
-          <Popover trigger={<Button variant="ghost">Open popover</Button>}>
-            <p className="font-medium text-text-primary">Popover title</p>
-            <p className="mt-1 text-text-secondary">
-              Any content can live in a popover panel.
-            </p>
-          </Popover>
+        <Row label="styleVariant">
+          {POPOVER_STYLE_VARIANTS.map((styleVariant) => (
+            <Popover
+              key={styleVariant}
+              styleVariant={styleVariant}
+              trigger={<Button variant="ghost">{styleVariant}</Button>}
+            >
+              <p className="font-medium text-text-primary">Popover title</p>
+              <p className="mt-1 text-text-secondary">
+                Any content can live in a {styleVariant} popover panel.
+              </p>
+            </Popover>
+          ))}
         </Row>
       </Showcase>
 
       <Showcase
         title="Menu"
         source="components/web/ui/Menu.tsx"
-        description="Dropdown of actions with keyboard nav, separators, labels, and a danger item."
+        description="Dropdown of actions with keyboard nav, separators, labels, and a danger item. Two surface treatments."
       >
-        <Row>
-          <Menu trigger={<Button>Actions ▾</Button>} items={MENU_ITEMS} />
-          <Menu align="end" trigger={<Button variant="ghost">Aligned end ▾</Button>} items={MENU_ITEMS} />
+        <Row label="styleVariant">
+          {MENU_STYLE_VARIANTS.map((styleVariant) => (
+            <Menu
+              key={styleVariant}
+              styleVariant={styleVariant}
+              trigger={<Button variant="ghost">{styleVariant}</Button>}
+              items={MENU_ITEMS}
+            />
+          ))}
+        </Row>
+        <Row label="Alignment">
+          <Menu trigger={<Button>Actions</Button>} items={MENU_ITEMS} />
+          <Menu align="end" trigger={<Button variant="ghost">Aligned end</Button>} items={MENU_ITEMS} />
         </Row>
       </Showcase>
     </div>

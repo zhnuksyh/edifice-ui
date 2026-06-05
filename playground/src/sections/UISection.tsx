@@ -5,7 +5,10 @@ import { Accordion } from '../../../components/web/ui/Accordion'
 import { Modal } from '../../../components/web/ui/Modal'
 import type { ModalStyleVariant } from '../../../components/web/ui/Modal'
 import { Toast } from '../../../components/web/ui/Toast'
-import type { ToastVariant } from '../../../components/web/ui/Toast'
+import type {
+  ToastVariant,
+  ToastStyleVariant,
+} from '../../../components/web/ui/Toast'
 import { Alert } from '../../../components/web/ui/Alert'
 import type {
   AlertVariant,
@@ -19,7 +22,10 @@ import { EmptyState } from '../../../components/web/ui/EmptyState'
 import { Divider } from '../../../components/web/ui/Divider'
 import { Kbd } from '../../../components/web/ui/Kbd'
 import { Drawer } from '../../../components/web/ui/Drawer'
-import type { DrawerSide } from '../../../components/web/ui/Drawer'
+import type {
+  DrawerSide,
+  DrawerStyleVariant,
+} from '../../../components/web/ui/Drawer'
 import { Stepper } from '../../../components/web/ui/Stepper'
 import { Rating } from '../../../components/web/ui/Rating'
 import { Inbox } from 'lucide-react'
@@ -28,6 +34,7 @@ import { useToast } from '../../../components/web/ui/ToastProvider'
 import { Showcase, Row } from '../components/Showcase'
 
 const TOAST_VARIANTS: ToastVariant[] = ['success', 'warning', 'danger', 'info']
+const TOAST_STYLE_VARIANTS: ToastStyleVariant[] = ['soft', 'solid', 'outline']
 const ALERT_VARIANTS: AlertVariant[] = ['info', 'success', 'warning', 'danger']
 const ALERT_STYLE_VARIANTS: AlertStyleVariant[] = ['soft', 'solid', 'outline']
 const CARD_STYLE_VARIANTS: CardStyleVariant[] = ['elevated', 'outlined', 'ghost']
@@ -50,12 +57,14 @@ const STEPPER_STEPS = [
 ]
 
 const DRAWER_SIDES: DrawerSide[] = ['left', 'right', 'top', 'bottom']
+const DRAWER_STYLE_VARIANTS: DrawerStyleVariant[] = ['overlay', 'flush']
 
 /** Card, Accordion, Modal, and Toast. */
 export function UISection() {
   const [modalStyle, setModalStyle] = useState<ModalStyleVariant | null>(null)
   const [page, setPage] = useState(1)
   const [drawerSide, setDrawerSide] = useState<DrawerSide | null>(null)
+  const [drawerStyle, setDrawerStyle] = useState<DrawerStyleVariant>('overlay')
   const [step, setStep] = useState(1)
   const [rating, setRating] = useState(3)
   const { toast, success, error } = useToast()
@@ -145,12 +154,33 @@ export function UISection() {
       <Showcase
         title="Drawer"
         source="components/web/ui/Drawer.tsx"
-        description="Panel that slides in from any edge over an overlay. Closes on overlay click or Escape."
+        description="Panel that slides in from any edge. Closes on overlay click or Escape. Two backdrop treatments."
       >
-        <Row>
+        <Row label="Sides (overlay)">
           {DRAWER_SIDES.map((side) => (
-            <Button key={side} variant="ghost" onClick={() => setDrawerSide(side)}>
+            <Button
+              key={side}
+              variant="ghost"
+              onClick={() => {
+                setDrawerStyle('overlay')
+                setDrawerSide(side)
+              }}
+            >
               Open {side}
+            </Button>
+          ))}
+        </Row>
+        <Row label="styleVariant (right)">
+          {DRAWER_STYLE_VARIANTS.map((styleVariant) => (
+            <Button
+              key={styleVariant}
+              variant="secondary"
+              onClick={() => {
+                setDrawerStyle(styleVariant)
+                setDrawerSide('right')
+              }}
+            >
+              Open {styleVariant}
             </Button>
           ))}
         </Row>
@@ -158,7 +188,8 @@ export function UISection() {
           isOpen={drawerSide !== null}
           onClose={() => setDrawerSide(null)}
           side={drawerSide ?? 'right'}
-          title={`Drawer (${drawerSide ?? 'right'})`}
+          styleVariant={drawerStyle}
+          title={`Drawer (${drawerStyle})`}
           footer={
             <>
               <Button variant="ghost" onClick={() => setDrawerSide(null)}>
@@ -224,15 +255,25 @@ export function UISection() {
       <Showcase
         title="Toast"
         source="components/web/ui/Toast.tsx"
-        description="Transient notification in four tones (auto-dismiss disabled here for display)."
+        description="Transient notification; four tones × three styleVariant treatments (auto-dismiss disabled here for display)."
       >
-        <div className="flex max-w-md flex-col gap-3">
-          {TOAST_VARIANTS.map((variant) => (
-            <Toast key={variant} variant={variant} title={variant} duration={0}>
-              This is a {variant} toast message.
-            </Toast>
-          ))}
-        </div>
+        {TOAST_STYLE_VARIANTS.map((styleVariant) => (
+          <Row key={styleVariant} label={styleVariant}>
+            <div className="flex w-full max-w-md flex-col gap-3">
+              {TOAST_VARIANTS.map((variant) => (
+                <Toast
+                  key={variant}
+                  variant={variant}
+                  styleVariant={styleVariant}
+                  title={variant}
+                  duration={0}
+                >
+                  This is a {styleVariant} {variant} toast.
+                </Toast>
+              ))}
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
