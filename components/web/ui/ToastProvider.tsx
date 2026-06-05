@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from 'react'
 import { cn } from '../../../utils/cn'
-import { Toast, type ToastVariant } from './Toast'
+import { Toast, type ToastVariant, type ToastStyleVariant } from './Toast'
 
 export type ToastPosition =
   | 'top-right'
@@ -16,8 +16,10 @@ export type ToastPosition =
   | 'bottom-left'
 
 export interface ToastOptions {
-  /** Tone. Defaults to 'info'. */
+  /** Tone (hue). Defaults to 'info'. */
   variant?: ToastVariant
+  /** Visual treatment. Defaults to 'soft'. */
+  styleVariant?: ToastStyleVariant
   /** Optional bold heading. */
   title?: ReactNode
   /** Message body. */
@@ -101,6 +103,7 @@ export function ToastProvider({ children, position = 'bottom-right' }: ToastProv
           <div key={t.id} className="pointer-events-auto w-full">
             <Toast
               variant={t.variant}
+              styleVariant={t.styleVariant}
               title={t.title}
               duration={t.duration}
               onClose={() => dismiss(t.id)}
