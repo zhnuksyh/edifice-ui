@@ -1,4 +1,5 @@
 import { useState, type HTMLAttributes } from 'react'
+import { Star } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export type RatingSize = 'sm' | 'md' | 'lg'
@@ -15,24 +16,6 @@ export interface RatingProps
   size?: RatingSize
   /** Disable interaction (display only). Inferred when `onChange` is omitted. */
   readOnly?: boolean
-}
-
-/** Single star glyph; `filled` toggles the fill. */
-function Star({ filled, className }: { filled: boolean; className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill={filled ? 'currentColor' : 'none'}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-    </svg>
-  )
 }
 
 /**
@@ -77,8 +60,12 @@ export function Rating({
           return (
             <Star
               key={starValue}
-              filled={filled}
-              className={cn(sizes[size], filled ? 'text-yellow' : 'text-grey-2A')}
+              strokeWidth={2}
+              aria-hidden="true"
+              className={cn(
+                sizes[size],
+                filled ? 'fill-current text-yellow' : 'text-grey-2A'
+              )}
             />
           )
         }
@@ -95,10 +82,13 @@ export function Rating({
             className="rounded transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
           >
             <Star
-              filled={filled}
+              strokeWidth={2}
+              aria-hidden="true"
               className={cn(
                 sizes[size],
-                filled ? 'text-yellow' : 'text-grey-2A hover:text-grey-44'
+                filled
+                  ? 'fill-current text-yellow'
+                  : 'text-grey-2A hover:text-grey-44'
               )}
             />
           </button>

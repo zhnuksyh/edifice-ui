@@ -1,4 +1,5 @@
 import { Fragment, type HTMLAttributes, type ReactNode } from 'react'
+import { ChevronRight } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export interface BreadcrumbItem {
@@ -31,18 +32,11 @@ export function Breadcrumb({
   }
 
   const sep = separator ?? (
-    <svg
-      viewBox="0 0 24 24"
+    <ChevronRight
       className="h-4 w-4 text-text-muted"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth={2}
       aria-hidden="true"
-    >
-      <path d="m9 18 6-6-6-6" />
-    </svg>
+    />
   )
 
   return (

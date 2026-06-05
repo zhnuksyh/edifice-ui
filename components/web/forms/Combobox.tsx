@@ -1,4 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 import { useClickOutside } from '../../../hooks/useClickOutside'
 
@@ -187,21 +188,14 @@ export function Combobox({
             className
           )}
         />
-        <svg
+        <ChevronDown
           className={cn(
             'pointer-events-none absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-text-secondary transition-transform duration-fast',
             open && 'rotate-180'
           )}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          strokeWidth={2}
           aria-hidden="true"
-        >
-          <path d="m6 9 6 6 6-6" />
-        </svg>
+        />
 
         {open && (
           <ul
@@ -237,18 +231,11 @@ export function Combobox({
                   >
                     <span className="truncate">{opt.label}</span>
                     {isSelected && (
-                      <svg
+                      <Check
                         className="ml-2 h-4 w-4 shrink-0"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
+                        strokeWidth={2}
                         aria-hidden="true"
-                      >
-                        <path d="M20 6 9 17l-5-5" />
-                      </svg>
+                      />
                     )}
                   </li>
                 )

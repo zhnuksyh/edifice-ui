@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 import { useClickOutside } from '../../../hooks/useClickOutside'
 
@@ -194,21 +195,14 @@ export function Select({
           <span className="truncate">
             {selectedOption ? selectedOption.label : placeholder}
           </span>
-          <svg
+          <ChevronDown
             className={cn(
               'h-5 w-5 shrink-0 text-text-secondary transition-transform duration-fast',
               open && 'rotate-180'
             )}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            strokeWidth={2}
             aria-hidden="true"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
+          />
         </button>
 
         {open && (
@@ -240,18 +234,11 @@ export function Select({
                 >
                   <span className="truncate">{opt.label}</span>
                   {isSelected && (
-                    <svg
+                    <Check
                       className="ml-2 h-4 w-4 shrink-0"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                      strokeWidth={2}
                       aria-hidden="true"
-                    >
-                      <path d="M20 6 9 17l-5-5" />
-                    </svg>
+                    />
                   )}
                 </li>
               )

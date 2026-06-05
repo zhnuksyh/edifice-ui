@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react'
+import { Check } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export type StepperOrientation = 'horizontal' | 'vertical'
@@ -72,18 +73,7 @@ export function Stepper({
                 )}
               >
                 {isComplete ? (
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
+                  <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
                 ) : (
                   index + 1
                 )}

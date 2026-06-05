@@ -1,32 +1,11 @@
 import type { HTMLAttributes, ReactNode } from 'react'
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
-/** Diagonal trend arrow (Lucide arrow-up-right / arrow-down-right paths). */
+/** Diagonal trend arrow. */
 function TrendArrow({ direction }: { direction: 'up' | 'down' }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-3.5 w-3.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      {direction === 'up' ? (
-        <>
-          <path d="M7 7h10v10" />
-          <path d="M7 17 17 7" />
-        </>
-      ) : (
-        <>
-          <path d="M7 7 17 17" />
-          <path d="M17 7v10H7" />
-        </>
-      )}
-    </svg>
-  )
+  const Icon = direction === 'up' ? ArrowUpRight : ArrowDownRight
+  return <Icon className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
 }
 
 export type StatTrend = 'up' | 'down' | 'neutral'

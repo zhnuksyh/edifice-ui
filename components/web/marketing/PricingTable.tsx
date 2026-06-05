@@ -1,4 +1,5 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { HTMLAttributes } from 'react'
+import { Check } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 import { Button } from '../ui/Button'
 
@@ -103,7 +104,11 @@ export function PricingTable({
                 key={feature}
                 className="flex items-start gap-2 text-sm text-text-secondary"
               >
-                <CheckIcon />
+                <Check
+                  className="mt-0.5 h-4 w-4 shrink-0 text-yellow"
+                  strokeWidth={2.5}
+                  aria-hidden="true"
+                />
                 <span>{feature}</span>
               </li>
             ))}
@@ -120,22 +125,5 @@ export function PricingTable({
         </div>
       ))}
     </div>
-  )
-}
-
-function CheckIcon(): ReactNode {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="mt-0.5 h-4 w-4 shrink-0 text-yellow"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M20 6 9 17l-5-5" />
-    </svg>
   )
 }

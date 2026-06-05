@@ -1,4 +1,5 @@
 import { useState, type HTMLAttributes, type ReactNode } from 'react'
+import { ChevronDown } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export interface AccordionItem {
@@ -71,15 +72,14 @@ export function Accordion({
               className="flex w-full items-center justify-between px-5 py-4 text-left font-medium text-text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500"
             >
               <span>{item.title}</span>
-              <span
+              <ChevronDown
                 className={cn(
-                  'ml-4 shrink-0 transition-transform duration-normal',
+                  'ml-4 h-4 w-4 shrink-0 text-text-muted transition-transform duration-normal',
                   isOpen && 'rotate-180'
                 )}
+                strokeWidth={2}
                 aria-hidden="true"
-              >
-                ▾
-              </span>
+              />
             </button>
             {isOpen && (
               <div className="px-5 pb-5 pt-0 text-text-secondary">

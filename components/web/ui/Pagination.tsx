@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from 'react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
 export interface PaginationProps
@@ -73,7 +74,7 @@ export function Pagination({
         onClick={() => go(page - 1)}
         className={arrow}
       >
-        ‹
+        <ChevronLeft className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
       </button>
 
       {pages.map((p, i) =>
@@ -107,7 +108,7 @@ export function Pagination({
         onClick={() => go(page + 1)}
         className={arrow}
       >
-        ›
+        <ChevronRight className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
       </button>
     </nav>
   )
