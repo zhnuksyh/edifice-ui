@@ -6,12 +6,17 @@ import { text } from './shared.js'
 
 /** Register component-related tools: list_components, get_component. */
 export function registerComponentTools(server: McpServer): void {
+  // Derive the category hint from the catalog so the description can't drift.
+  const allCategories = Array.from(
+    new Set([...COMPONENT_CATEGORIES.web, ...COMPONENT_CATEGORIES.mobile])
+  ).join('/')
+
   server.registerTool(
     'list_components',
     {
       title: 'List components',
       description:
-        'List Edifice components, optionally filtered by platform (web/mobile) and category (layout/ui/forms/marketing).',
+        `List Edifice components, optionally filtered by platform (web/mobile) and category (${allCategories}).`,
       inputSchema: {
         platform: z.enum(['web', 'mobile']).optional(),
         category: z.string().optional(),
