@@ -10,11 +10,19 @@ import {
 import { cn } from '../../../utils/cn'
 
 export type AlertVariant = 'info' | 'success' | 'warning' | 'danger'
+export type AlertStyleVariant = 'soft' | 'solid' | 'outline'
 
 export interface AlertProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
-  /** Tone. Defaults to 'info'. */
+  /** Tone (hue). Defaults to 'info'. */
   variant?: AlertVariant
+  /**
+   * Visual treatment. Defaults to 'soft'.
+   * - `soft` — tinted surface with a hue left-accent (the original look).
+   * - `solid` — filled hue background with contrasting text.
+   * - `outline` — transparent with a full hue border.
+   */
+  styleVariant?: AlertStyleVariant
   /** Optional bold heading. */
   title?: ReactNode
   /** Message body. */
@@ -38,27 +46,57 @@ const ICONS: Record<AlertVariant, ComponentType<LucideProps>> = {
  */
 export function Alert({
   variant = 'info',
+  styleVariant = 'soft',
   title,
   children,
   onDismiss,
   className,
   ...rest
 }: AlertProps) {
-  const variants: Record<AlertVariant, string> = {
-    info: 'border-info bg-info-tint text-info',
-    success: 'border-success bg-success-tint text-success',
-    warning: 'border-warning bg-warning-tint text-warning',
-    danger: 'border-danger bg-danger-tint text-danger',
+  // soft — tinted surface + hue left-accent (the original look).
+  const soft: Record<AlertVariant, string> = {
+    info: 'border-l-4 border-info bg-info-tint text-info',
+    success: 'border-l-4 border-success bg-success-tint text-success',
+    warning: 'border-l-4 border-warning bg-warning-tint text-warning',
+    danger: 'border-l-4 border-danger bg-danger-tint text-danger',
+  }
+
+  // solid — filled hue background, contrasting text.
+  const solid: Record<AlertVariant, string> = {
+    info: 'bg-info text-text-inverse',
+    success: 'bg-success text-text-inverse',
+    warning: 'bg-warning text-text-inverse',
+    danger: 'bg-danger text-text-inverse',
+  }
+
+  // outline — transparent with a full hue border.
+  const outline: Record<AlertVariant, string> = {
+    info: 'border border-info text-info',
+    success: 'border border-success text-success',
+    warning: 'border border-warning text-warning',
+    danger: 'border border-danger text-danger',
+  }
+
+  const treatments: Record<AlertStyleVariant, Record<AlertVariant, string>> = {
+    soft,
+    solid,
+    outline,
   }
 
   const Icon = ICONS[variant]
+  const isSolid = styleVariant === 'solid'
+  // On a filled surface, body/dismiss text inherits the contrasting color.
+  const bodyText = isSolid ? 'text-current/90' : 'text-text-secondary'
+  const dismissText = isSolid
+    ? 'text-current/80 hover:text-current'
+    : 'text-text-secondary hover:text-text-primary'
 
   return (
     <div
       role="alert"
       className={cn(
-        'flex items-start gap-3 rounded-lg border-l-4 bg-surface p-4',
-        variants[variant],
+        'flex items-start gap-3 rounded-lg p-4',
+        treatments[styleVariant][variant],
         className
       )}
       {...rest}
@@ -70,14 +108,17 @@ export function Alert({
       />
       <div className="flex-1">
         {title && <p className="font-semibold">{title}</p>}
-        <div className="text-sm text-text-secondary">{children}</div>
+        <div className={cn('text-sm', bodyText)}>{children}</div>
       </div>
       {onDismiss && (
         <button
           type="button"
           onClick={onDismiss}
           aria-label="Dismiss"
-          className="shrink-0 text-text-secondary transition-colors duration-fast hover:text-text-primary"
+          className={cn(
+            'shrink-0 transition-colors duration-fast',
+            dismissText
+          )}
         >
           <X className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
         </button>
