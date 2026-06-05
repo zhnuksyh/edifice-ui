@@ -3,12 +3,20 @@ import type { HeroStyleVariant } from '../../../components/web/marketing/HeroSec
 import { CTASection } from '../../../components/web/marketing/CTASection'
 import type { CTAStyleVariant } from '../../../components/web/marketing/CTASection'
 import { ContactSection } from '../../../components/web/marketing/ContactSection'
+import type { ContactStyleVariant } from '../../../components/web/marketing/ContactSection'
 import { PricingTable } from '../../../components/web/marketing/PricingTable'
-import type { PricingTier } from '../../../components/web/marketing/PricingTable'
+import type {
+  PricingTier,
+  PricingStyleVariant,
+} from '../../../components/web/marketing/PricingTable'
 import { FAQSection } from '../../../components/web/marketing/FAQSection'
+import type { FAQStyleVariant } from '../../../components/web/marketing/FAQSection'
 import { LogoCloud } from '../../../components/web/marketing/LogoCloud'
+import type { LogoCloudStyleVariant } from '../../../components/web/marketing/LogoCloud'
 import { Banner } from '../../../components/web/marketing/Banner'
+import type { BannerStyleVariant } from '../../../components/web/marketing/Banner'
 import { NewsletterSignup } from '../../../components/web/marketing/NewsletterSignup'
+import type { NewsletterStyleVariant } from '../../../components/web/marketing/NewsletterSignup'
 import { Button } from '../../../components/web/ui/Button'
 import { Sparkles } from 'lucide-react'
 import { Showcase, Row } from '../components/Showcase'
@@ -20,6 +28,18 @@ const HERO_VARIANTS: HeroStyleVariant[] = [
 ]
 
 const CTA_VARIANTS: CTAStyleVariant[] = ['banner', 'boxed', 'gradient']
+
+const CONTACT_VARIANTS: ContactStyleVariant[] = ['split', 'stacked', 'card']
+
+const FAQ_VARIANTS: FAQStyleVariant[] = ['centered', 'two-column']
+
+const PRICING_VARIANTS: PricingStyleVariant[] = ['cards', 'bordered', 'minimal']
+
+const NEWSLETTER_VARIANTS: NewsletterStyleVariant[] = ['inline', 'card', 'split']
+
+const LOGO_VARIANTS: LogoCloudStyleVariant[] = ['row', 'grid', 'bordered']
+
+const BANNER_VARIANTS: BannerStyleVariant[] = ['bar', 'floating']
 
 const LOGOS = ['Acme', 'Globex', 'Initech', 'Umbra', 'Stark'].map((name) => ({
   id: name,
@@ -124,81 +144,122 @@ export function MarketingSection() {
       <Showcase
         title="ContactSection"
         source="components/web/marketing/ContactSection.tsx"
-        description="Intro copy plus a simple contact form."
+        description="Intro copy plus a simple contact form. Three styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-grey-2A">
-          <ContactSection
-            subtitle="Have a question? Send us a note and we'll get back to you."
-            onSubmit={() => {}}
-          />
-        </div>
+        {CONTACT_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <ContactSection
+                styleVariant={variant}
+                subtitle="Have a question? Send us a note and we'll get back to you."
+                onSubmit={() => {}}
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="PricingTable"
         source="components/web/marketing/PricingTable.tsx"
-        description="Tiered pricing with features and a CTA each; one highlighted 'Popular' tier."
+        description="Tiered pricing with one highlighted 'Popular' tier. Three styleVariant looks."
       >
-        <PricingTable tiers={TIERS} />
+        {PRICING_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full">
+              <PricingTable tiers={TIERS} styleVariant={variant} />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="FAQSection"
         source="components/web/marketing/FAQSection.tsx"
-        description="Titled Q&A built on Accordion."
+        description="Titled Q&A built on Accordion. Two styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-grey-2A">
-          <FAQSection items={FAQ_ITEMS} subtitle="Everything you need to know." />
-        </div>
+        {FAQ_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <FAQSection
+                styleVariant={variant}
+                items={FAQ_ITEMS}
+                subtitle="Everything you need to know."
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="Banner"
         source="components/web/marketing/Banner.tsx"
-        description="Full-width announcement bar; three tones, optional icon, action, and dismiss."
+        description="Announcement bar; three tones, optional icon/action/dismiss, two styleVariants."
       >
-        <div className="flex flex-col gap-3 overflow-hidden rounded-xl border border-grey-2A">
-          <Banner
-            icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
-            action={
-              <a href="#" className="underline underline-offset-2">
-                Learn more
-              </a>
-            }
-            onDismiss={() => {}}
-          >
-            Edifice v2 is here — faster, leaner, fully typed.
-          </Banner>
-          <Banner tone="info">Scheduled maintenance this Sunday at 02:00 UTC.</Banner>
-          <Banner tone="neutral" onDismiss={() => {}}>
-            We use cookies to improve your experience.
-          </Banner>
-        </div>
+        {BANNER_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <Banner
+                styleVariant={variant}
+                icon={<Sparkles className="h-4 w-4" strokeWidth={1.75} />}
+                action={
+                  <a href="#" className="underline underline-offset-2">
+                    Learn more
+                  </a>
+                }
+                onDismiss={() => {}}
+              >
+                Edifice v2 is here — faster, leaner, fully typed.
+              </Banner>
+            </div>
+          </Row>
+        ))}
+        <Row label="tones (bar)">
+          <div className="flex w-full flex-col gap-3 overflow-hidden rounded-xl border border-grey-2A">
+            <Banner tone="info">Scheduled maintenance this Sunday at 02:00 UTC.</Banner>
+            <Banner tone="neutral" onDismiss={() => {}}>
+              We use cookies to improve your experience.
+            </Banner>
+          </div>
+        </Row>
       </Showcase>
 
       <Showcase
         title="LogoCloud"
         source="components/web/marketing/LogoCloud.tsx"
-        description="A 'trusted by' strip of partner logos; muted by default, brighten on hover."
+        description="A 'trusted by' strip; muted by default, brighten on hover. Three styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-grey-2A">
-          <LogoCloud title="Trusted by teams at" logos={LOGOS} />
-        </div>
+        {LOGO_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <LogoCloud
+                styleVariant={variant}
+                title="Trusted by teams at"
+                logos={LOGOS}
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
         title="NewsletterSignup"
         source="components/web/marketing/NewsletterSignup.tsx"
-        description="Email-capture block with heading and inline form; calls onSubscribe(email)."
+        description="Email-capture block; calls onSubscribe(email). Three styleVariant layouts."
       >
-        <div className="overflow-hidden rounded-xl border border-grey-2A">
-          <NewsletterSignup
-            title="Stay in the loop"
-            subtitle="Get product updates and the occasional deep dive. No spam."
-            note="Unsubscribe anytime."
-            onSubscribe={() => {}}
-          />
-        </div>
+        {NEWSLETTER_VARIANTS.map((variant) => (
+          <Row key={variant} label={variant}>
+            <div className="w-full overflow-hidden rounded-xl border border-grey-2A">
+              <NewsletterSignup
+                styleVariant={variant}
+                title="Stay in the loop"
+                subtitle="Get product updates and the occasional deep dive. No spam."
+                note="Unsubscribe anytime."
+                onSubscribe={() => {}}
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
     </div>
   )

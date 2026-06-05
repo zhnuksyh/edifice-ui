@@ -8,6 +8,7 @@ import { Stack } from '../../../components/web/layout/Stack'
 import { Grid } from '../../../components/web/layout/Grid'
 import { AspectRatio } from '../../../components/web/layout/AspectRatio'
 import { Sidebar } from '../../../components/web/layout/Sidebar'
+import type { SidebarStyleVariant } from '../../../components/web/layout/Sidebar'
 import { Button } from '../../../components/web/ui/Button'
 import { Home, Inbox, Settings, BarChart3 } from 'lucide-react'
 import { Showcase, Row } from '../components/Showcase'
@@ -44,6 +45,12 @@ const NAVBAR_VARIANTS: NavbarStyleVariant[] = [
 ]
 
 const FOOTER_VARIANTS: FooterStyleVariant[] = ['columns', 'minimal', 'centered']
+
+const SIDEBAR_VARIANTS: SidebarStyleVariant[] = [
+  'default',
+  'floating',
+  'compact',
+]
 
 const NAV_LINKS = [
   { label: 'Home', href: '#', active: true },
@@ -231,15 +238,25 @@ export function LayoutSection() {
       <Showcase
         title="Sidebar"
         source="components/web/layout/Sidebar.tsx"
-        description="Vertical navigation rail with grouped, active-aware items and header/footer slots."
+        description="Vertical navigation rail with grouped, active-aware items and header/footer slots. Three styleVariant looks."
       >
-        <div className="h-80 overflow-hidden rounded-xl border border-grey-2A">
-          <Sidebar
-            header={<p className="font-display font-bold text-text-primary">Edifice</p>}
-            groups={SIDEBAR_GROUPS}
-            footer={<p className="text-xs text-text-muted">v0.1.0</p>}
-          />
-        </div>
+        <Row>
+          {SIDEBAR_VARIANTS.map((variant) => (
+            <div key={variant}>
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-grey-AA">
+                {variant}
+              </p>
+              <div className="h-80 w-64 overflow-hidden rounded-xl border border-grey-2A bg-grey-11">
+                <Sidebar
+                  styleVariant={variant}
+                  header={<p className="font-display font-bold text-text-primary">Edifice</p>}
+                  groups={SIDEBAR_GROUPS}
+                  footer={<p className="text-xs text-text-muted">v0.1.0</p>}
+                />
+              </div>
+            </div>
+          ))}
+        </Row>
       </Showcase>
     </div>
   )
