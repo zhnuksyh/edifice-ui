@@ -10,10 +10,22 @@ export type ButtonVariant =
   | 'danger'
   | 'purple'
 export type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonStyleVariant = 'solid' | 'soft' | 'outline'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Visual style. Defaults to 'primary'. */
+  /** Visual style (hue/role). Defaults to 'primary'. */
   variant?: ButtonVariant
+  /**
+   * Treatment, applied over `variant`'s hue. Optional — when omitted, the
+   * button keeps its original per-variant look.
+   * - `solid` — filled hue background.
+   * - `soft` — tinted hue background, hue text.
+   * - `outline` — transparent, hue border + hue text.
+   *
+   * The hue is derived from `variant` (primary→accent yellow, danger→red,
+   * purple→purple; secondary/accent/ghost map to accent).
+   */
+  styleVariant?: ButtonStyleVariant
   /** Size preset. Defaults to 'md'. */
   size?: ButtonSize
   /** Stretch to container width. */
@@ -41,8 +53,12 @@ const SPINNER_SIZE = { sm: 'sm', md: 'sm', lg: 'md' } as const
  * Supports loading (spinner + disabled), leading/trailing icons, and an
  * icon-only mode.
  */
+/** Hues available to the styleVariant treatment axis. */
+type ButtonHue = 'accent' | 'danger' | 'purple'
+
 export function Button({
   variant = 'primary',
+  styleVariant,
   size = 'md',
   fullWidth = false,
   loading = false,
@@ -87,9 +103,50 @@ export function Button({
     lg: 'h-12 w-12 text-lg',
   }
 
-  // Secondary/ghost render dark-on-light text, so they need the neutral spinner.
-  const spinnerTone =
-    variant === 'ghost' || variant === 'secondary' ? 'neutral' : 'inverse'
+  // Derive a hue from variant for the optional styleVariant treatment axis.
+  const hue: ButtonHue =
+    variant === 'danger' ? 'danger' : variant === 'purple' ? 'purple' : 'accent'
+
+  // treatment × hue — only used when styleVariant is set.
+  const treatments: Record<ButtonStyleVariant, Record<ButtonHue, string>> = {
+    solid: {
+      accent:
+        'bg-accent-500 text-text-inverse hover:bg-accent-600 active:bg-accent-600 focus-visible:ring-accent-400',
+      danger:
+        'bg-danger text-text-inverse hover:bg-danger-dark active:bg-danger-dark focus-visible:ring-danger',
+      purple:
+        'bg-purple text-white hover:bg-purple/90 active:bg-purple/90 focus-visible:ring-purple',
+    },
+    soft: {
+      accent:
+        'bg-yellow-tint text-yellow hover:bg-yellow-tint/70 active:bg-yellow-tint/70 focus-visible:ring-yellow/40',
+      danger:
+        'bg-danger-tint text-danger hover:bg-danger-tint/70 active:bg-danger-tint/70 focus-visible:ring-danger/40',
+      purple:
+        'bg-purple-tint text-purple hover:bg-purple-tint/70 active:bg-purple-tint/70 focus-visible:ring-purple/40',
+    },
+    outline: {
+      accent:
+        'border border-yellow text-yellow hover:bg-yellow-tint active:bg-yellow-tint focus-visible:ring-yellow/40',
+      danger:
+        'border border-danger text-danger hover:bg-danger-tint active:bg-danger-tint focus-visible:ring-danger/40',
+      purple:
+        'border border-purple text-purple hover:bg-purple-tint active:bg-purple-tint focus-visible:ring-purple/40',
+    },
+  }
+
+  // styleVariant (when set) wins; otherwise keep the original per-variant look.
+  const appearance = styleVariant
+    ? treatments[styleVariant][hue]
+    : variants[variant]
+
+  // Soft/outline and secondary/ghost render hue/dark text on light, so they
+  // need the neutral spinner; solid treatments and filled variants use inverse.
+  const neutralSpinner =
+    styleVariant === 'soft' ||
+    styleVariant === 'outline' ||
+    (!styleVariant && (variant === 'ghost' || variant === 'secondary'))
+  const spinnerTone = neutralSpinner ? 'neutral' : 'inverse'
 
   return (
     <button
@@ -98,7 +155,7 @@ export function Button({
       aria-busy={loading || undefined}
       className={cn(
         base,
-        variants[variant],
+        appearance,
         iconOnly ? iconOnlySizes[size] : sizes[size],
         fullWidth && 'w-full',
         className
