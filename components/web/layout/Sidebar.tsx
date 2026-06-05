@@ -25,6 +25,8 @@ export interface SidebarGroup {
   items: SidebarItem[]
 }
 
+export type SidebarStyleVariant = 'default' | 'floating' | 'compact'
+
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   /** Top slot — brand/logo. */
   header?: ReactNode
@@ -32,6 +34,13 @@ export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   groups: SidebarGroup[]
   /** Bottom slot — user menu, settings, etc. */
   footer?: ReactNode
+  /**
+   * Visual style. Defaults to 'default'.
+   * - `default` — full-height rail with a right divider.
+   * - `floating` — inset, fully-bordered, rounded card rail.
+   * - `compact` — narrower, tighter rows for icon-forward navigation.
+   */
+  styleVariant?: SidebarStyleVariant
 }
 
 /**
@@ -45,19 +54,31 @@ export function Sidebar({
   header,
   groups,
   footer,
+  styleVariant = 'default',
   className,
   ...rest
 }: SidebarProps) {
+  const compact = styleVariant === 'compact'
+
+  const shell =
+    styleVariant === 'floating'
+      ? 'm-3 h-[calc(100%-1.5rem)] rounded-xl border border-grey-2A shadow-sm'
+      : 'h-full border-r border-grey-2A'
+
   return (
     <aside
       className={cn(
-        'flex h-full w-60 shrink-0 flex-col border-r border-grey-2A bg-grey-1A',
+        'flex shrink-0 flex-col overflow-hidden bg-grey-1A',
+        compact ? 'w-52' : 'w-60',
+        shell,
         className
       )}
       {...rest}
     >
       {header && (
-        <div className="border-b border-grey-2A px-5 py-4">{header}</div>
+        <div className={cn('border-b border-grey-2A px-5', compact ? 'py-3' : 'py-4')}>
+          {header}
+        </div>
       )}
       <nav className="flex-1 overflow-y-auto p-3">
         {groups.map((group, index) => (
@@ -78,7 +99,8 @@ export function Sidebar({
                   </>
                 )
                 const classes = cn(
-                  'flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                  'flex items-center gap-2.5 rounded-lg px-3 text-sm font-medium transition-colors',
+                  compact ? 'py-1.5' : 'py-2',
                   item.active
                     ? 'bg-grey-22 text-yellow'
                     : 'text-text-secondary hover:bg-grey-22 hover:text-text-primary'
