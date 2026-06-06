@@ -179,6 +179,148 @@ export async function readComponent(
 }
 
 // ---------------------------------------------------------------------------
+// Component dependency resolution
+// ---------------------------------------------------------------------------
+
+/** A file in a resolved bundle. */
+export interface BundleFile {
+  /** Repo-relative path, e.g. `utils/cn.ts`. */
+  path: string
+  source: string
+}
+
+/** A component plus the full local dependency graph it needs to be copied in. */
+export interface ComponentBundle {
+  /** The entry component's repo-relative path. */
+  entry: string
+  /** Entry file first, then every transitive local file it imports (deduped). */
+  files: BundleFile[]
+  /** Bare import specifiers that are declared in the repo's peerDependencies. */
+  peerDeps: string[]
+  /** Bare import specifiers not in peerDependencies (e.g. `react`). */
+  externalDeps: string[]
+}
+
+/** Extensions to probe when resolving a relative import with no/implicit extension. */
+const RESOLVE_EXTS = ['.ts', '.tsx']
+
+/**
+ * Extract the module specifiers from a TypeScript source's import/export-from
+ * statements. Covers `import … from 'x'`, `export … from 'x'`, type-only forms,
+ * and bare side-effect `import 'x'`. A focused regex (not the TS compiler) keeps
+ * the server dependency-free; the library's imports are all standard ES syntax.
+ */
+function parseImportSpecifiers(source: string): string[] {
+  const specs = new Set<string>()
+  // `import …from 'x'` / `export …from 'x'` (the `…from` covers default, named,
+  // namespace, and type-only clauses alike).
+  const fromRe = /(?:import|export)\b[^'"]*?\bfrom\s*['"]([^'"]+)['"]/g
+  // Bare `import 'x'` side-effect imports (no `from`).
+  const bareRe = /import\s*['"]([^'"]+)['"]/g
+  for (const m of source.matchAll(fromRe)) specs.add(m[1])
+  for (const m of source.matchAll(bareRe)) specs.add(m[1])
+  return [...specs]
+}
+
+/** True for a relative specifier (`./x`, `../x`). */
+function isRelative(spec: string): boolean {
+  return spec.startsWith('./') || spec.startsWith('../')
+}
+
+/**
+ * Resolve a relative import specifier (from the importing file) to a real
+ * repo-relative file path, or null if it does not resolve to a repo file.
+ * Tries the literal path, then `.ts`/`.tsx`, then `/index.ts(x)`.
+ */
+async function resolveRelative(
+  fromFile: string,
+  spec: string
+): Promise<string | null> {
+  const fromDir = join(fromFile, '..')
+  const base = join(fromDir, spec)
+  const candidates = [
+    base,
+    ...RESOLVE_EXTS.map((e) => base + e),
+    ...RESOLVE_EXTS.map((e) => join(base, `index${e}`)),
+  ]
+  for (const cand of candidates) {
+    const rel = cand.split(sep).join('/')
+    // Skip bare extensionless dirs; only count real files.
+    if (rel.endsWith('.ts') || rel.endsWith('.tsx')) {
+      if (await fileExists(rel)) return rel
+    }
+  }
+  return null
+}
+
+/** Read the repo's declared peerDependencies (names only). Empty on any error. */
+async function readPeerDepNames(): Promise<Set<string>> {
+  try {
+    const pkg = JSON.parse(await readRepoFile('package.json')) as {
+      peerDependencies?: Record<string, string>
+    }
+    return new Set(Object.keys(pkg.peerDependencies ?? {}))
+  } catch {
+    return new Set()
+  }
+}
+
+/**
+ * Resolve a component and the full local dependency graph it imports, plus the
+ * bare (peer/external) specifiers a consumer must install. Returns null if the
+ * component is not found.
+ *
+ * Derived from the actual import statements — never a hand-maintained manifest —
+ * so it cannot drift from the source.
+ */
+export async function resolveComponentBundle(
+  platform: Platform,
+  name: string
+): Promise<ComponentBundle | null> {
+  const entry = await readComponent(platform, name)
+  if (!entry) return null
+
+  const peerNames = await readPeerDepNames()
+  const files: BundleFile[] = []
+  const visited = new Set<string>()
+  const peerDeps = new Set<string>()
+  const externalDeps = new Set<string>()
+
+  // Depth-first walk over local files, classifying every import specifier.
+  const walkFile = async (file: BundleFile): Promise<void> => {
+    if (visited.has(file.path)) return
+    visited.add(file.path)
+    files.push(file)
+
+    for (const spec of parseImportSpecifiers(file.source)) {
+      if (isRelative(spec)) {
+        const rel = await resolveRelative(file.path, spec)
+        if (rel && !visited.has(rel)) {
+          await walkFile({ path: rel, source: await readRepoFile(rel) })
+        }
+        continue
+      }
+      // Bare specifier: peer dep if declared, otherwise external.
+      // Normalize scoped/subpath specifiers to the package name.
+      const pkgName = spec.startsWith('@')
+        ? spec.split('/').slice(0, 2).join('/')
+        : spec.split('/')[0]
+      if (peerNames.has(pkgName)) peerDeps.add(pkgName)
+      else externalDeps.add(pkgName)
+    }
+  }
+
+  await walkFile({ path: entry.path, source: entry.source })
+
+  return {
+    entry: entry.path,
+    files,
+    peerDeps: [...peerDeps].sort(),
+    externalDeps: [...externalDeps].sort(),
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Tokens
 // ---------------------------------------------------------------------------
 

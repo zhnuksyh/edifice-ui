@@ -60,6 +60,27 @@ const button = firstText(
 )
 assert('Button source returned', button.includes('export function Button'))
 
+// 4b. get_component withDependencies → bundle resolves transitive local files + peer deps
+const bundle = firstText(
+  await client.callTool({
+    name: 'get_component',
+    arguments: { platform: 'web', name: 'Select', withDependencies: true },
+  })
+)
+assert('bundle includes the entry component', bundle.includes('components/web/forms/Select.tsx'))
+assert('bundle resolves local util (cn)', bundle.includes('utils/cn.ts'))
+assert('bundle resolves local hook (useClickOutside)', bundle.includes('hooks/useClickOutside.ts'))
+assert('bundle lists peer deps to install', /npm install .*lucide-react/.test(bundle))
+
+// 4c. sibling-component imports resolve transitively (Button → Spinner)
+const buttonBundle = firstText(
+  await client.callTool({
+    name: 'get_component',
+    arguments: { platform: 'web', name: 'Button', withDependencies: true },
+  })
+)
+assert('bundle resolves sibling component (Spinner)', buttonBundle.includes('components/web/ui/Spinner.tsx'))
+
 // 5. get_token_group colors
 const colors = firstText(
   await client.callTool({ name: 'get_token_group', arguments: { group: 'colors' } })
