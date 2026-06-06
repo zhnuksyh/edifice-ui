@@ -55,6 +55,10 @@ my-library/
   - Use `cn()` from `utils/cn` for conditional classNames
   - Have a JSDoc comment at the top describing what it does
   - Export as a named export, not default
+- When giving a component more than one visual look, use the `styleVariant`
+  prop pattern. **Read [`architecture/style-variants.md`](./architecture/style-variants.md)**
+  for the rules (orthogonal to `variant`, backwards-compatible default, exported
+  typed union, treatment map, tokens only).
 
 ### Adding A New Token
 - Place it in the correct file inside `tokens/`
