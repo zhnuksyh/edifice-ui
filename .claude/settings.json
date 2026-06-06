@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "Bash(git commit*)",
+            "command": "branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: commit on %s. Per CLAUDE.md, never commit to the default branch. Branch first: git checkout -b feat/... then commit.\"}}\\n' \"$branch\"; fi"
+          },
+          {
+            "type": "command",
+            "shell": "bash",
+            "if": "PowerShell(git commit*)",
+            "command": "branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: commit on %s. Per CLAUDE.md, never commit to the default branch. Branch first: git checkout -b feat/... then commit.\"}}\\n' \"$branch\"; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
