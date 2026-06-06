@@ -13,5 +13,14 @@
     "config/tailwind.base.ts",
     "nativewind-env.d.ts"
   ],
-  "exclude": ["node_modules", "dist", "build", ".next", "mcp"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    "mcp",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "test"
+  ]
 }
