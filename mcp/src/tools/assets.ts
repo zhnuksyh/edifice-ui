@@ -1,8 +1,13 @@
 import { z } from 'zod'
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import type { FlatDirKey } from '../catalog.js'
-import { listFlatDir, readFlatItem, SafeNameError } from '../library.js'
-import { text } from './shared.js'
+import {
+  listFlatDir,
+  readFlatItem,
+  resolveFlatItemBundle,
+  SafeNameError,
+} from '../library.js'
+import { renderBundle, text } from './shared.js'
 
 /**
  * Register the flat-directory asset tools: hooks, utils, prompts, docs.
@@ -17,7 +22,8 @@ export function registerAssetTools(server: McpServer): void {
     getName: 'get_hook',
     label: 'hook',
     getDesc:
-      'Return the source of an Edifice React hook by name (e.g. name="useDebounce").',
+      'Return the source of an Edifice React hook by name (e.g. name="useDebounce"). Set withDependencies=true to also return every local file it imports plus the peer dependencies to install.',
+    bundleable: true,
   })
 
   registerPair(server, {
@@ -26,7 +32,8 @@ export function registerAssetTools(server: McpServer): void {
     getName: 'get_util',
     label: 'util',
     getDesc:
-      'Return the source of an Edifice utility function by name (e.g. name="cn").',
+      'Return the source of an Edifice utility function by name (e.g. name="cn"). Set withDependencies=true to also return every local file it imports plus the peer dependencies to install.',
+    bundleable: true,
   })
 
   registerPair(server, {
@@ -54,6 +61,8 @@ interface PairConfig {
   getName: string
   label: string
   getDesc: string
+  /** Code dirs (hooks/utils) support `withDependencies`; markdown dirs do not. */
+  bundleable?: boolean
 }
 
 function registerPair(server: McpServer, cfg: PairConfig): void {
@@ -78,10 +87,27 @@ function registerPair(server: McpServer, cfg: PairConfig): void {
     {
       title: `Get ${cfg.label}`,
       description: cfg.getDesc,
-      inputSchema: { name: z.string() },
+      inputSchema: cfg.bundleable
+        ? { name: z.string(), withDependencies: z.boolean().optional() }
+        : { name: z.string() },
     },
-    async ({ name }) => {
+    async ({
+      name,
+      withDependencies,
+    }: {
+      name: string
+      withDependencies?: boolean
+    }) => {
       try {
+        if (cfg.bundleable && withDependencies) {
+          const bundle = await resolveFlatItemBundle(cfg.key, name)
+          if (!bundle) {
+            const available = (await listFlatDir(cfg.key)).join(', ')
+            return text(`No ${cfg.label} named "${name}". Available: ${available}.`)
+          }
+          return text(renderBundle(bundle))
+        }
+
         const result = await readFlatItem(cfg.key, name)
         if (!result) {
           const available = (await listFlatDir(cfg.key)).join(', ')

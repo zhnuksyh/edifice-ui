@@ -81,6 +81,25 @@ const buttonBundle = firstText(
 )
 assert('bundle resolves sibling component (Spinner)', buttonBundle.includes('components/web/ui/Spinner.tsx'))
 
+// 4d. get_util withDependencies → util bundle lists its peer deps
+const utilBundle = firstText(
+  await client.callTool({
+    name: 'get_util',
+    arguments: { name: 'cn', withDependencies: true },
+  })
+)
+assert('util bundle includes the entry file', utilBundle.includes('utils/cn.ts'))
+assert('util bundle lists peer deps', /npm install .*clsx.*tailwind-merge/.test(utilBundle))
+
+// 4e. get_hook withDependencies → hook bundle resolves + lists peer deps
+const hookBundle = firstText(
+  await client.callTool({
+    name: 'get_hook',
+    arguments: { name: 'useClickOutside', withDependencies: true },
+  })
+)
+assert('hook bundle includes the entry file', hookBundle.includes('hooks/useClickOutside.ts'))
+
 // 5. get_token_group colors
 const colors = firstText(
   await client.callTool({ name: 'get_token_group', arguments: { group: 'colors' } })

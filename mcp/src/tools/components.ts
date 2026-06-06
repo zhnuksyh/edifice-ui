@@ -6,9 +6,8 @@ import {
   readComponent,
   resolveComponentBundle,
   SafeNameError,
-  type ComponentBundle,
 } from '../library.js'
-import { text } from './shared.js'
+import { renderBundle, text } from './shared.js'
 
 /** Register component-related tools: list_components, get_component. */
 export function registerComponentTools(server: McpServer): void {
@@ -91,24 +90,4 @@ export function registerComponentTools(server: McpServer): void {
       }
     }
   )
-}
-
-/** Render a resolved component bundle as labeled file blocks + an install footer. */
-function renderBundle(bundle: ComponentBundle): string {
-  const header = `// Bundle for ${bundle.entry} — ${bundle.files.length} file(s)`
-  const blocks = bundle.files.map((f) => `// ${f.path}\n\n${f.source}`)
-
-  const footer: string[] = []
-  if (bundle.peerDeps.length > 0) {
-    footer.push(
-      `// Peer dependencies to install:\nnpm install ${bundle.peerDeps.join(' ')}`
-    )
-  }
-  if (bundle.externalDeps.length > 0) {
-    footer.push(
-      `// Also imported (likely already present): ${bundle.externalDeps.join(', ')}`
-    )
-  }
-
-  return [header, ...blocks, ...footer].join('\n\n')
 }
