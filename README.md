@@ -70,11 +70,21 @@ import { colors, spacing, typography } from './tokens'
 
 ### Using a component
 
-Copy the component file into your project (or fetch it), then ensure the
-peer dependencies are installed:
+A component is rarely self-contained — it usually imports `cn()` from `utils/`,
+sometimes a hook from `hooks/`, and occasionally a sibling component. To copy one
+in, you need its **local dependency graph** plus its **peer dependencies**.
+
+**Via the MCP server (recommended):** call `get_component` with
+`withDependencies: true`. It returns the component **and every local file it
+imports** (utils, hooks, sibling components), plus the peer-dep install line —
+everything needed to drop it into a project in one response.
+
+**By hand:** copy the component file, then copy the local files it imports,
+preserving the repo's `utils/` / `hooks/` / `components/` layout so the relative
+imports (`../../../utils/cn`) still resolve. Then install the peer deps, e.g.:
 
 ```bash
-npm install clsx tailwind-merge
+npm install clsx tailwind-merge   # plus lucide-react for components using icons
 ```
 
 ```tsx
