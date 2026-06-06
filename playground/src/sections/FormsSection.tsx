@@ -10,7 +10,10 @@ import { Slider } from '../../../components/web/forms/Slider'
 import { Combobox } from '../../../components/web/forms/Combobox'
 import { OtpInput } from '../../../components/web/forms/OtpInput'
 import { FileUpload } from '../../../components/web/forms/FileUpload'
+import type { InputStyleVariant } from '../../../components/web/forms/Input'
 import { Showcase, Row } from '../components/Showcase'
+
+const FIELD_STYLE_VARIANTS: InputStyleVariant[] = ['outline', 'filled', 'underline']
 
 const SELECT_OPTIONS = [
   { value: 'react', label: 'React' },
@@ -71,6 +74,16 @@ export function FormsSection() {
             onClear={() => setSearch('')}
           />
         </div>
+        <div className="mt-5 grid max-w-2xl gap-5 sm:grid-cols-3">
+          {FIELD_STYLE_VARIANTS.map((styleVariant) => (
+            <Input
+              key={styleVariant}
+              styleVariant={styleVariant}
+              label={styleVariant}
+              placeholder={styleVariant}
+            />
+          ))}
+        </div>
       </Showcase>
 
       <Showcase
@@ -82,6 +95,17 @@ export function FormsSection() {
           <Textarea label="Message" placeholder="How can we help?" hint="Max 500 characters." />
           <Textarea label="With error" error="This field is required." placeholder="…" />
         </div>
+        <div className="mt-5 grid max-w-2xl gap-5 sm:grid-cols-3">
+          {FIELD_STYLE_VARIANTS.map((styleVariant) => (
+            <Textarea
+              key={styleVariant}
+              styleVariant={styleVariant}
+              label={styleVariant}
+              rows={2}
+              placeholder={styleVariant}
+            />
+          ))}
+        </div>
       </Showcase>
 
       <Showcase
@@ -92,6 +116,17 @@ export function FormsSection() {
         <div className="grid max-w-2xl gap-5 sm:grid-cols-2">
           <Select label="Framework" options={SELECT_OPTIONS} value={framework} onChange={setFramework} />
           <Select label="With placeholder" placeholder="Choose one…" options={SELECT_OPTIONS} />
+        </div>
+        <div className="mt-5 grid max-w-2xl gap-5 sm:grid-cols-3">
+          {FIELD_STYLE_VARIANTS.map((styleVariant) => (
+            <Select
+              key={styleVariant}
+              styleVariant={styleVariant}
+              label={styleVariant}
+              placeholder={styleVariant}
+              options={SELECT_OPTIONS}
+            />
+          ))}
         </div>
       </Showcase>
 
@@ -174,6 +209,17 @@ export function FormsSection() {
             placeholder="Search…"
           />
         </div>
+        <div className="mt-5 grid max-w-2xl gap-5 sm:grid-cols-3">
+          {FIELD_STYLE_VARIANTS.map((styleVariant) => (
+            <Combobox
+              key={styleVariant}
+              styleVariant={styleVariant}
+              label={styleVariant}
+              options={COUNTRY_OPTIONS}
+              placeholder={styleVariant}
+            />
+          ))}
+        </div>
       </Showcase>
 
       <Showcase
@@ -187,6 +233,11 @@ export function FormsSection() {
         <Row label="4-digit, masked">
           <OtpInput length={4} masked />
         </Row>
+        {FIELD_STYLE_VARIANTS.map((styleVariant) => (
+          <Row key={styleVariant} label={styleVariant}>
+            <OtpInput styleVariant={styleVariant} length={4} />
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase
