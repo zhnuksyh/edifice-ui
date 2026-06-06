@@ -41,12 +41,6 @@
     "typescript": "^5",
     "vitest": "^2"
   },
-  "exports": {
-    "./tokens": "./tokens/index.ts",
-    "./utils/*": "./utils/*.ts",
-    "./hooks/*": "./hooks/*.ts",
-    "./config/*": "./config/*"
-  },
   "peerDependencies": {
     "clsx": "*",
     "expo-document-picker": "*",
