@@ -32,7 +32,10 @@ jobs:
       - name: Typecheck (tokens, utils, hooks, web + mobile components, config)
         run: npm run typecheck
 
-      - name: Unit tests (utils)
+      - name: Typecheck test files (RTL + jest-dom types)
+        run: npm run typecheck:test
+
+      - name: Tests (utils, hooks, and all web components)
         run: npm test
 
   mcp:
