@@ -11,23 +11,19 @@ projects.
 ## Inputs (fill these in)
 
 - **Component name:** `<PascalCase, e.g. Tooltip>`
-- **Category:** `<layout | ui | forms | marketing>`
-- **Platform:** `<web | mobile | both>`
+- **Category:** `<layout | ui | forms | marketing | data-display>`
 - **Purpose:** `<one sentence>`
 - **Props (name, type, default, description):** `<list them>`
 - **States to handle:** `<e.g. open/closed, loading, disabled, error>`
 
 ## Before you write code
 
-1. **Check for duplicates.** Search the matching `components/<platform>/<category>/`
+1. **Check for duplicates.** Search the matching `components/web/<category>/`
    folder. If something similar exists, extend it instead of adding a near-copy —
    and say so.
-2. **Confirm placement.** Web → `components/web/<category>/Name.tsx`. Mobile →
-   `components/mobile/<category>/Name.native.tsx`.
+2. **Confirm placement.** `components/web/<category>/Name.tsx`.
 
 ## Conventions (must follow all)
-
-Web:
 
 - Functional React component in **TypeScript** (`.tsx`), **named export only**.
 - Export a typed `Props` interface; extend the relevant element attributes
@@ -44,13 +40,6 @@ Web:
 - JSDoc block at the top describing the component (types document the props).
 - Forward unknown props (`...rest`) to the root element where sensible.
 - Handle edge cases: empty, loading, disabled, error.
-
-Mobile:
-
-- Functional React Native component in **TypeScript** using **NativeWind**.
-- File ends in `.native.tsx`.
-- **Mirror the web component's props API** where possible.
-- Same `Props` interface, JSDoc, and `cn()` rules.
 
 ## After writing
 

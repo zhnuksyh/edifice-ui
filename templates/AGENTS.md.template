@@ -28,14 +28,12 @@ https://raw.githubusercontent.com/{{GITHUB_OWNER}}/edifice-ui/main/
 
 - **Tokens:** fetch `tokens/<name>.ts` (or the bundle `tokens/index.ts`).
   Never hardcode a color, font size, spacing, radius, or shadow — use a token.
-- **Components:** fetch
-  `components/web/<category>/<Name>.tsx` (web) or
-  `components/mobile/<category>/<Name>.native.tsx` (mobile).
-  Categories: `layout`, `ui`, `forms`, `marketing`.
+- **Components:** fetch `components/web/<category>/<Name>.tsx`.
+  Categories: `layout`, `ui`, `forms`, `marketing`, `data-display`.
 - **Hooks:** fetch `hooks/<useName>.ts`.
 - **Utils:** fetch `utils/<name>.ts` (always use `cn` for className merging).
 - **Prompts:** fetch `prompts/<task>.md` for scaffolding tasks
-  (`new-page`, `new-component`, `mobile-screen`, `code-review`).
+  (`new-page`, `new-component`, `code-review`).
 - **Config:** extend `config/tailwind.base.ts`, `config/eslint.base.js`,
   `config/prettier.base.js`, `config/tsconfig.base.json`.
 - **Architecture:** follow `architecture/*.md` for folder structure, the API
@@ -69,7 +67,7 @@ back.
 - **No commented-out code** — delete it.
 - **No `console.log`** in committed files (`console.warn`/`error` allowed).
 - **No hardcoded values** — colors, sizes, and spacing come from Edifice tokens.
-- **No inline styles** — Tailwind / NativeWind utility classes only.
+- **No inline styles** — Tailwind utility classes only.
 - **Always handle edge cases** — loading, empty, and error states.
 - Every function does one thing. Prefer **named exports**.
 
@@ -77,9 +75,9 @@ back.
 
 ## Stack Rules
 
-- **Web:** React + TailwindCSS. Use Edifice web components and `cn()`.
-- **Mobile:** React Native + NativeWind. Use Edifice `.native` components.
-- **Tokens:** platform-agnostic JS from Edifice `tokens/`.
+- **Web:** React + TailwindCSS (responsive down to mobile viewport). Use Edifice
+  components and `cn()`.
+- **Tokens:** typed JS from Edifice `tokens/`.
 - **API calls:** go through a per-domain service layer — never inline `fetch` in
   components (see Edifice `architecture/api-layer.md`).
 
@@ -87,9 +85,7 @@ back.
 
 ## Icons
 
-- **Lucide** is the official icon library.
-  - Web: use `lucide-react`.
-  - Mobile: use `lucide-react-native`.
+- **Lucide** is the official icon library — use `lucide-react`.
 - **Outline style only** — never use filled icons.
 - **Import icons individually**, never import the whole library:
   ```tsx

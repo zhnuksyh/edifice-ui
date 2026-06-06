@@ -46,16 +46,15 @@ console.log(
 )
 assert('exposes resource templates', resourceTemplates.length >= 3)
 
-// 3. list_components → expect both platforms present
+// 3. list_components → expect the web categories present
 const listed = firstText(await client.callTool({ name: 'list_components', arguments: {} }))
-assert('list_components mentions web', listed.includes('[web/'))
-assert('list_components mentions mobile', listed.includes('[mobile/'))
+assert('list_components lists components with categories', listed.includes('[ui]'))
 
-// 4. get_component web/Button
+// 4. get_component Button
 const button = firstText(
   await client.callTool({
     name: 'get_component',
-    arguments: { platform: 'web', name: 'Button' },
+    arguments: { name: 'Button' },
   })
 )
 assert('Button source returned', button.includes('export function Button'))
@@ -64,7 +63,7 @@ assert('Button source returned', button.includes('export function Button'))
 const bundle = firstText(
   await client.callTool({
     name: 'get_component',
-    arguments: { platform: 'web', name: 'Select', withDependencies: true },
+    arguments: { name: 'Select', withDependencies: true },
   })
 )
 assert('bundle includes the entry component', bundle.includes('components/web/forms/Select.tsx'))
@@ -76,7 +75,7 @@ assert('bundle lists peer deps to install', /npm install .*lucide-react/.test(bu
 const buttonBundle = firstText(
   await client.callTool({
     name: 'get_component',
-    arguments: { platform: 'web', name: 'Button', withDependencies: true },
+    arguments: { name: 'Button', withDependencies: true },
   })
 )
 assert('bundle resolves sibling component (Spinner)', buttonBundle.includes('components/web/ui/Spinner.tsx'))

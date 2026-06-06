@@ -10,7 +10,7 @@ import {
   listFlatDir,
   readFlatItem,
 } from './library.js'
-import { TOKEN_GROUPS, type Platform } from './catalog.js'
+import { TOKEN_GROUPS } from './catalog.js'
 
 /**
  * Register browsable MCP resources under the `edifice://` scheme.
@@ -19,30 +19,30 @@ import { TOKEN_GROUPS, type Platform } from './catalog.js'
  * duplicated IO. `list` callbacks let clients enumerate available URIs.
  */
 export function registerResources(server: McpServer): void {
-  // edifice://component/{platform}/{name}
+  // edifice://component/{name}
   server.registerResource(
     'component',
-    new ResourceTemplate('edifice://component/{platform}/{name}', {
+    new ResourceTemplate('edifice://component/{name}', {
       list: async () => {
         const entries = await listComponents()
         return {
           resources: entries.map((e) => ({
-            uri: `edifice://component/${e.platform}/${e.name}`,
-            name: `${e.name} (${e.platform}/${e.category})`,
+            uri: `edifice://component/${e.name}`,
+            name: `${e.name} (${e.category})`,
             mimeType: 'text/plain',
           })),
         }
       },
     }),
     { title: 'Edifice component', mimeType: 'text/plain' },
-    async (uri, { platform, name }) => {
-      const result = await readComponent(platform as Platform, String(name))
+    async (uri, { name }) => {
+      const result = await readComponent(String(name))
       return {
         contents: [
           {
             uri: uri.href,
             mimeType: 'text/plain',
-            text: result ? result.source : `// Not found: ${platform}/${name}`,
+            text: result ? result.source : `// Not found: ${name}`,
           },
         ],
       }

@@ -11,9 +11,7 @@
     "design-system",
     "component-library",
     "react",
-    "react-native",
     "tailwindcss",
-    "nativewind",
     "design-tokens"
   ],
   "scripts": {
@@ -29,13 +27,10 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "clsx": "^2",
-    "expo-document-picker": "^56.0.4",
     "jsdom": "^25.0.1",
     "lucide-react": "^0.460.0",
-    "nativewind": "^4",
     "react": "^18",
     "react-dom": "^18.3.1",
-    "react-native": "^0.74",
     "tailwind-merge": "^2",
     "tailwindcss": "^3",
     "typescript": "^5",
@@ -43,16 +38,12 @@
   },
   "peerDependencies": {
     "clsx": "*",
-    "expo-document-picker": "*",
     "lucide-react": "*",
     "react": ">=18",
     "tailwind-merge": "*",
     "typescript": ">=5"
   },
   "peerDependenciesMeta": {
-    "expo-document-picker": {
-      "optional": true
-    },
     "react": {
       "optional": false
     },

@@ -24,12 +24,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      # React Native's peer-dependency ranges otherwise trip ERESOLVE; legacy
-      # resolution gives us a complete type tree (incl. NativeWind's chain).
       - name: Install dev dependencies
-        run: npm install --legacy-peer-deps
+        run: npm ci
 
-      - name: Typecheck (tokens, utils, hooks, web + mobile components, config)
+      - name: Typecheck (tokens, utils, hooks, components, config)
         run: npm run typecheck
 
       - name: Typecheck test files (RTL + jest-dom types)

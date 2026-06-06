@@ -6,13 +6,14 @@
  * top-level shape changes.
  */
 
-export type Platform = 'web' | 'mobile'
-
-/** Component categories available per platform. */
-export const COMPONENT_CATEGORIES: Record<Platform, readonly string[]> = {
-  web: ['layout', 'ui', 'forms', 'marketing', 'data-display'],
-  mobile: ['layout', 'ui', 'forms', 'data-display', 'marketing'],
-}
+/** Web component categories. */
+export const COMPONENT_CATEGORIES = [
+  'layout',
+  'ui',
+  'forms',
+  'marketing',
+  'data-display',
+] as const
 
 /** Token groups, each backed by `tokens/<group>.ts`. */
 export const TOKEN_GROUPS = [
@@ -39,7 +40,5 @@ export const FLAT_DIRS = {
 
 export type FlatDirKey = keyof typeof FLAT_DIRS
 
-/** The component file extension for a given platform. */
-export function componentExt(platform: Platform): string {
-  return platform === 'mobile' ? '.native.tsx' : '.tsx'
-}
+/** The web component file extension. */
+export const COMPONENT_EXT = '.tsx'

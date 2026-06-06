@@ -15,8 +15,7 @@ them from scratch on every project.
 | Folder           | Contents                                                        |
 | ---------------- | --------------------------------------------------------------- |
 | `tokens/`        | Raw design values: colors, typography, spacing, radius, shadows, animation |
-| `components/web/`    | React + TailwindCSS components (`layout`, `ui`, `forms`, `marketing`) |
-| `components/mobile/` | React Native + NativeWind components (`.native.tsx`)        |
+| `components/web/`    | React + TailwindCSS components (`layout`, `ui`, `forms`, `marketing`, `data-display`) |
 | `hooks/`         | Reusable React hooks                                            |
 | `utils/`         | Pure helper functions                                           |
 | `assets/`        | Icons, background patterns, self-hosted fonts                   |
@@ -133,9 +132,9 @@ These are **not** installed by this repo — your consuming project provides the
 - `react`
 - `clsx`
 - `tailwind-merge`
+- `lucide-react` (for components that use icons)
 - `typescript` (>=5) + `@types/react`
-- `tailwindcss` (web)
-- `react-native` + `nativewind` (mobile; provides RN types via `@types/react-native` or its own bundled types)
+- `tailwindcss`
 
 ---
 

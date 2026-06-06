@@ -16,8 +16,7 @@ fix. Group findings by severity (**blocker**, **should-fix**, **nit**).
 - [ ] Named exports only — no default exports.
 - [ ] Written in TypeScript (`.ts` / `.tsx`); components export a typed `Props`
       interface and avoid `any`.
-- [ ] Components accept `className` and merge it via `cn()` (web).
-- [ ] Mobile components end in `.native.tsx` and use NativeWind.
+- [ ] Components accept `className` and merge it via `cn()`.
 - [ ] JSDoc block present on every component, hook, and util (types document the
       props / params / return).
 - [ ] File placed in the correct folder/category.
