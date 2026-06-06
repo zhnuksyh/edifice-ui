@@ -63,7 +63,7 @@ checkout, set `EDIFICE_ROOT`:
 | Tool | Input | Returns |
 | --- | --- | --- |
 | `list_components` | `platform?`, `category?` | component names + paths |
-| `get_component` | `platform`, `name` | component `.tsx` source |
+| `get_component` | `platform`, `name`, `withDependencies?` | component `.tsx` source; with `withDependencies: true`, also every local file it imports (utils/hooks/sibling components) + peer deps to install |
 | `list_tokens` | — | the six token group names |
 | `get_token_group` | `group` | `tokens/<group>.ts` source |
 | `list_hooks` / `get_hook` | — / `name` | hook listing / source |
