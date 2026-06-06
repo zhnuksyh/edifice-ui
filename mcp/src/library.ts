@@ -11,18 +11,16 @@ import { join, resolve, relative, basename, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
   COMPONENT_CATEGORIES,
+  COMPONENT_EXT,
   FLAT_DIRS,
   TOKEN_GROUPS,
-  componentExt,
   type FlatDirKey,
-  type Platform,
   type TokenGroup,
 } from './catalog.js'
 
 /** A located component file. */
 export interface ComponentEntry {
   name: string
-  platform: Platform
   category: string
   /** Path relative to the repo root, e.g. `components/web/ui/Button.tsx`. */
   path: string
@@ -120,39 +118,32 @@ async function fileExists(relPath: string): Promise<boolean> {
 // Components
 // ---------------------------------------------------------------------------
 
-/** List components, optionally filtered by platform and/or category. */
+/** List components, optionally filtered by category. */
 export async function listComponents(
-  platform?: Platform,
   category?: string
 ): Promise<ComponentEntry[]> {
-  const platforms: Platform[] = platform ? [platform] : ['web', 'mobile']
+  const categories = category
+    ? COMPONENT_CATEGORIES.includes(category as (typeof COMPONENT_CATEGORIES)[number])
+      ? [category]
+      : []
+    : COMPONENT_CATEGORIES
   const entries: ComponentEntry[] = []
 
-  for (const p of platforms) {
-    const categories = category
-      ? COMPONENT_CATEGORIES[p].includes(category)
-        ? [category]
-        : []
-      : COMPONENT_CATEGORIES[p]
-    const ext = componentExt(p)
-
-    for (const cat of categories) {
-      const relDir = join('components', p, cat)
-      let files: string[]
-      try {
-        files = await readdir(safeResolve(relDir))
-      } catch {
-        continue
-      }
-      for (const file of files) {
-        if (!file.endsWith(ext)) continue
-        entries.push({
-          name: basename(file, ext),
-          platform: p,
-          category: cat,
-          path: join(relDir, file).split(sep).join('/'),
-        })
-      }
+  for (const cat of categories) {
+    const relDir = join('components', 'web', cat)
+    let files: string[]
+    try {
+      files = await readdir(safeResolve(relDir))
+    } catch {
+      continue
+    }
+    for (const file of files) {
+      if (!file.endsWith(COMPONENT_EXT)) continue
+      entries.push({
+        name: basename(file, COMPONENT_EXT),
+        category: cat,
+        path: join(relDir, file).split(sep).join('/'),
+      })
     }
   }
 
@@ -161,13 +152,11 @@ export async function listComponents(
 
 /** Read a component's source. Returns null if not found. */
 export async function readComponent(
-  platform: Platform,
   name: string
 ): Promise<{ path: string; source: string } | null> {
   assertSafeName(name)
-  const ext = componentExt(platform)
-  for (const cat of COMPONENT_CATEGORIES[platform]) {
-    const relPath = join('components', platform, cat, `${name}${ext}`)
+  for (const cat of COMPONENT_CATEGORIES) {
+    const relPath = join('components', 'web', cat, `${name}${COMPONENT_EXT}`)
     if (await fileExists(relPath)) {
       return {
         path: relPath.split(sep).join('/'),
@@ -321,10 +310,9 @@ async function resolveBundleFrom(entry: {
  * component is not found.
  */
 export async function resolveComponentBundle(
-  platform: Platform,
   name: string
 ): Promise<Bundle | null> {
-  const entry = await readComponent(platform, name)
+  const entry = await readComponent(name)
   if (!entry) return null
   return resolveBundleFrom(entry)
 }

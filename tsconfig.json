@@ -10,8 +10,7 @@
     "utils",
     "hooks",
     "components",
-    "config/tailwind.base.ts",
-    "nativewind-env.d.ts"
+    "config/tailwind.base.ts"
   ],
   "exclude": [
     "node_modules",

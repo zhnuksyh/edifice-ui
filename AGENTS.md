@@ -23,8 +23,7 @@ my-library/
 │
 ├── tokens/                      ← Raw design values (colors, type, spacing...)
 ├── components/
-│   ├── web/                     ← React + TailwindCSS
-│   └── mobile/                  ← React Native + NativeWind
+│   └── web/                     ← React + TailwindCSS (web only, incl. mobile viewport)
 ├── hooks/                       ← Reusable React hooks
 ├── utils/                       ← Helper functions
 ├── assets/
@@ -42,11 +41,13 @@ my-library/
 ## Rules For Working In This Repo
 
 ### Adding A New Component
-- Place web components in `components/web/<category>/ComponentName.tsx`
-- Place mobile components in `components/mobile/<category>/ComponentName.native.tsx`
+- Place components in `components/web/<category>/ComponentName.tsx`
 - Categories: `layout/`, `ui/`, `forms/`, `marketing/`, `data-display/`
+- This is a **web-only** library (React + TailwindCSS). Mobile screens are served
+  as the responsive/mobile viewport of the web app — there are no React Native
+  components.
 - Every component must:
-  - Accept a `className` prop for external overrides (web)
+  - Accept a `className` prop for external overrides
   - Define a typed `Props` interface (exported) for its props
   - When a prop reuses a native HTML attribute name with a richer type
     (e.g. `title?: ReactNode`), `Omit` it from the extended `HTMLAttributes`
@@ -122,9 +123,8 @@ my-library/
 ## Stack
 
 - Language: TypeScript (`.ts` / `.tsx`) throughout
-- Web components: React + TailwindCSS
-- Mobile components: React Native + NativeWind
-- Tokens: typed TypeScript objects (`as const`, platform-agnostic)
+- Components: React + TailwindCSS (web only; responsive down to mobile viewport)
+- Tokens: typed TypeScript objects (`as const`)
 - MCP server: Node.js — lives in `mcp/`, serves the library to agents over stdio
   (tools: `list_components`, `get_component`, `get_token_group`, `search`, …)
 
@@ -132,9 +132,7 @@ my-library/
 
 ## Icons
 
-- **Lucide** is the official icon library.
-  - Web: use [`lucide-react`](https://lucide.dev).
-  - Mobile: use [`lucide-react-native`](https://lucide.dev).
+- **Lucide** is the official icon library — use [`lucide-react`](https://lucide.dev).
 - **Outline style only** — never use filled icons.
 - **Import icons individually**, never import the whole library:
   ```tsx

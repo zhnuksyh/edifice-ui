@@ -113,9 +113,9 @@ top border; four columns (Brand + three link groups); H4 column headings,
 
 ## 5. Icons
 
-All icons come from **lucide-react** (web) / **lucide-react-native** (mobile),
-**outline style only**, imported individually. Size and color with tokens/CSS
-variables, never inline hardcoded colors. See `CLAUDE.md` → Icons.
+All icons come from **lucide-react**, **outline style only**, imported
+individually. Size and color with tokens/CSS variables, never inline hardcoded
+colors. See `CLAUDE.md` → Icons.
 
 ---
 
