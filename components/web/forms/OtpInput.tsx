@@ -150,7 +150,7 @@ export function OtpInput({
               'h-12 w-10 rounded-lg border bg-surface text-center text-lg font-semibold text-text-primary transition-colors duration-fast focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50',
               error
                 ? 'border-danger focus-visible:ring-danger'
-                : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500'
+                : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow'
             )}
           />
         ))}

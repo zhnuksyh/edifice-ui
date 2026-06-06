@@ -92,7 +92,7 @@ export function Pagination({
             className={cn(
               'inline-flex h-9 min-w-9 items-center justify-center rounded-md px-2 text-sm transition-colors duration-fast',
               p === page
-                ? 'bg-primary-600 font-medium text-text-inverse'
+                ? 'bg-yellow font-medium text-text-inverse'
                 : 'border border-grey-2A text-text-secondary hover:border-grey-44 hover:text-text-primary'
             )}
           >

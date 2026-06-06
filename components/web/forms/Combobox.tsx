@@ -184,7 +184,7 @@ export function Combobox({
             'h-10 w-full rounded-lg border bg-surface px-3 pr-9 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50',
             error
               ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
             className
           )}
         />
@@ -226,7 +226,7 @@ export function Combobox({
                       isActive && !opt.disabled
                         ? 'bg-grey-2A text-text-primary'
                         : 'text-text-secondary',
-                      isSelected && 'text-primary-600'
+                      isSelected && 'text-yellow'
                     )}
                   >
                     <span className="truncate">{opt.label}</span>

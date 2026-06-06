@@ -64,10 +64,10 @@ export function Checkbox({
             aria-hidden="true"
             className={cn(
               'flex h-5 w-5 items-center justify-center rounded border bg-surface text-text-inverse transition-colors duration-fast',
-              'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500 peer-focus-visible:ring-offset-2',
+              'peer-focus-visible:ring-2 peer-focus-visible:ring-yellow peer-focus-visible:ring-offset-2',
               error ? 'border-danger' : 'border-grey-2A',
-              'peer-checked:border-primary-600 peer-checked:bg-primary-600',
-              'peer-indeterminate:border-primary-600 peer-indeterminate:bg-primary-600',
+              'peer-checked:border-yellow peer-checked:bg-yellow',
+              'peer-indeterminate:border-yellow peer-indeterminate:bg-yellow',
               className
             )}
           >

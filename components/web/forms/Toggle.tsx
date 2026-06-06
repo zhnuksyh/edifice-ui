@@ -50,8 +50,8 @@ export function Toggle({
         disabled={disabled}
         onClick={() => onChange?.(!checked)}
         className={cn(
-          'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
-          checked ? 'border-primary-600 bg-primary-600' : 'border-grey-2A bg-grey-22'
+          'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+          checked ? 'border-yellow bg-yellow' : 'border-grey-2A bg-grey-22'
         )}
         {...rest}
       >

@@ -76,12 +76,12 @@ export function Button({
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      'bg-primary-600 text-text-inverse hover:bg-primary-700 active:bg-primary-700 focus-visible:ring-primary-500',
+      'bg-yellow text-text-inverse hover:bg-yellow/90 active:bg-yellow/90 focus-visible:ring-yellow',
     // Bordered neutral button — the everyday non-primary action.
     secondary:
       'border border-grey-2A bg-grey-1A text-text-primary hover:border-grey-44 hover:bg-grey-22 active:bg-grey-2A focus-visible:ring-grey-44',
     accent:
-      'bg-accent-500 text-text-inverse hover:bg-accent-600 active:bg-accent-600 focus-visible:ring-accent-400',
+      'bg-yellow text-text-inverse hover:bg-yellow/90 active:bg-yellow/90 focus-visible:ring-yellow',
     // Borderless until hover — leans neutral, accent only on focus ring.
     ghost:
       'bg-transparent text-text-secondary hover:bg-grey-22 hover:text-text-primary active:bg-grey-2A focus-visible:ring-grey-44',
@@ -111,7 +111,7 @@ export function Button({
   const treatments: Record<ButtonStyleVariant, Record<ButtonHue, string>> = {
     solid: {
       accent:
-        'bg-accent-500 text-text-inverse hover:bg-accent-600 active:bg-accent-600 focus-visible:ring-accent-400',
+        'bg-yellow text-text-inverse hover:bg-yellow/90 active:bg-yellow/90 focus-visible:ring-yellow',
       danger:
         'bg-danger text-text-inverse hover:bg-danger-dark active:bg-danger-dark focus-visible:ring-danger',
       purple:

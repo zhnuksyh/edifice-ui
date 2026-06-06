@@ -104,7 +104,7 @@ export function Slider({
         aria-describedby={describedBy}
         onChange={(e) => commit(Number(e.target.value))}
         className={cn(
-          'h-2 w-full cursor-pointer appearance-none rounded-full bg-grey-2A accent-yellow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:cursor-not-allowed disabled:opacity-50',
+          'h-2 w-full cursor-pointer appearance-none rounded-full bg-grey-2A accent-yellow focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:cursor-not-allowed disabled:opacity-50',
           error && 'accent-danger'
         )}
       />

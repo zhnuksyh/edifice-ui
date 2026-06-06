@@ -42,7 +42,7 @@ export function Textarea({
             'w-full rounded-lg border bg-surface px-3 py-2 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2',
             invalid
               ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
             className
           )}
           {...rest}

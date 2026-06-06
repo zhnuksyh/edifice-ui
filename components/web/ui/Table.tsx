@@ -67,7 +67,7 @@ export function TableRow({
       className={cn(
         'transition-colors duration-fast',
         interactive && 'cursor-pointer',
-        selected ? 'bg-primary-600/10' : interactive && 'hover:bg-grey-1A',
+        selected ? 'bg-yellow/10' : interactive && 'hover:bg-grey-1A',
         className
       )}
       {...rest}
