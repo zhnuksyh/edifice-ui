@@ -66,8 +66,8 @@ checkout, set `EDIFICE_ROOT`:
 | `get_component` | `platform`, `name`, `withDependencies?` | component `.tsx` source; with `withDependencies: true`, also every local file it imports (utils/hooks/sibling components) + peer deps to install |
 | `list_tokens` | — | the six token group names |
 | `get_token_group` | `group` | `tokens/<group>.ts` source |
-| `list_hooks` / `get_hook` | — / `name` | hook listing / source |
-| `list_utils` / `get_util` | — / `name` | util listing / source |
+| `list_hooks` / `get_hook` | — / `name`, `withDependencies?` | hook listing / source; with `withDependencies: true`, also its local imports + peer deps |
+| `list_utils` / `get_util` | — / `name`, `withDependencies?` | util listing / source; with `withDependencies: true`, also its local imports + peer deps |
 | `list_prompts` / `get_prompt` | — / `name` | prompt-template listing / markdown |
 | `list_docs` / `get_doc` | — / `name` | architecture-doc listing / markdown |
 | `search` | `query` | ranked matches across the library |

@@ -179,7 +179,7 @@ export async function readComponent(
 }
 
 // ---------------------------------------------------------------------------
-// Component dependency resolution
+// Dependency resolution (components, hooks, utils)
 // ---------------------------------------------------------------------------
 
 /** A file in a resolved bundle. */
@@ -189,9 +189,9 @@ export interface BundleFile {
   source: string
 }
 
-/** A component plus the full local dependency graph it needs to be copied in. */
-export interface ComponentBundle {
-  /** The entry component's repo-relative path. */
+/** An entry file plus the full local dependency graph it needs to be copied in. */
+export interface Bundle {
+  /** The entry file's repo-relative path. */
   entry: string
   /** Entry file first, then every transitive local file it imports (deduped). */
   files: BundleFile[]
@@ -266,20 +266,16 @@ async function readPeerDepNames(): Promise<Set<string>> {
 }
 
 /**
- * Resolve a component and the full local dependency graph it imports, plus the
- * bare (peer/external) specifiers a consumer must install. Returns null if the
- * component is not found.
+ * Resolve an entry file and the full local dependency graph it imports, plus the
+ * bare (peer/external) specifiers a consumer must install.
  *
  * Derived from the actual import statements — never a hand-maintained manifest —
- * so it cannot drift from the source.
+ * so it cannot drift from the source. Shared by every `*Bundle` resolver.
  */
-export async function resolveComponentBundle(
-  platform: Platform,
-  name: string
-): Promise<ComponentBundle | null> {
-  const entry = await readComponent(platform, name)
-  if (!entry) return null
-
+async function resolveBundleFrom(entry: {
+  path: string
+  source: string
+}): Promise<Bundle> {
   const peerNames = await readPeerDepNames()
   const files: BundleFile[] = []
   const visited = new Set<string>()
@@ -318,6 +314,32 @@ export async function resolveComponentBundle(
     peerDeps: [...peerDeps].sort(),
     externalDeps: [...externalDeps].sort(),
   }
+}
+
+/**
+ * Resolve a component plus its full local dependency graph. Returns null if the
+ * component is not found.
+ */
+export async function resolveComponentBundle(
+  platform: Platform,
+  name: string
+): Promise<Bundle | null> {
+  const entry = await readComponent(platform, name)
+  if (!entry) return null
+  return resolveBundleFrom(entry)
+}
+
+/**
+ * Resolve a flat-dir item (hook or util) plus its full local dependency graph.
+ * Returns null if the item is not found.
+ */
+export async function resolveFlatItemBundle(
+  key: FlatDirKey,
+  name: string
+): Promise<Bundle | null> {
+  const entry = await readFlatItem(key, name)
+  if (!entry) return null
+  return resolveBundleFrom(entry)
 }
 
 // ---------------------------------------------------------------------------

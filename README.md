@@ -77,7 +77,8 @@ in, you need its **local dependency graph** plus its **peer dependencies**.
 **Via the MCP server (recommended):** call `get_component` with
 `withDependencies: true`. It returns the component **and every local file it
 imports** (utils, hooks, sibling components), plus the peer-dep install line —
-everything needed to drop it into a project in one response.
+everything needed to drop it into a project in one response. `get_hook` and
+`get_util` take the same `withDependencies` flag.
 
 **By hand:** copy the component file, then copy the local files it imports,
 preserving the repo's `utils/` / `hooks/` / `components/` layout so the relative
