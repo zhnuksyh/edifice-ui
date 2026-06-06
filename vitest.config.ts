@@ -9,6 +9,7 @@ export default defineConfig({
       'utils/**/*.test.ts',
       'components/**/*.test.tsx',
       'hooks/**/*.test.ts',
+      'hooks/**/*.test.tsx',
     ],
     environment: 'node',
     environmentMatchGlobs: [

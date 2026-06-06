@@ -7,14 +7,7 @@
           {
             "type": "command",
             "shell": "bash",
-            "if": "Bash(git commit*)",
-            "command": "branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: commit on %s. Per CLAUDE.md, never commit to the default branch. Branch first: git checkout -b feat/... then commit.\"}}\\n' \"$branch\"; fi"
-          },
-          {
-            "type": "command",
-            "shell": "bash",
-            "if": "PowerShell(git commit*)",
-            "command": "branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$branch\" = \"main\" ] || [ \"$branch\" = \"master\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: commit on %s. Per CLAUDE.md, never commit to the default branch. Branch first: git checkout -b feat/... then commit.\"}}\\n' \"$branch\"; fi"
+            "command": "input=$(cat); cmd=$(printf '%s' \"$input\" | sed -n 's/.*\"command\"[[:space:]]*:[[:space:]]*\"\\([^\"]*\\)\".*/\\1/p'); case \"$cmd\" in \"git commit\"*|*\"; git commit\"*|*\"&& git commit\"*|*\"| git commit\"*) b=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); if [ \"$b\" = \"main\" ] || [ \"$b\" = \"master\" ]; then printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Blocked: commit on %s. Per CLAUDE.md, never commit to the default branch. Branch first: git checkout -b feat/... then commit.\"}}\\n' \"$b\"; fi ;; esac"
           }
         ]
       }
