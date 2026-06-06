@@ -9,9 +9,18 @@ export interface SelectOption {
   disabled?: boolean
 }
 
+export type SelectStyleVariant = 'outline' | 'filled' | 'underline'
+
 export interface SelectProps {
   /** Visible label text. */
   label?: string
+  /**
+   * Surface treatment for the trigger. Defaults to 'outline'.
+   * - `outline` — surface fill with a full hairline border (the original).
+   * - `filled` — brighter fill, borderless until focus.
+   * - `underline` — transparent, bottom border only.
+   */
+  styleVariant?: SelectStyleVariant
   /** Options to render. */
   options: SelectOption[]
   /** Controlled selected value. */
@@ -48,6 +57,7 @@ export interface SelectProps {
  */
 export function Select({
   label,
+  styleVariant = 'outline',
   options = [],
   value,
   defaultValue,
@@ -73,6 +83,32 @@ export function Select({
   const isControlled = value !== undefined
   const [internal, setInternal] = useState(defaultValue ?? '')
   const selected = isControlled ? value : internal
+
+  // Per-treatment trigger surface; `normal`/`invalid` carry the border colors.
+  const triggerTreatments: Record<
+    SelectStyleVariant,
+    { surface: string; normal: string; invalid: string }
+  > = {
+    outline: {
+      surface:
+        'rounded-lg border bg-grey-1A focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    filled: {
+      surface:
+        'rounded-lg border border-transparent bg-grey-22 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+      normal: 'hover:bg-grey-2A focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    underline: {
+      surface: 'rounded-none border-0 border-b-2 bg-transparent',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:border-yellow',
+      invalid: 'border-danger focus-visible:border-danger',
+    },
+  }
+
+  const triggerTreatment = triggerTreatments[styleVariant]
 
   const [open, setOpen] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
@@ -184,10 +220,9 @@ export function Select({
           onClick={() => (open ? setOpen(false) : openMenu())}
           onKeyDown={onKeyDown}
           className={cn(
-            'flex h-11 w-full items-center justify-between gap-2 rounded-lg border bg-grey-1A px-3 text-left text-base transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:cursor-not-allowed disabled:opacity-50',
-            error
-              ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
+            'flex h-11 w-full items-center justify-between gap-2 px-3 text-left text-base transition-colors duration-fast focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            triggerTreatment.surface,
+            error ? triggerTreatment.invalid : triggerTreatment.normal,
             selectedOption ? 'text-text-primary' : 'text-text-secondary',
             className
           )}
