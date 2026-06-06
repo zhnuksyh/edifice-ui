@@ -2,10 +2,19 @@ import { useId, type InputHTMLAttributes, type ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '../../../utils/cn'
 
+export type InputStyleVariant = 'outline' | 'filled' | 'underline'
+
 export interface InputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'> {
   /** Visible label text. */
   label?: string
+  /**
+   * Surface treatment. Defaults to 'outline'.
+   * - `outline` — surface fill with a full hairline border (the original).
+   * - `filled` — brighter fill, borderless until focus.
+   * - `underline` — transparent, bottom border only.
+   */
+  styleVariant?: InputStyleVariant
   /** Error message; sets invalid styling. */
   error?: string
   /** Helper text shown below the field. */
@@ -28,6 +37,7 @@ export interface InputProps
 export function Input({
   label,
   type = 'text',
+  styleVariant = 'outline',
   error,
   hint,
   id,
@@ -51,6 +61,33 @@ export function Input({
   const showClear = clearable && value !== undefined && value !== ''
   const hasRight = showClear || Boolean(rightIcon)
 
+  // Per-treatment surface: fill, border shape, radius, and focus affordance.
+  // `normal`/`invalid` carry the resting + error border colors for each.
+  const treatments: Record<
+    InputStyleVariant,
+    { surface: string; normal: string; invalid: string }
+  > = {
+    outline: {
+      surface:
+        'rounded-lg border bg-grey-1A focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    filled: {
+      surface:
+        'rounded-lg border border-transparent bg-grey-22 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+      normal: 'hover:bg-grey-2A focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    underline: {
+      surface: 'rounded-none border-0 border-b-2 bg-transparent',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:border-yellow',
+      invalid: 'border-danger focus-visible:border-danger',
+    },
+  }
+
+  const treatment = treatments[styleVariant]
+
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
@@ -73,12 +110,11 @@ export function Input({
           aria-invalid={Boolean(error)}
           aria-describedby={describedBy}
           className={cn(
-            'h-11 w-full rounded-lg border bg-grey-1A px-3 text-base text-text-primary placeholder:text-text-muted transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11',
+            'h-11 w-full px-3 text-base text-text-primary placeholder:text-text-muted transition-colors duration-fast focus:outline-none',
+            treatment.surface,
+            error ? treatment.invalid : treatment.normal,
             leftIcon && 'pl-9',
             hasRight && 'pr-9',
-            error
-              ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
             className
           )}
           {...rest}

@@ -9,9 +9,18 @@ export interface ComboboxOption {
   disabled?: boolean
 }
 
+export type ComboboxStyleVariant = 'outline' | 'filled' | 'underline'
+
 export interface ComboboxProps {
   /** Visible label text. */
   label?: string
+  /**
+   * Surface treatment for the input. Defaults to 'outline'.
+   * - `outline` — surface fill with a full hairline border (the original).
+   * - `filled` — brighter fill, borderless until focus.
+   * - `underline` — transparent, bottom border only.
+   */
+  styleVariant?: ComboboxStyleVariant
   /** Options to filter and choose from. */
   options: ComboboxOption[]
   /** Controlled selected value. */
@@ -50,6 +59,7 @@ export interface ComboboxProps {
  */
 export function Combobox({
   label,
+  styleVariant = 'outline',
   options = [],
   value,
   defaultValue,
@@ -77,6 +87,30 @@ export function Combobox({
   const [internal, setInternal] = useState(defaultValue ?? '')
   const selected = isControlled ? value : internal
   const selectedOption = options.find((o) => o.value === selected)
+
+  // Per-treatment input surface; `normal`/`invalid` carry the border colors.
+  const inputTreatments: Record<
+    ComboboxStyleVariant,
+    { surface: string; normal: string; invalid: string }
+  > = {
+    outline: {
+      surface: 'rounded-lg border bg-surface focus-visible:ring-2',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    filled: {
+      surface: 'rounded-lg border border-transparent bg-grey-22 focus-visible:ring-2',
+      normal: 'hover:bg-grey-2A focus-visible:ring-yellow',
+      invalid: 'border-danger focus-visible:ring-danger',
+    },
+    underline: {
+      surface: 'rounded-none border-0 border-b-2 bg-transparent',
+      normal: 'border-grey-2A hover:border-grey-44 focus-visible:border-yellow',
+      invalid: 'border-danger focus-visible:border-danger',
+    },
+  }
+
+  const inputTreatment = inputTreatments[styleVariant]
 
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -181,10 +215,9 @@ export function Combobox({
           }}
           onKeyDown={onKeyDown}
           className={cn(
-            'h-10 w-full rounded-lg border bg-surface px-3 pr-9 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50',
-            error
-              ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
+            'h-10 w-full px-3 pr-9 text-base text-text-primary placeholder:text-text-secondary transition-colors duration-fast focus:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            inputTreatment.surface,
+            error ? inputTreatment.invalid : inputTreatment.normal,
             className
           )}
         />
