@@ -7,6 +7,7 @@ import {
   TableHead,
   TableCell,
 } from '../../../components/web/ui/Table'
+import type { TableStyleVariant } from '../../../components/web/ui/Table'
 import { DataTable } from '../../../components/web/ui/DataTable'
 import type { DataTableColumn } from '../../../components/web/ui/DataTable'
 import { Badge } from '../../../components/web/ui/Badge'
@@ -27,6 +28,8 @@ const USERS: User[] = [
   { id: 3, name: 'Alan Turing', role: 'Member', status: 'invited', seats: 1 },
   { id: 4, name: 'Katherine Johnson', role: 'Member', status: 'suspended', seats: 3 },
 ]
+
+const TABLE_STYLE_VARIANTS: TableStyleVariant[] = ['lined', 'striped', 'bordered']
 
 const STATUS_VARIANT: Record<User['status'], BadgeVariant> = {
   active: 'success',
@@ -73,6 +76,28 @@ export function DataSection() {
           onRowClick={(r) => setSelectedId(r.id)}
           isRowSelected={(r) => r.id === selectedId}
         />
+      </Showcase>
+
+      <Showcase
+        title="DataTable — styleVariant"
+        source="components/web/ui/DataTable.tsx"
+        description="Row/cell treatment forwarded to the underlying Table: lined (default), striped, and bordered."
+      >
+        <div className="flex flex-col gap-8">
+          {TABLE_STYLE_VARIANTS.map((styleVariant) => (
+            <div key={styleVariant} className="flex flex-col gap-2">
+              <span className="text-xs font-medium uppercase tracking-widest text-text-muted">
+                {styleVariant}
+              </span>
+              <DataTable
+                styleVariant={styleVariant}
+                columns={COLUMNS}
+                data={USERS}
+                rowKey={(r) => r.id}
+              />
+            </div>
+          ))}
+        </div>
       </Showcase>
 
       <Showcase

@@ -8,6 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  type TableStyleVariant,
 } from './Table'
 
 export type SortDirection = 'asc' | 'desc'
@@ -47,6 +48,8 @@ export interface DataTableProps<T> {
   isRowSelected?: (row: T) => boolean
   /** Content shown when `data` is empty. */
   emptyState?: ReactNode
+  /** Row/cell treatment, forwarded to the underlying Table. Defaults to 'lined'. */
+  styleVariant?: TableStyleVariant
   /** Extra classes merged onto the table via cn(). */
   className?: string
 }
@@ -70,6 +73,7 @@ export function DataTable<T>({
   onRowClick,
   isRowSelected,
   emptyState = 'No data',
+  styleVariant = 'lined',
   className,
 }: DataTableProps<T>) {
   const [sort, setSort] = useState<SortState | null>(null)
@@ -100,7 +104,7 @@ export function DataTable<T>({
 
   if (data.length === 0) {
     return (
-      <Table className={className}>
+      <Table styleVariant={styleVariant} className={className}>
         <TableHeader>
           <TableRow>
             {columns.map((col) => (
@@ -122,7 +126,7 @@ export function DataTable<T>({
   }
 
   return (
-    <Table className={className}>
+    <Table styleVariant={styleVariant} className={className}>
       <TableHeader>
         <TableRow>
           {columns.map((col) => {
