@@ -187,7 +187,7 @@ export function Select({
             'flex h-11 w-full items-center justify-between gap-2 rounded-lg border bg-grey-1A px-3 text-left text-base transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11 disabled:cursor-not-allowed disabled:opacity-50',
             error
               ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
             selectedOption ? 'text-text-primary' : 'text-text-secondary',
             className
           )}
@@ -229,7 +229,7 @@ export function Select({
                     'flex cursor-pointer items-center justify-between rounded-md px-3 py-2 text-sm',
                     opt.disabled && 'cursor-not-allowed opacity-50',
                     isActive && !opt.disabled ? 'bg-grey-2A text-text-primary' : 'text-text-secondary',
-                    isSelected && 'text-primary-600'
+                    isSelected && 'text-yellow'
                   )}
                 >
                   <span className="truncate">{opt.label}</span>

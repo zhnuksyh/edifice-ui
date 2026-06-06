@@ -118,12 +118,12 @@ export function Radio({ value, label, id, disabled, className, ...rest }: RadioP
           aria-hidden="true"
           className={cn(
             'flex h-5 w-5 items-center justify-center rounded-full border bg-surface transition-colors duration-fast',
-            'border-grey-2A peer-checked:border-primary-600',
-            'peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500 peer-focus-visible:ring-offset-2',
+            'border-grey-2A peer-checked:border-yellow',
+            'peer-focus-visible:ring-2 peer-focus-visible:ring-yellow peer-focus-visible:ring-offset-2',
             className
           )}
         >
-          <span className="h-2 w-2 rounded-full bg-primary-600 opacity-0 transition-opacity duration-fast peer-checked:opacity-100" />
+          <span className="h-2 w-2 rounded-full bg-yellow opacity-0 transition-opacity duration-fast peer-checked:opacity-100" />
         </span>
       </span>
       {label && <span className="text-sm text-text-primary">{label}</span>}

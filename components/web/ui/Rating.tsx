@@ -79,7 +79,7 @@ export function Rating({
             aria-label={`${starValue} star${starValue === 1 ? '' : 's'}`}
             aria-checked={starValue === value}
             role="radio"
-            className="rounded transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
+            className="rounded transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
           >
             <Star
               strokeWidth={2}

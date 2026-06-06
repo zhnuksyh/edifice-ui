@@ -93,7 +93,7 @@ export function FileUpload({
         onDragLeave={() => setDragging(false)}
         aria-describedby={describedBy}
         className={cn(
-          'flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed px-6 py-8 text-center transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50',
+          'flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed px-6 py-8 text-center transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow disabled:cursor-not-allowed disabled:opacity-50',
           dragging
             ? 'border-yellow bg-yellow-tint'
             : error

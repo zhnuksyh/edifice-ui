@@ -78,7 +78,7 @@ export function Input({
             hasRight && 'pr-9',
             error
               ? 'border-danger focus-visible:ring-danger'
-              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-primary-500',
+              : 'border-grey-2A hover:border-grey-44 focus-visible:ring-yellow',
             className
           )}
           {...rest}

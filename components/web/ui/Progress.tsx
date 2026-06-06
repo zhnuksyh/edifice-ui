@@ -42,7 +42,7 @@ export function Progress({
   }
 
   const tones: Record<ProgressTone, string> = {
-    primary: 'bg-primary-600',
+    primary: 'bg-yellow',
     success: 'bg-success',
     danger: 'bg-danger',
   }

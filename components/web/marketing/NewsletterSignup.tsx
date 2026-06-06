@@ -86,7 +86,7 @@ export function NewsletterSignup({
         onChange={(event) => setEmail(event.target.value)}
         placeholder={placeholder}
         aria-label="Email address"
-        className="h-11 flex-1 rounded-lg border border-grey-2A bg-grey-1A px-4 text-sm text-grey-F0 placeholder:text-grey-66 transition-colors hover:border-grey-44 focus-visible:border-yellow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
+        className="h-11 flex-1 rounded-lg border border-grey-2A bg-grey-1A px-4 text-sm text-grey-F0 placeholder:text-grey-66 transition-colors hover:border-grey-44 focus-visible:border-yellow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow focus-visible:ring-offset-2 focus-visible:ring-offset-grey-11"
       />
       <Button type="submit">{buttonLabel}</Button>
     </form>

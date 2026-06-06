@@ -73,9 +73,9 @@ export function Tabs({
               disabled={item.disabled}
               onClick={() => select(item.value)}
               className={cn(
-                '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50',
+                '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-yellow disabled:cursor-not-allowed disabled:opacity-50',
                 selected
-                  ? 'border-primary-600 text-text-primary'
+                  ? 'border-yellow text-text-primary'
                   : 'border-transparent text-text-secondary hover:text-text-primary'
               )}
             >
