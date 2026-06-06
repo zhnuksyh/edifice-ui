@@ -1,9 +1,14 @@
 import { Stat } from '../../../components/web/data-display/Stat'
+import type { StatStyleVariant } from '../../../components/web/data-display/Stat'
 import { Timeline } from '../../../components/web/data-display/Timeline'
 import { CodeBlock } from '../../../components/web/data-display/CodeBlock'
+import type { CodeBlockStyleVariant } from '../../../components/web/data-display/CodeBlock'
 import { DescriptionList } from '../../../components/web/data-display/DescriptionList'
 import { Users, GitCommit, Rocket, AlertTriangle } from 'lucide-react'
 import { Showcase, Row } from '../components/Showcase'
+
+const STAT_STYLE_VARIANTS: StatStyleVariant[] = ['elevated', 'outlined', 'ghost']
+const CODEBLOCK_STYLE_VARIANTS: CodeBlockStyleVariant[] = ['boxed', 'minimal']
 
 const TIMELINE_ITEMS = [
   {
@@ -77,6 +82,18 @@ export function DataDisplaySection() {
           />
           <Stat label="Open issues" value="37" delta="No change" trend="neutral" />
         </div>
+        <div className="mt-5 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+          {STAT_STYLE_VARIANTS.map((styleVariant) => (
+            <Stat
+              key={styleVariant}
+              styleVariant={styleVariant}
+              label={styleVariant}
+              value="$48,200"
+              delta="+12.5%"
+              trend="up"
+            />
+          ))}
+        </div>
       </Showcase>
 
       <Showcase
@@ -104,6 +121,17 @@ export function DataDisplaySection() {
             <CodeBlock code={`npm install @edifice/ui`} language="bash" />
           </div>
         </Row>
+        {CODEBLOCK_STYLE_VARIANTS.map((styleVariant) => (
+          <Row key={styleVariant} label={styleVariant}>
+            <div className="w-full max-w-2xl">
+              <CodeBlock
+                code={SAMPLE_CODE}
+                language="tsx"
+                styleVariant={styleVariant}
+              />
+            </div>
+          </Row>
+        ))}
       </Showcase>
 
       <Showcase

@@ -15,6 +15,8 @@ function CopyGlyph({ done }: { done: boolean }) {
   )
 }
 
+export type CodeBlockStyleVariant = 'boxed' | 'minimal'
+
 export interface CodeBlockProps extends HTMLAttributes<HTMLDivElement> {
   /** The code to display (and copy). */
   code: string
@@ -22,6 +24,12 @@ export interface CodeBlockProps extends HTMLAttributes<HTMLDivElement> {
   language?: string
   /** Optional filename shown in the header. */
   filename?: string
+  /**
+   * Surface treatment. Defaults to 'boxed'.
+   * - `boxed` — bordered, dark `grey-0A` surface with a header bar (the original).
+   * - `minimal` — borderless `grey-11` surface, header divider only.
+   */
+  styleVariant?: CodeBlockStyleVariant
   /** Show the copy button. Defaults to true. */
   copyable?: boolean
   /** Show line numbers in the gutter. Defaults to false. */
@@ -38,6 +46,7 @@ export function CodeBlock({
   code,
   language,
   filename,
+  styleVariant = 'boxed',
   copyable = true,
   showLineNumbers = false,
   className,
@@ -47,16 +56,35 @@ export function CodeBlock({
   const lines = code.replace(/\n$/, '').split('\n')
   const hasHeader = Boolean(filename || language || copyable)
 
+  // Per-treatment frame + header chrome.
+  const treatments: Record<
+    CodeBlockStyleVariant,
+    { frame: string; header: string }
+  > = {
+    boxed: {
+      frame: 'rounded-xl border border-grey-2A bg-grey-0A',
+      header: 'border-b border-grey-2A bg-grey-11',
+    },
+    minimal: {
+      frame: 'rounded-xl bg-grey-11',
+      header: 'border-b border-grey-2A bg-transparent',
+    },
+  }
+
+  const treatment = treatments[styleVariant]
+
   return (
     <div
-      className={cn(
-        'overflow-hidden rounded-xl border border-grey-2A bg-grey-0A',
-        className
-      )}
+      className={cn('overflow-hidden', treatment.frame, className)}
       {...rest}
     >
       {hasHeader && (
-        <div className="flex items-center justify-between border-b border-grey-2A bg-grey-11 px-4 py-2">
+        <div
+          className={cn(
+            'flex items-center justify-between px-4 py-2',
+            treatment.header
+          )}
+        >
           <span className="font-mono text-xs text-text-muted">
             {filename ?? language ?? ''}
           </span>
